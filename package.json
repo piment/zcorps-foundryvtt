@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "zcorps",
   "version": "1.0.0",
-  "description": "CSS compiler for the Boilerplate system",
+  "description": "CSS compiler for the Z-Corps system",
   "scripts": {
     "build": "gulp build",
     "compile": "gulp css",
@@ -11,13 +11,13 @@
   "browserslist": [
     "last 3 versions"
   ],
-  "author": "John Doe",
+  "author": "piment",
   "license": "MIT",
   "private": true,
   "dependencies": {
     "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^2.6.5"
+    "gulp-autoprefixer": "^8",
+    "gulp-sass": "^4",
+    "gulp-sourcemaps": "^3"
   }
 }

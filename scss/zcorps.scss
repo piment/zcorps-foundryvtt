@@ -1,0 +1,177 @@
+// Add custom fonts by visiting and search https://fonts.google.com
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+// Import utilities.
+@import 'utils/typography';
+@import 'utils/colors';
+@import 'utils/mixins';
+@import 'utils/variables';
+
+/* Global styles */
+@import 'global/window';
+@import 'global/grid';
+@import 'global/flex';
+
+/* Styles limited to zcorps sheets */
+.zcorps {
+  @import 'components/forms';
+  @import 'components/resource';
+  @import 'components/items';
+  @import 'components/effects';
+}
+
+.zcorps {
+  background-color: red !important;
+  font-size: 0.9em;
+}
+.caracs {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  .carac-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(104, 28, 28);
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 5px;
+    margin: 0;
+  }
+  ul.carac {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: rgba($color: #000, $alpha: 0.5);
+    li {
+      margin: 0;
+      padding: 0;
+      flex-basis: 50%;
+      display: flex;
+      flex-direction: column;
+      align-content: flex-start;
+      ul.skills {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        li.carac-li {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          margin: 2px 0;
+          padding: 0 5px;
+          list-style-type: none;
+          .skill {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+          }
+        }
+        
+        ul.specialisations {
+          padding-left: 0;
+          margin: 3px 0 0 0;
+          li.specialisation {
+            margin-left: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+    
+  }
+
+  h2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-transform: uppercase;
+  }
+  .setDice {
+    color: white;
+    width: 20px;
+    text-align: center;
+  }
+  
+}
+
+
+.item {
+  .window-content {
+    .sheet-body {
+      .hidden {
+          border: 1px dashed gray;
+          margin-top: 30px;
+      }
+      .category {
+        margin-top: 20px;
+        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        border-top: 1px solid gray;
+        &-title {
+          text-transform: uppercase;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        &-body {
+          display: flex;
+          flex-direction: row;
+          align-content: center;
+          width: 100%;
+        }
+        &-element {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-evenly;
+          width: 100%;
+          .input-short {
+            max-width: 30px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+.actor {
+  .window-content {
+    background-image: linear-gradient(
+      rgba(0, 0, 0, 0.7), 
+      rgba(0, 0, 0, 0.7)
+    ), url(../img/characBG_2.jpg);
+    background-size: cover;
+    padding: 0;
+    color: $c-white;
+
+    .sheet-header {
+      .arme-name {
+        input {
+          color: white;
+          font-size: 0.8em;
+          font-weight: 300;
+          height: auto;
+        }
+      }
+    }
+
+    .sheet-body {
+      .owned {
+        color: rgb(194, 29, 29);
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+

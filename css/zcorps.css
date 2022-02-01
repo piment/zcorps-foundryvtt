@@ -1,0 +1,697 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+/* Global styles */
+.window-app {
+  font-family: "Roboto", sans-serif;
+}
+
+.rollable:hover, .rollable:focus {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+
+.grid,
+.grid-2col {
+  display: grid;
+  grid-column: span 2 / span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.grid-3col {
+  grid-column: span 3 / span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4col {
+  grid-column: span 4 / span 4;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-5col {
+  grid-column: span 5 / span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-6col {
+  grid-column: span 6 / span 6;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-7col {
+  grid-column: span 7 / span 7;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-8col {
+  grid-column: span 8 / span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-9col {
+  grid-column: span 9 / span 9;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.grid-10col {
+  grid-column: span 10 / span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.grid-11col {
+  grid-column: span 11 / span 11;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.grid-12col {
+  grid-column: span 12 / span 12;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.grid-start-2 {
+  grid-column-start: 2;
+}
+
+.grid-start-3 {
+  grid-column-start: 3;
+}
+
+.grid-start-4 {
+  grid-column-start: 4;
+}
+
+.grid-start-5 {
+  grid-column-start: 5;
+}
+
+.grid-start-6 {
+  grid-column-start: 6;
+}
+
+.grid-start-7 {
+  grid-column-start: 7;
+}
+
+.grid-start-8 {
+  grid-column-start: 8;
+}
+
+.grid-start-9 {
+  grid-column-start: 9;
+}
+
+.grid-start-10 {
+  grid-column-start: 10;
+}
+
+.grid-start-11 {
+  grid-column-start: 11;
+}
+
+.grid-start-12 {
+  grid-column-start: 12;
+}
+
+.grid-span-2 {
+  grid-column-end: span 2;
+}
+
+.grid-span-3 {
+  grid-column-end: span 3;
+}
+
+.grid-span-4 {
+  grid-column-end: span 4;
+}
+
+.grid-span-5 {
+  grid-column-end: span 5;
+}
+
+.grid-span-6 {
+  grid-column-end: span 6;
+}
+
+.grid-span-7 {
+  grid-column-end: span 7;
+}
+
+.grid-span-8 {
+  grid-column-end: span 8;
+}
+
+.grid-span-9 {
+  grid-column-end: span 9;
+}
+
+.grid-span-10 {
+  grid-column-end: span 10;
+}
+
+.grid-span-11 {
+  grid-column-end: span 11;
+}
+
+.grid-span-12 {
+  grid-column-end: span 12;
+}
+
+.flex-group-center,
+.flex-group-left,
+.flex-group-right {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
+
+.flex-group-left {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.flex-group-right {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.flexshrink {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+}
+
+.flex-between {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.flexlarge {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+}
+
+.align-left {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.align-right {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.align-center {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Styles limited to zcorps sheets */
+.zcorps {
+  /* ----------------------------------------- */
+  /*  Items Lists                              */
+  /* ----------------------------------------- */
+  /* Example style for zcorps (can be removed if not needed) */
+}
+
+.zcorps .item-form {
+  font-family: "Roboto", sans-serif;
+}
+
+.zcorps .sheet-header {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 auto;
+  flex: 0 auto;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.zcorps .sheet-header .profile-img {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 100px;
+  flex: 0 0 100px;
+  height: 150px;
+  width: 150px;
+  margin-right: 10px;
+  border: 1px solid white;
+}
+
+.zcorps .sheet-header .header-fields {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.zcorps .sheet-header h1.charname {
+  height: 50px;
+  padding: 0px;
+  margin: 5px 0;
+  border-bottom: 0;
+}
+
+.zcorps .sheet-header h1.charname input {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.zcorps .sheet-tabs {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+}
+
+.zcorps .sheet-body,
+.zcorps .sheet-body .tab,
+.zcorps .sheet-body .tab .editor {
+  height: 100%;
+}
+
+.zcorps .tox .tox-editor-container {
+  background: #fff;
+}
+
+.zcorps .tox .tox-edit-area {
+  padding: 0 8px;
+}
+
+.zcorps .resource-label {
+  font-weight: bold;
+}
+
+.zcorps .items-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+}
+
+.zcorps .items-header > * {
+  font-size: 14px;
+  text-align: center;
+}
+
+.zcorps .items-header .item-name {
+  font-weight: bold;
+  padding-left: 5px;
+  text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.zcorps .items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: #444;
+}
+
+.zcorps .items-list .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.zcorps .items-list .item-name {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  margin: 0;
+  overflow: hidden;
+  font-size: 13px;
+  text-align: left;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.zcorps .items-list .item-name h3, .zcorps .items-list .item-name h4 {
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.zcorps .items-list .item-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 100px;
+  flex: 0 0 100px;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.zcorps .items-list .item-controls a {
+  font-size: 12px;
+  text-align: center;
+  margin: 0 6px;
+}
+
+.zcorps .items-list .item {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 2px;
+  border-bottom: 1px solid #c9c7b8;
+}
+
+.zcorps .items-list .item:last-child {
+  border-bottom: none;
+}
+
+.zcorps .items-list .item .item-name {
+  color: #191813;
+}
+
+.zcorps .items-list .item .item-name .item-image {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 30px;
+  flex: 0 0 30px;
+  height: 30px;
+  background-size: 30px;
+  border: none;
+  margin-right: 5px;
+}
+
+.zcorps .items-list .item-prop {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+
+.zcorps .items-list .items-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+}
+
+.zcorps .items-list .items-header > * {
+  font-size: 12px;
+  text-align: center;
+}
+
+.zcorps .items-list .items-header .item-name {
+  padding-left: 5px;
+  text-align: left;
+}
+
+.zcorps .item-formula {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 200px;
+  flex: 0 0 200px;
+  padding: 0 8px;
+}
+
+.zcorps .effects .item .effect-source,
+.zcorps .effects .item .effect-duration,
+.zcorps .effects .item .effect-controls {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+
+.zcorps .effects .item .effect-controls {
+  border: none;
+}
+
+.zcorps {
+  background-color: red !important;
+  font-size: 0.9em;
+}
+
+.caracs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.caracs .carac-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #681c1c;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 5px;
+  margin: 0;
+}
+
+.caracs ul.carac {
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.caracs ul.carac li {
+  margin: 0;
+  padding: 0;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.caracs ul.carac li ul.skills {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.caracs ul.carac li ul.skills li.carac-li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 2px 0;
+  padding: 0 5px;
+  list-style-type: none;
+}
+
+.caracs ul.carac li ul.skills li.carac-li .skill {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.caracs ul.carac li ul.skills ul.specialisations {
+  padding-left: 0;
+  margin: 3px 0 0 0;
+}
+
+.caracs ul.carac li ul.skills ul.specialisations li.specialisation {
+  margin-left: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.caracs h2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  text-transform: uppercase;
+}
+
+.caracs .setDice {
+  color: white;
+  width: 20px;
+  text-align: center;
+}
+
+.item .window-content .sheet-body .hidden {
+  border: 1px dashed gray;
+  margin-top: 30px;
+}
+
+.item .window-content .sheet-body .category {
+  margin-top: 20px;
+  padding: 20px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  border-top: 1px solid gray;
+}
+
+.item .window-content .sheet-body .category-title {
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.item .window-content .sheet-body .category-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  width: 100%;
+}
+
+.item .window-content .sheet-body .category-element {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.item .window-content .sheet-body .category-element .input-short {
+  max-width: 30px;
+  text-align: center;
+}
+
+.actor .window-content {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0.7))), url(../img/characBG_2.jpg);
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/characBG_2.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/characBG_2.jpg);
+  background-size: cover;
+  padding: 0;
+  color: #fff;
+}
+
+.actor .window-content .sheet-header .arme-name input {
+  color: white;
+  font-size: 0.8em;
+  font-weight: 300;
+  height: auto;
+}
+
+.actor .window-content .sheet-body .owned {
+  color: #c21d1d;
+  font-weight: bold;
+}

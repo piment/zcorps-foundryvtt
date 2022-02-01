@@ -1,24 +1,31 @@
-<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+<form class="{{cssClass}} {{actor.type}} flexcol characSheet" autocomplete="off">
 
   {{!-- Sheet Header --}}
   <header class="sheet-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+      <h1 class="charname">
+        {{#if actor.editSheet}}
+          <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+        {{else}}
+          {{actor.name}}
+        {{/if}}
+      </h1>
+      
       {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
       use both the "grid" and "grid-Ncol" class where "N" can be any number
       from 1 to 12 and will create that number of columns.  --}}
       <div class="resources grid grid-3col">
-
+        <button class="edit-btn">edit</button>
         {{!-- "flex-group-center" is also defined in the _grid.scss file
         and it will add a small amount of padding, a border, and will
         center all of its child elements content and text. --}}
         <div class="resource flex-group-center">
-          <label for="data.health.value" class="resource-label">Health</label>
+          <label for="data.xp" class="resource-label">Point de Personnage</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
+          <input type="text" name="data.xp.value" value="{{data.xp.value}}" data-dtype="Number"/>
           <span> / </span>
-          <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number"/>
+          <input type="text" name="data.xp.total" value="{{data.xp.total}}" data-dtype="Number"/>
           </div>
         </div>
 
@@ -45,10 +52,9 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a class="item" data-tab="features">Features</a>
+    <a class="item" data-tab="features">Fiche de Perso</a>
     <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="items">Items</a>
-    <a class="item" data-tab="spells">Spells</a>
+    <a class="item" data-tab="assets">Equipements</a>
     <a class="item" data-tab="effects">Effects</a>
   </nav>
 
@@ -56,28 +62,56 @@
   <section class="sheet-body">
 
     {{!-- Owned Features Tab --}}
-    <div class="tab features" data-group="primary" data-tab="features">
-      <section class="grid grid-3col">
-        <aside class="sidebar">
-
-          {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-          use both the "grid" and "grid-Ncol" class where "N" can be any number
-          from 1 to 12 and will create that number of columns.  --}}
-          <div class="abilities flexcol">
-            {{#each data.abilities as |ability key|}}
-            <div class="ability flexrow flex-group-center">
-              <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
-              <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-              <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-            </div>
-            {{/each}}
-          </div>
-        </aside>
+    <div class="tab features caracs" data-group="primary" data-tab="features">
+      <section class="grid grid-1col" style="margin-top:0;">
 
         {{!-- For the main features list, span the right two columns --}}
         <section class="main grid-span-2">
-          {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
-          {{> "systems/boilerplate/templates/actor/parts/actor-features.html"}}
+          
+          <ul class="carac">
+            {{#each caracs as |carac caracId|}}
+              <li data-item-id="{{caracs.name}}">
+                <div class="carac-title">
+                  <div>{{carac.name}}</div>
+                  {{#if ../actor.editSheet}}
+                    <input class="setDice" type="text" name="data.caracs.{{caracId}}.value" value="{{carac.value}}" data-dtype="number"/>
+                  {{else}}
+                    <div>{{carac.value}}D <a href="#"><i class="fas fa-dice-d6"></i></a></div>
+                  {{/if}}
+                  
+                </div>
+                
+                <ul class="skills">
+                  {{#each carac.skills as |skill skillId|}}
+                    <li class="carac-li">
+                      <div class="skill {{#if skill.owned}}owned{{/if}}">
+                        <div >
+                          {{#if ../../actor.editSheet}}
+                            <input type="checkbox" name="data.caracs.{{caracId}}.skills.{{skillId}}.owned" {{#if skill.owned}}checked{{/if}} class="skillCheckbox error"/>
+                          {{/if}}
+                          {{skill.name}}
+                        </div>
+                        {{#if ../../actor.editSheet}}
+                          <input class="setDice" type="text" name="data.caracs.{{caracId}}.skills.{{skillId}}.value" value="{{skill.value}}" data-dtype="number"/>
+                        {{else}}
+                        <div>{{showTotalForSkill skill.total}} <a class="rollable" data-roll="{{skill.total}}" data-label="{{skill.name}}"><i class="fas fa-dice-d6"></i></a></div>
+                        {{/if}}
+                      </div>
+                      <ul class="specialisations">
+                        {{#each ../../specialisation as |spec specId|}}
+                          {{#if (checkSpecialisation spec skillId)}}
+                            <li class="specialisation">
+                              <div>- {{spec.name}}</div><div>{{spec.data.value}}</div>
+                            </li>
+                          {{/if}}
+                        {{/each}}
+                      </ul>
+                    </li>
+                  {{/each}}
+                </ul>
+              </li>
+            {{/each}}
+          </ul>
         </section>
 
       </section>
@@ -90,18 +124,13 @@
     </div>
 
     {{!-- Owned Items Tab --}}
-    <div class="tab items" data-group="primary" data-tab="items">
-       {{> "systems/boilerplate/templates/actor/parts/actor-items.html"}}
-    </div>
-
-    {{!-- Owned Spells Tab --}}
-    <div class="tab spells" data-group="primary" data-tab="spells">
-      {{> "systems/boilerplate/templates/actor/parts/actor-spells.html"}}
+    <div class="tab assets" data-group="primary" data-tab="assets">
+       {{> "systems/zcorps/templates/actor/parts/actor-items.html"}}
     </div>
 
     {{!-- Active Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-      {{> "systems/boilerplate/templates/actor/parts/actor-effects.html"}}
+      {{> "systems/zcorps/templates/actor/parts/actor-effects.html"}}
     </div>
 
   </section>

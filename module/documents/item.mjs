@@ -2,10 +2,11 @@
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-export class BoilerplateItem extends Item {
+export class zcorpsItem extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
+  
   prepareData() {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
@@ -16,7 +17,8 @@ export class BoilerplateItem extends Item {
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
    */
-   getRollData() {
+
+  getRollData() {
     // If present, return the actor's roll data.
     if ( !this.actor ) return null;
     const rollData = this.actor.getRollData();
@@ -53,7 +55,9 @@ export class BoilerplateItem extends Item {
       const rollData = this.getRollData();
 
       // Invoke the roll and submit it to chat.
-      const roll = new Roll(rollData.item.formula, rollData).roll();
+      const roll = new Roll(rollData.item.formula, rollData);
+      // If you need to store the value first, uncomment the next line.
+      // let result = await roll.roll({async: true});
       roll.toMessage({
         speaker: speaker,
         rollMode: rollMode,

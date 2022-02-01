@@ -2,12 +2,12 @@
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
-export class BoilerplateItemSheet extends ItemSheet {
+export class zcorpsItemSheet extends ItemSheet {
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["boilerplate", "sheet", "item"],
+      classes: ["zcorps", "sheet", "item"],
       width: 520,
       height: 480,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
@@ -16,7 +16,7 @@ export class BoilerplateItemSheet extends ItemSheet {
 
   /** @override */
   get template() {
-    const path = "systems/boilerplate/templates/item";
+    const path = "systems/zcorps/templates/item";
     // Return a single sheet for all item types.
     // return `${path}/item-sheet.html`;
 
@@ -31,7 +31,7 @@ export class BoilerplateItemSheet extends ItemSheet {
   getData() {
     // Retrieve base data structure.
     const context = super.getData();
-
+    context.ammoType = {0: ".38", 1: "9mm", 2: ".22"};
     // Use a safe clone of the item data for further operations.
     const itemData = context.item.data;
 
@@ -41,11 +41,13 @@ export class BoilerplateItemSheet extends ItemSheet {
     if (actor) {
       context.rollData = actor.getRollData();
     }
-
+    context.actor = this.actor ? this.actor.data : {};
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = itemData.data;
     context.flags = itemData.flags;
-
+    context.armeType = {"armedepoing": "arme de poing", "armedejet": "arme de jet", "armedepaule" : "arme d'épaule", "armecontandante": "arme contandante"};
+    //console.log(Object.keys(context))
+    //console.log(context.item.data);
     return context;
   }
 
@@ -59,5 +61,24 @@ export class BoilerplateItemSheet extends ItemSheet {
     if (!this.isEditable) return;
 
     // Roll handlers, click handlers, etc. would go here.
+    html.find(".arme-type").change(ev => { 
+      let item = this.object.data.data;
+      let skill = ev.currentTarget.value;
+      if(skill ==="armedepoing" || skill === "armedepaule") {
+        item.carac = "deftness";
+        item.skill = "armeafeu";
+      }
+      else if(skill === "armedejet") {
+        item.carac = "deftness";
+        item.skill = "armedejet";
+      } else {
+        item.carac = "agility";
+        item.skill = "melee";
+      }
+      html.find(".data-skill")[0].value = item.skill;
+      html.find(".data-carac")[0].value = item.carac;
+    });
   }
+
+  
 }

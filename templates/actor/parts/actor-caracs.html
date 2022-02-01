@@ -1,0 +1,22 @@
+<ul class="carac">
+  {{#each caracs as |carac id|}}
+    <li data-item-id="{{caracs.name}}">
+      <div class="carac-title">
+        <div>{{carac.name}}</div>
+        {{log actor.editSheet}}
+        {{#if (editSheet actor.editSheet)}}
+          <input type="number" name="{{carac.name}}" value="{{carac.value}}">
+          <p>test</p>
+        {{else}}
+          <div>{{carac.value}}D</div>
+        {{/if}}
+      </div>
+      
+      <ul class="skills">
+        {{#each carac.skills as |skill id|}}
+          <li><div>{{skill.name}}</div><div>{{skill.value}}D <i class="fas fa-dice-d6"></i></div></li>
+        {{/each}}
+      </ul>
+    </li>
+  {{/each}}
+</ul>

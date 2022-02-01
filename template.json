@@ -1,56 +1,358 @@
 {
   "Actor": {
-    "types": ["character", "npc"],
+    "types": ["character"],
     "templates": {
       "base": {
-        "health": {
-          "value": 10,
-          "min": 0,
-          "max": 10
-        },
-        "power": {
-          "value": 5,
-          "min": 0,
-          "max": 5
-        },
-        "biography": ""
+        "caracs": {
+          "agility": {
+            "name": "Agilité",
+            "value": 3,
+            "tier": 0,
+            "skills": {
+              "acrobaties" : {
+                "name": "Acrobaties",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "bagarre" : {
+                "name": "Bagarre",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "contorsion" : {
+                "name": "Contorsion",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "equitation" : {
+                "name": "Equitation",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "discretion" : {
+                "name": "Discrétion",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "esquive" : {
+                "name": "Esquive",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "grimper" : {
+                "name": "Grimper",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "melee" : {
+                "name": "Mêlée",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "sauter" : {
+                "name": "Sauter",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              }
+            }
+          },
+          "knowledge": {
+            "name": "Connaissances",
+            "value": 2,
+            "tier": 0,
+            "skills": {
+              "affaires" : {
+                "name": "Affaires",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "contrefacon" : {
+                "name": "Contrefaçon",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "demolition" : {
+                "name": "Démolition",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "electronique" : {
+                "name": "Electronique",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "erudition" : {
+                "name": "Erudition",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "informatique" : {
+                "name": "Informatique",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "langues" : {
+                "name": "Langues",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "medecine" : {
+                "name": "Médecine",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "navigation" : {
+                "name": "Navigation",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "securite" : {
+                "name": "Sécurité",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "sciencesoccultes" : {
+                "name": "Sciences occultes",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              }
+            }
+          },
+          "deftness": {
+            "name": "Adresse",
+            "value": 4,
+            "tier": 0,
+            "skills": {
+              "armeafeu" : {
+                "name": "Armes à feu",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "armedejet" : {
+                "name": "Arme de jet",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "crochetage" : {
+                "name": "Crochetage",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "dexterite" : {
+                "name": "Dextérité",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "lancer" : {
+                "name": "Lancer",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "pilotage" : {
+                "name": "Pilotage",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "reparer" : {
+                "name": "Réparer",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              }
+            }
+          },
+          "perception": {
+            "name": "Perception",
+            "value": 1,
+            "tier": 0,
+            "skills": {
+              "artiste" : {
+                "name": "Artiste",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "camouflage" : {
+                "name": "Camouflage",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "chercher" : {
+                "name": "Chercher",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "connaissance_de_la_rue" : {
+                "name": "Connaissance de la rue",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "investigation" : {
+                "name": "Investigation",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "jeux" : {
+                "name": "Jeux",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "pister" : {
+                "name": "Pister",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "survie" : {
+                "name": "Survie",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              }
+            }
+          },
+          "strength": {
+            "name": "Puissance",
+            "value": 3,
+            "tier": 0,
+            "skills": {
+              "courir" : {
+                "name": "Courir",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "endurance" : {
+                "name": "Endurance",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "nager" : {
+                "name": "Nager",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "soulever" : {
+                "name": "Soulever",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              }
+            }
+          },
+          "presence": {
+            "name": "Présence",
+            "value": 3,
+            "tier": 0,
+            "skills": {
+              "charmer" : {
+                "name": "Charmer",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "commander" : {
+                "name": "Commander",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "deguisement" : {
+                "name": "Déguisement",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "dressage" : {
+                "name": "Dressage",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "empathie" : {
+                "name": "Empathie",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "escroquerie" : {
+                "name": "Escroquerie",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "intimidation" : {
+                "name": "Intimidation",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "persuasion" : {
+                "name": "Persuasion",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              },
+              "volonte" : {
+                "name": "volonté",
+                "owned": false,
+                "value": 0,
+                "tier": 0
+              }
+            }
+          }
+        }
       }
     },
     "character": {
       "templates": ["base"],
       "attributes": {
-        "level": {
-          "value": 1
-        }
-      },
-      "abilities": {
-        "str": {
-          "value": 10
+        "xp": {
+          "value": 5,
+          "total": 5
         },
-        "dex": {
-          "value": 10
-        },
-        "con": {
-          "value": 10
-        },
-        "int": {
-          "value": 10
-        },
-        "wis": {
-          "value": 10
-        },
-        "cha": {
-          "value": 10
+        "cojones": {
+          "value": 5,
+          "total": 5
         }
       }
-    },
-    "npc": {
-      "templates": ["base"],
-      "cr": 0
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": ["item", "specialisation", "arme", "ammo"],
     "templates": {
       "base": {
         "description": ""
@@ -62,12 +364,27 @@
       "weight": 0,
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
     },
-    "feature": {
-      "templates": ["base"]
+    "specialisation": {
+      "name": "",
+      "skill": "",
+      "value": 0
     },
-    "spell": {
-      "templates": ["base"],
-      "spellLevel": 1
+    "arme": {
+      "type": "",
+      "skill": "",
+      "carac": "",
+      "range": {
+        "short": 0,
+        "middle": 0,
+        "long": 0
+      },
+      "damage" : "",
+      "ammo-max": 0,
+      "ammo-actual": 0
+    },
+    "ammo": {
+      "type": "",
+      "quantity": 0
     }
   }
 }
