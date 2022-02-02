@@ -27,7 +27,7 @@
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "cojones",
   "url": "https://github.com/piment/zcorps-foundryvtt",
-  "manifest": "https://github.com/piment/zcorps-foundryvtt/blob/main/system.json",
-  "download": "",
+  "manifest": "https://raw.githubusercontent.com/piment/zcorps-foundryvtt/main/system.json",
+  "download": "https://github.com/piment/zcorps-foundryvtt/blob/main/archive/v0.0.1.zip",
   "license": "LICENSE.txt"
 }

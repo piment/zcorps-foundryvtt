@@ -5,7 +5,7 @@ Système Foundry VTT (Non-officiel) pour le jeu de rôle Z-Corps, édité par la
 :warning: Le système est encore en version Alpha et non utilisable en "production" :warning:
 
 
-:information_source: Fichier ["manifest"](https://github.com/piment/zcorps-foundryvtt/blob/main/system.json) pour l'installation directe.
+:information_source: Fichier ["manifest"](https://raw.githubusercontent.com/piment/zcorps-foundryvtt/main/system.json) pour l'installation directe.
 
 :gear: Serveur [Discord](https://discord.gg/rbsvujHH) pour participer au développement.
 
