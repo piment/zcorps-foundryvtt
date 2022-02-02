@@ -1,12 +1,18 @@
-### Z-corps game system for Foundry VTT
+### :zombie_man: Z-Corps pour Foundry VTT :zombie_woman:
 
-An unofficial game system for [Z-corps RGP](https://www.7emecercle.com/7C_site/jeux-de-roles/z-corps/) by "Le 7eme Cercle"
+Système Foundry VTT (Non-officiel) pour le jeu de rôle Z-Corps, édité par la société [7eme Cercle](https://www.7emecercle.com/7C_site/jeux-de-roles/z-corps/)
 
-:warning: This system is in alpha development, and it's not ready for "production" use. :warning:
+:warning: Le système est encore en version Alpha et non utilisable en "production" :warning:
 
-Developped on FoundryVTT V9, need to test compatibility on previous versions.
 
+:information_source: Fichier ["manifest"](https://github.com/piment/zcorps-foundryvtt/blob/main/system.json) pour l'installation directe.
+
+:gear: Serveur [Discord](https://discord.gg/rbsvujHH) pour participer au développement.
+
+Développé sur Foundry VTT V9. Non testé sur les versions précédentes
 
 version 0.0.1
 
-Author: Romain MURA
+Basée sur le Boilerplate de ["asacolips"](https://github.com/asacolips)
+
+Autheur: Romain MURA 
