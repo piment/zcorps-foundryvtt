@@ -1,7 +1,7 @@
 {
   "name": "zcorps",
-  "title": "Z-Corps For Foundry VTT",
-  "description": "The Z-Corps system for Foundry VTT (unofficial)",
+  "title": "Z-Corps Foundry VTT - FR (unofficial)",
+  "description": "Z-Corps Foundry VTT - FR (unofficial)",
   "version": "0.0.1",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "9",
