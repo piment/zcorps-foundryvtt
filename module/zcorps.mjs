@@ -92,6 +92,35 @@ Handlebars.registerHelper("getSkillValuefromActor", (caracs, carac, skill) => {
   const value = `${caracs[carac].skills[skill].total}D+${caracs[carac].skills[skill].tier}`;
   return value;
 });
+
+Handlebars.registerHelper("getHealthStatus", level => {
+  switch(parseInt(level)) {
+    case 0: 
+      return "Pas de blessure";
+      break;
+    case 1: 
+      return "Sonné";
+      break;
+    case 2: 
+      return "Blessé";
+      break;
+    case 3: 
+      return "Gravement Blessé";
+      break;
+    case 4: 
+      return "Handicapé";
+      break;
+    case 5: 
+      return "Mortellement blessé";
+      break;
+    case 6: 
+      return "Mort";
+      break;
+    default:
+      return "Pas de blessure"
+      break;
+  }
+});
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */

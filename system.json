@@ -1,16 +1,21 @@
 {
   "name": "zcorps",
-  "title": "Z-Corps",
-  "description": "The Z-Corps system for FoundryVTT!",
+  "title": "Z-Corps For Foundry VTT",
+  "description": "The Z-Corps system for Foundry VTT (unofficial)",
   "version": "0.0.1",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "9",
-  "author": "piment",
+  "author": "Romain MURA",
   "esmodules": ["module/zcorps.mjs"],
   "styles": ["css/zcorps.css"],
   "scripts": [],
   "packs": [],
   "languages": [
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json"
+    },
     {
       "lang": "en",
       "name": "English",
@@ -20,9 +25,9 @@
   "gridDistance": 1,
   "gridUnits": "m",
   "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "power",
-  "url": "",
-  "manifest": "",
+  "secondaryTokenAttribute": "cojones",
+  "url": "https://github.com/piment/zcorps-foundryvtt",
+  "manifest": "https://github.com/piment/zcorps-foundryvtt/blob/main/system.json",
   "download": "",
   "license": "LICENSE.txt"
 }

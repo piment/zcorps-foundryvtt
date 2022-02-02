@@ -609,6 +609,105 @@
   text-align: center;
 }
 
+.actor .window-content .sheet-header {
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+
+.actor .window-content .sheet-header input {
+  border: 1px solid gray;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.actor .window-content .sheet-header .edit-sheet-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: white;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 30px;
+  right: 8px;
+  background-color: rgba(104, 28, 28, 0.5);
+}
+
+.actor .window-content .sheet-header .edit-sheet-btn i {
+  width: 50px;
+  margin: 0;
+  padding: 0;
+}
+
+.actor .window-content .sheet-header .profile-card {
+  max-width: 150px;
+}
+
+.actor .window-content .sheet-header .profile-card .profile-img {
+  width: 150px;
+  height: 150px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.actor .window-content .sheet-header .profile-card .profile-character-name {
+  text-align: center;
+}
+
+.actor .window-content .sheet-header .profile-card .profile-character-name input {
+  margin: 0;
+  padding: 0;
+  max-height: 30px;
+}
+
+.actor .window-content .sheet-header .profile-card .profile-character-name input:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.actor .window-content .sheet-header .character-attr {
+  height: 100%;
+}
+
+.actor .window-content .sheet-header .character-attr .physical {
+  height: 100%;
+}
+
+.actor .window-content .sheet-header .health-level ul li {
+  list-style-type: none;
+}
+
+.actor .window-content .sheet-header .healthAndStressLevel .level {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.actor .window-content .sheet-header .healthAndStressLevel .level select {
+  background-color: gray;
+}
+
 .item .window-content .sheet-body .hidden {
   border: 1px dashed gray;
   margin-top: 30px;
@@ -676,12 +775,14 @@
 }
 
 .actor .window-content {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0.7))), url(../img/characBG_2.jpg);
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/characBG_2.jpg);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/characBG_2.jpg);
-  background-size: cover;
   padding: 0;
   color: #fff;
+}
+
+.actor .window-content .character {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#0006), to(#0006)), url(../img/characBG_3.jpg);
+  background-image: -o-linear-gradient(#0006, #0006), url(../img/characBG_3.jpg);
+  background-image: linear-gradient(#0006, #0006), url(../img/characBG_3.jpg);
 }
 
 .actor .window-content .sheet-header .arme-name input {

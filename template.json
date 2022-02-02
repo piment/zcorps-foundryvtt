@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character"],
+    "types": ["character", "npc", "zombie"],
     "templates": {
       "base": {
         "caracs": {
@@ -347,8 +347,23 @@
         "cojones": {
           "value": 5,
           "total": 5
-        }
+        },
+        "health": 0,
+        "stress": 0,
+        "physical": {
+          "age": 0,
+          "height": 0,
+          "weight": 0,
+          "gender": ""
+        }, 
+        "pseudo": ""
       }
+    },
+    "npc": {
+      "templates": ["base"]
+    },
+    "zombie" :{
+      "xp": 0
     }
   },
   "Item": {

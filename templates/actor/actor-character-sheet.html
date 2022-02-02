@@ -2,51 +2,99 @@
 
   {{!-- Sheet Header --}}
   <header class="sheet-header">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-    <div class="header-fields">
-      <h1 class="charname">
+    <button class="edit-sheet-btn"><i class="fas fa-pencil-alt"></i></button>
+    <div class="profile-card">
+      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+      <h1 class="profile-character-name">
         {{#if actor.editSheet}}
-          <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+          <input name="name" type="text" value="{{actor.name}}" placeholder="Name" class="attr-input"/>
         {{else}}
           {{actor.name}}
         {{/if}}
       </h1>
-      
-      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-      use both the "grid" and "grid-Ncol" class where "N" can be any number
-      from 1 to 12 and will create that number of columns.  --}}
-      <div class="resources grid grid-3col">
-        <button class="edit-btn">edit</button>
-        {{!-- "flex-group-center" is also defined in the _grid.scss file
-        and it will add a small amount of padding, a border, and will
-        center all of its child elements content and text. --}}
-        <div class="resource flex-group-center">
-          <label for="data.xp" class="resource-label">Point de Personnage</label>
-          <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.xp.value" value="{{data.xp.value}}" data-dtype="Number"/>
-          <span> / </span>
-          <input type="text" name="data.xp.total" value="{{data.xp.total}}" data-dtype="Number"/>
-          </div>
+    </div>
+    <div class="character-attr">
+      <div class="physical">
+        <div class="attributes-element">
+          {{#if actor.editSheet}}
+            <label for="pseudo">Pseudo :</label>
+            <input name="data.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="attr-input"/>
+          {{else}}
+            <span>Pseudo : {{attributes.pseudo}}</span>
+          {{/if}}
         </div>
-
-        <div class="resource flex-group-center">
-          <label for="data.power.value" class="resource-label">Power</label>
-          <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.power.value" value="{{data.power.value}}" data-dtype="Number"/>
-          <span> / </span>
-          <input type="text" name="data.power.max" value="{{data.power.max}}" data-dtype="Number"/>
-          </div>
+        <div class="attributes-element">
+          {{#if actor.editSheet}}
+            <label for="age">Age :</label>
+            <input name="data.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="attr-input"/>
+          {{else}}
+            <span>Age : {{attributes.physical.age}}</span>
+          {{/if}}
         </div>
-
-        <div class="resource flex-group-center">
-          <label for="data.attributes.level.value" class="resource-label">Level</label>
-          <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.attributes.level.value" value="{{data.attributes.level.value}}" data-dtype="Number"/>
-          </div>
+        <div class="attributes-element">
+          {{#if actor.editSheet}}
+            <label for="height">Taille :</label>
+            <input name="data.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="attr-input"/>
+          {{else}}
+            <span>Taille : {{attributes.physical.height}}</span>
+          {{/if}}
         </div>
-
+        <div class="attributes-element">
+          {{#if actor.editSheet}}
+            <label for="weight">Poids :</label>
+            <input name="data.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="attr-input"/>
+          {{else}}
+            <span>Poids : {{attributes.physical.weight}}</span>
+          {{/if}}
+        </div>
+        <div class="attributes-element">
+          {{#if actor.editSheet}}
+            <label for="gender">Genre :</label>
+            <select name="data.attributes.physical.gender" id="data.attributes.physical.gender" class="arme-type">
+              {{#select attributes.physical.gender}}
+              {{selectOptions genderType selected=value nameAttr=key}}
+              {{/select}}
+            </select>
+          {{else}}
+            <span>Genre : {{attributes.physical.gender}}</span>
+          {{/if}}
+        </div>
       </div>
     </div>
+
+    <div class="healthAndStressLevel">
+      <div class="level">
+        <span>Niveau de blessures</span>
+        <select name="data.attributes.health" class="healthAndStressLevel">
+          {{#select data.attributes.health}}
+           {{selectOptions healthLevel selected=value attr=key}}
+          {{/select}}
+        </select>
+      </div>
+      <div class="level">
+        <span>Niveau de stress</span>
+        <select name="data.attributes.stress" class="healthAndStressLevel">
+          {{#select data.attributes.stress}}
+           {{selectOptions stressLevel selected=value attr=key}}
+          {{/select}}
+        </select>
+      </div>
+      <div class="level">
+        <label for="data.attributes.xp" class="resource-label">Point de Personnage</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="data.attributes.xp.value" value="{{data.attributes.xp.value}}" data-dtype="Number"/>
+            <span> / {{data.attributes.xp.total}}</span>
+          </div>
+      </div>
+      <div class="level">
+        <label for="data.attributes.cojones" class="resource-label">Point de Cojones</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="data.attributes.cojones.value" value="{{data.attributes.cojones.value}}" data-dtype="Number"/>
+            <span> / {{data.attributes.cojones.total}}</span>
+          </div>
+      </div>
+    </div>
+    
   </header>
 
   {{!-- Sheet Tab Navigation --}}
@@ -76,7 +124,7 @@
                   {{#if ../actor.editSheet}}
                     <input class="setDice" type="text" name="data.caracs.{{caracId}}.value" value="{{carac.value}}" data-dtype="number"/>
                   {{else}}
-                    <div>{{carac.value}}D <a href="#"><i class="fas fa-dice-d6"></i></a></div>
+                    <div>{{carac.value}}D <a class="rollable" data-roll="{{carac.value}}" data-label="{{carac.name}}"><i class="fas fa-dice-d6"></i></a></div>
                   {{/if}}
                   
                 </div>
@@ -100,8 +148,11 @@
                       <ul class="specialisations">
                         {{#each ../../specialisation as |spec specId|}}
                           {{#if (checkSpecialisation spec skillId)}}
-                            <li class="specialisation">
-                              <div>- {{spec.name}}</div><div>{{spec.data.value}}</div>
+                            <li class="specialisation item" data-item-id="{{spec._id}}">
+                              <div>- {{spec.name}}</div><div>{{spec.data.value}} <a class="item-control item-delete" title="Delete Item">
+                                {{#if ../../../actor.editSheet}}
+                                  <i class="fas fa-trash"></i></a></div>
+                                {{/if}}
                             </li>
                           {{/if}}
                         {{/each}}

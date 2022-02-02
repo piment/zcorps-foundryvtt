@@ -101,6 +101,84 @@
   
 }
 
+.actor {
+  .window-content {
+    .sheet-header {
+      color: white;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      input {
+        border: 1px solid gray;
+        color: white;
+        background-color: rgba($color: #000, $alpha: 0.5);
+      }
+      .edit-sheet-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        margin: 0;
+        padding: 0;
+        color: white;
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 30px;
+        right: 8px;
+        background-color: $zcorps-red-a;
+        i {
+          width: 50px;
+          margin: 0;
+          padding: 0;
+        }
+      }
+      .profile-card {
+        max-width: 150px;
+        .profile-img {
+          width: 150px;
+          height: 150px;
+          background-color: rgba($color: #000, $alpha: 0.5);
+        }
+        .profile-character-name {
+          text-align: center;
+          input {
+            margin: 0;
+            padding: 0;
+            max-height: 30px;
+            &:focus {
+              box-shadow: none;
+            }
+          }
+        }
+      }
+      .character-attr {
+        height: 100%;
+        .physical {
+          height: 100%;
+        }
+      }
+      
+      .health-level {
+        ul {
+          li {
+            list-style-type: none;
+          }
+        }
+      }
+      .healthAndStressLevel {
+        .level {
+          display: flex;
+          flex-direction: column;
+          select {
+            background-color: gray;
+          }
+        }
+        
+      }
+    }
+  }
+}
 
 .item {
   .window-content {
@@ -146,14 +224,11 @@
 }
 .actor {
   .window-content {
-    background-image: linear-gradient(
-      rgba(0, 0, 0, 0.7), 
-      rgba(0, 0, 0, 0.7)
-    ), url(../img/characBG_2.jpg);
-    background-size: cover;
     padding: 0;
     color: $c-white;
-
+    .character {
+      background-image: linear-gradient(#0006, #0006),url(../img/characBG_3.jpg);
+    }
     .sheet-header {
       .arme-name {
         input {

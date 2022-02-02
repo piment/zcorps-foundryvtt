@@ -60,8 +60,11 @@ export class zcorpsActorSheet extends ActorSheet {
 
     // Prepare active effects
     context.effects = prepareActiveEffectCategories(this.actor.effects);
-
+    context.genderType = {"homme": "homme", "femme": "femme"};
+    context.stressLevel = {0: "Calme", 1: "Enervé", 2: "Stressé", 3: "Angoissé", 4: "Paniqué", 5: "Choqué"};
+    context.healthLevel = {0: "Pas de blessure", 1: "Sonné", 2: "Blessé", 3: "Gravement Blessé", 4: "Handicapé", 5: "Mortelement blessé", 6: "Mort"};
     //console.log(context);
+    this.actor.context = context;
     return context;
   }
   
@@ -85,6 +88,7 @@ export class zcorpsActorSheet extends ActorSheet {
         }
       }
     }
+    context.attributes = context.data.attributes;
   }
 
   /**
@@ -188,7 +192,7 @@ export class zcorpsActorSheet extends ActorSheet {
         ev.currentTarget.classList.add("error");
       }
     })
-    html.find(".edit-btn").click((ev) => {
+    html.find(".edit-sheet-btn").click((ev) => {
       ev.preventDefault();
       if(this.actor.editSheet === undefined) {
         this.actor.editSheet = true;
@@ -238,8 +242,64 @@ export class zcorpsActorSheet extends ActorSheet {
         li.addEventListener("dragstart", handler, false);
       });
     }
-  }
 
+    html.find("#getHits").click(ev => {
+      const hitsActual = html.find("#hitsActual")[0].dataset.level;
+      const hitsReceived = html.find("#hitsReceived")[0].value;
+      let hitsLevel = this._getHitsLevel(parseInt(hitsReceived));
+      if(hitsLevel <= hitsActual){
+        this.actor.data.data.attributes.health++;
+      } else {
+        this.actor.data.data.attributes.health = hitsLevel;
+      }
+      // if(hitsActual === 2 && hitsLevel === 2) {
+      //   this.actor.data.data.attributes.health = 3;
+      // }
+      // else {
+        
+      // }
+      
+      this.actor.sheet.render(true);
+      console.log(this.actor);
+      console.log(hitsLevel);
+      html.find("#hitsReceived")[0].value = "";
+    });
+
+    html.find(".stress_radio").change(ev => {
+      ev.currentTarget.classList.add("owned");
+    });
+  }
+  _getFormula(die, malus) {
+    let pool = die - malus;
+    console.log("pool => ", pool, malus);
+    if(!pool) {return 0}
+    else {
+      if(pool == 1) {
+        return "1D6x";
+      }
+      else {
+        return `${pool - 1}D6 + 1D6x`;
+      }
+    }
+  }
+  _getMalus(health) {
+    if(health === 0) {return 0}
+    if(health <= 2 ) {
+      return 1;
+    }
+    else if(health == 3) {
+      return 2;
+    }
+    else if(health == 4) {
+      return 3;
+    }
+    else if(health == 5) {
+      return 4;
+    }
+    else {
+      return -1;
+    }
+  }
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @param {Event} event   The originating click event
@@ -324,8 +384,20 @@ export class zcorpsActorSheet extends ActorSheet {
 
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
-      let label = dataset.label ? `[lance] ${dataset.label} (${dataset.roll})D6` : "";
-      let formula = (parseInt(dataset.roll) - 1) + "d6 + 1d6x"
+      const healthStatus = this.actor.data.data.attributes.health;
+      const malus = parseInt(this._getMalus(+healthStatus));
+      let label = dataset.label ? `[lance] ${dataset.label} (${dataset.roll}D6) (Malus: ${this.actor.context.healthLevel[healthStatus]})` : "";
+      if(malus == -1) {
+        ui.notifications.error("Le personnage est mort, désolé!..");
+        return;
+      }
+      //let formula = (parseInt(dataset.roll) - 1 - malus) + "d6 + 1d6x"
+      let formula = this._getFormula(parseInt(dataset.roll), malus);
+      console.log("formula", formula);
+      if(!formula) {
+        ui.notifications.error("Le personnage n'est pas en capacité d'agir");
+        return;
+      }
       let roll = new Roll(formula, this.actor.getRollData());
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
