@@ -62,9 +62,10 @@ export class zcorpsActorSheet extends ActorSheet {
     context.effects = prepareActiveEffectCategories(this.actor.effects);
     context.genderType = {"homme": "homme", "femme": "femme"};
     context.stressLevel = {0: "Calme", 1: "Enervé", 2: "Stressé", 3: "Angoissé", 4: "Paniqué", 5: "Choqué"};
-    context.healthLevel = {0: "Pas de blessure", 1: "Sonné", 2: "Blessé", 3: "Gravement Blessé", 4: "Handicapé", 5: "Mortelement blessé", 6: "Mort"};
+    context.healthLevel = {0: "Pas de blessure", 1: "Sonné", 2: "Blessé", 3: "Gravement blessé", 4: "Handicapé", 5: "Mortellement blessé", 6: "Mort"};
     //console.log(context);
     this.actor.context = context;
+
     return context;
   }
   
@@ -268,6 +269,7 @@ export class zcorpsActorSheet extends ActorSheet {
     html.find(".stress_radio").change(ev => {
       ev.currentTarget.classList.add("owned");
     });
+
   }
   _getFormula(die, malus) {
     let pool = die - malus;

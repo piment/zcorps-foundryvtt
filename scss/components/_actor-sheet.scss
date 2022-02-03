@@ -1,0 +1,222 @@
+.window-content {
+    padding: 0;
+    color: $c-white;
+    background-color: #111;
+
+
+    .sheet-header {
+        color: white;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        background-color: #111;
+        margin: 0;
+        .header-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            input {
+                text-align: center;
+                color: white;
+                background-color: #222;
+                border: none;
+                &:focus-within {
+                    box-shadow: none;
+                    
+                }
+            }
+            &.profile {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                img {
+                    min-width: 150px;
+                    min-height: 150px;
+                    margin: 0;
+                    border: none;
+                    padding: 0;
+                }
+                h1 {
+                    font-size: 1.2em;
+                    padding: 0;
+                    margin: 0;
+                    background-color: $zcorps-red;
+                    color:  white;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    width: 100%;
+                    min-height: 30px;
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                input {
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+                    padding: 0;
+                    font-size: 1em;
+                    display: block;
+                }
+            }
+            &.character-infos {
+                max-width: 200px;
+                padding-right: 20px;
+                .info {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-left: 10px;
+                    label {
+                        font-weight: bold;
+                        margin-right: 5px;
+                        display: block;
+                        width: 100%;
+                    }
+                    span {
+                        font-style: italic;
+                    }
+                    input {
+                        max-height: 22px;
+                    }
+                }
+            }
+            &.levels {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 5px;
+                .level {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    justify-content: space-between;
+                    padding-bottom: 5px;
+                    .level-title {
+                        text-decoration: underline;
+                        font-size: 0.8em;
+                    }
+                }
+            }
+            select {
+                border: none;
+                color: white;
+                margin-top: 5px;
+                background-color: #222;
+                &:focus {
+                    box-shadow: none;
+                }
+                * {
+                    background-color: #222;
+                }
+            }
+        }
+        .edit-sheet-btn {
+            border: 1px dotted white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            margin: 0;
+            padding: 0;
+            color: white;
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: 29px;
+            left: 0px;
+            background-color: #222;
+            border-radius: 0 0 2px 0;
+            i {
+                width: 50px;
+                margin: 0;
+                padding: 0;
+            }
+            &:hover {
+                box-shadow: none;
+                background-color: #333;
+                i {
+                    color: yellowgreen;
+                }
+            }
+        }            
+    }
+    .sheet-tabs {
+        margin: 0;
+        background-color: #222;
+    }  
+    .sheet-body {
+        .tab {
+            background-color: #111;
+        }
+        .attributes {
+            
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            ul.attributes-block {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                li.attribute {
+                    margin: 0;
+                    padding: 0;
+                    flex-basis: 50%;
+                    display: flex;
+                    flex-direction: column;
+                    align-content: flex-start;
+                    .attribute-title {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        background-color: rgb(104, 28, 28);
+                        text-transform: uppercase;
+                        font-weight: 600;
+                        padding: 5px;
+                        margin: 0;
+                    }
+                    ul.skills {
+                        display: flex;
+                        flex-direction: column;
+                        margin: 0;
+                        padding: 0;
+                        li.carac-li {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            margin: 2px 0;
+                            padding: 0 5px;
+                            list-style-type: none;
+                            .skill {
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                            }
+                        }
+                        ul.specialisations {
+                            padding-left: 0;
+                            margin: 3px 0 0 0;
+                            li.specialisation {
+                                margin-left: 5px;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .owned {
+            color: $zcorps-red;
+            font-weight: bold;
+        }
+    }
+}

@@ -71,5 +71,4 @@ export class zcorpsActor extends Actor {
       data.lvl = data.attributes.level.value ?? 0;
     }
   }
-
 }

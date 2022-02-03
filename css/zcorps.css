@@ -229,6 +229,7 @@
   /*  Items Lists                              */
   /* ----------------------------------------- */
   /* Example style for zcorps (can be removed if not needed) */
+  background-color: red;
 }
 
 .zcorps .item-form {
@@ -464,149 +465,10 @@
   border: none;
 }
 
-.zcorps {
-  background-color: red !important;
-  font-size: 0.9em;
-}
-
-.caracs {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  margin: 0;
+.actor .window-content {
   padding: 0;
-}
-
-.caracs .carac-title {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #681c1c;
-  text-transform: uppercase;
-  font-weight: 600;
-  padding: 5px;
-  margin: 0;
-}
-
-.caracs ul.carac {
-  margin: 0;
-  padding: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.caracs ul.carac li {
-  margin: 0;
-  padding: 0;
-  -ms-flex-preferred-size: 50%;
-  flex-basis: 50%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -ms-flex-line-pack: start;
-  align-content: flex-start;
-}
-
-.caracs ul.carac li ul.skills {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-}
-
-.caracs ul.carac li ul.skills li.carac-li {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  margin: 2px 0;
-  padding: 0 5px;
-  list-style-type: none;
-}
-
-.caracs ul.carac li ul.skills li.carac-li .skill {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.caracs ul.carac li ul.skills ul.specialisations {
-  padding-left: 0;
-  margin: 3px 0 0 0;
-}
-
-.caracs ul.carac li ul.skills ul.specialisations li.specialisation {
-  margin-left: 5px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.caracs h2 {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  text-transform: uppercase;
-}
-
-.caracs .setDice {
-  color: white;
-  width: 20px;
-  text-align: center;
+  color: #fff;
+  background-color: #111;
 }
 
 .actor .window-content .sheet-header {
@@ -621,15 +483,183 @@
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
+  background-color: #111;
+  margin: 0;
 }
 
-.actor .window-content .sheet-header input {
-  border: 1px solid gray;
+.actor .window-content .sheet-header .header-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+}
+
+.actor .window-content .sheet-header .header-block input {
+  text-align: center;
   color: white;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #222;
+  border: none;
+}
+
+.actor .window-content .sheet-header .header-block input:focus-within {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.actor .window-content .sheet-header .header-block.profile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.actor .window-content .sheet-header .header-block.profile img {
+  min-width: 150px;
+  min-height: 150px;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.actor .window-content .sheet-header .header-block.profile h1 {
+  font-size: 1.2em;
+  padding: 0;
+  margin: 0;
+  background-color: #681c1c;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+  min-height: 30px;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.actor .window-content .sheet-header .header-block.profile input {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  display: block;
+}
+
+.actor .window-content .sheet-header .header-block.character-infos {
+  max-width: 200px;
+  padding-right: 20px;
+}
+
+.actor .window-content .sheet-header .header-block.character-infos .info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.actor .window-content .sheet-header .header-block.character-infos .info label {
+  font-weight: bold;
+  margin-right: 5px;
+  display: block;
+  width: 100%;
+}
+
+.actor .window-content .sheet-header .header-block.character-infos .info span {
+  font-style: italic;
+}
+
+.actor .window-content .sheet-header .header-block.character-infos .info input {
+  max-height: 22px;
+}
+
+.actor .window-content .sheet-header .header-block.levels {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 5px;
+}
+
+.actor .window-content .sheet-header .header-block.levels .level {
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.actor .window-content .sheet-header .header-block.levels .level .level-title {
+  text-decoration: underline;
+  font-size: 0.8em;
+}
+
+.actor .window-content .sheet-header .header-block select {
+  border: none;
+  color: white;
+  margin-top: 5px;
+  background-color: #222;
+}
+
+.actor .window-content .sheet-header .header-block select:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.actor .window-content .sheet-header .header-block select * {
+  background-color: #222;
 }
 
 .actor .window-content .sheet-header .edit-sheet-btn {
+  border: 1px dotted white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -646,9 +676,10 @@
   position: absolute;
   width: 30px;
   height: 30px;
-  top: 30px;
-  right: 8px;
-  background-color: rgba(104, 28, 28, 0.5);
+  top: 29px;
+  left: 0px;
+  background-color: #222;
+  border-radius: 0 0 2px 0;
 }
 
 .actor .window-content .sheet-header .edit-sheet-btn i {
@@ -657,44 +688,50 @@
   padding: 0;
 }
 
-.actor .window-content .sheet-header .profile-card {
-  max-width: 150px;
-}
-
-.actor .window-content .sheet-header .profile-card .profile-img {
-  width: 150px;
-  height: 150px;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.actor .window-content .sheet-header .profile-card .profile-character-name {
-  text-align: center;
-}
-
-.actor .window-content .sheet-header .profile-card .profile-character-name input {
-  margin: 0;
-  padding: 0;
-  max-height: 30px;
-}
-
-.actor .window-content .sheet-header .profile-card .profile-character-name input:focus {
+.actor .window-content .sheet-header .edit-sheet-btn:hover {
   -webkit-box-shadow: none;
   box-shadow: none;
+  background-color: #333;
 }
 
-.actor .window-content .sheet-header .character-attr {
-  height: 100%;
+.actor .window-content .sheet-header .edit-sheet-btn:hover i {
+  color: yellowgreen;
 }
 
-.actor .window-content .sheet-header .character-attr .physical {
-  height: 100%;
+.actor .window-content .sheet-tabs {
+  margin: 0;
+  background-color: #222;
 }
 
-.actor .window-content .sheet-header .health-level ul li {
-  list-style-type: none;
+.actor .window-content .sheet-body .tab {
+  background-color: #111;
 }
 
-.actor .window-content .sheet-header .healthAndStressLevel .level {
+.actor .window-content .sheet-body .attributes {
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+}
+
+.actor .window-content .sheet-body .attributes ul.attributes-block {
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute {
+  margin: 0;
+  padding: 0;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -702,10 +739,90 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
 }
 
-.actor .window-content .sheet-header .healthAndStressLevel .level select {
-  background-color: gray;
+.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute .attribute-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #681c1c;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 5px;
+  margin: 0;
+}
+
+.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills li.carac-li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 2px 0;
+  padding: 0 5px;
+  list-style-type: none;
+}
+
+.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills li.carac-li .skill {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills ul.specialisations {
+  padding-left: 0;
+  margin: 3px 0 0 0;
+}
+
+.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills ul.specialisations li.specialisation {
+  margin-left: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.actor .window-content .sheet-body .owned {
+  color: #681c1c;
+  font-weight: bold;
 }
 
 .item .window-content .sheet-body .hidden {
@@ -772,27 +889,4 @@
 .item .window-content .sheet-body .category-element .input-short {
   max-width: 30px;
   text-align: center;
-}
-
-.actor .window-content {
-  padding: 0;
-  color: #fff;
-}
-
-.actor .window-content .character {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#0006), to(#0006)), url(../img/characBG_3.jpg);
-  background-image: -o-linear-gradient(#0006, #0006), url(../img/characBG_3.jpg);
-  background-image: linear-gradient(#0006, #0006), url(../img/characBG_3.jpg);
-}
-
-.actor .window-content .sheet-header .arme-name input {
-  color: white;
-  font-size: 0.8em;
-  font-weight: 300;
-  height: auto;
-}
-
-.actor .window-content .sheet-body .owned {
-  color: #c21d1d;
-  font-weight: bold;
 }

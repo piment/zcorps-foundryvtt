@@ -21,7 +21,16 @@ Hooks.once('init', async function() {
     zcorpsItem,
     rollItemMacro
   };
-
+  
+  game.settings.register("zcorps", "test", {
+    name: `ZCORPS.settings.test.name`,
+    default: true,
+    type: Boolean,
+    scope: 'world',
+    config: true,
+    hint: `ZCORPS.settings.test.hint`,
+  });
+  console.log(game.settings);
   // Add custom constants for configuration.
   CONFIG.ZCORPS = ZCORPS;
   CONFIG.debug.hooks = false;
@@ -129,6 +138,7 @@ Hooks.once("ready", async function() {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
+
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

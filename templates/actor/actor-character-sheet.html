@@ -3,68 +3,65 @@
   {{!-- Sheet Header --}}
   <header class="sheet-header">
     <button class="edit-sheet-btn"><i class="fas fa-pencil-alt"></i></button>
-    <div class="profile-card">
-      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
-      <h1 class="profile-character-name">
+    <div class="header-block profile flex0">
+      <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+      <h1>
         {{#if actor.editSheet}}
-          <input name="name" type="text" value="{{actor.name}}" placeholder="Name" class="attr-input"/>
+          <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
         {{else}}
           {{actor.name}}
         {{/if}}
       </h1>
     </div>
-    <div class="character-attr">
-      <div class="physical">
-        <div class="attributes-element">
-          {{#if actor.editSheet}}
-            <label for="pseudo">Pseudo :</label>
-            <input name="data.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="attr-input"/>
-          {{else}}
-            <span>Pseudo : {{attributes.pseudo}}</span>
-          {{/if}}
-        </div>
-        <div class="attributes-element">
-          {{#if actor.editSheet}}
-            <label for="age">Age :</label>
-            <input name="data.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="attr-input"/>
-          {{else}}
-            <span>Age : {{attributes.physical.age}}</span>
-          {{/if}}
-        </div>
-        <div class="attributes-element">
-          {{#if actor.editSheet}}
-            <label for="height">Taille :</label>
-            <input name="data.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="attr-input"/>
-          {{else}}
-            <span>Taille : {{attributes.physical.height}}</span>
-          {{/if}}
-        </div>
-        <div class="attributes-element">
-          {{#if actor.editSheet}}
-            <label for="weight">Poids :</label>
-            <input name="data.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="attr-input"/>
-          {{else}}
-            <span>Poids : {{attributes.physical.weight}}</span>
-          {{/if}}
-        </div>
-        <div class="attributes-element">
-          {{#if actor.editSheet}}
-            <label for="gender">Genre :</label>
-            <select name="data.attributes.physical.gender" id="data.attributes.physical.gender" class="arme-type">
-              {{#select attributes.physical.gender}}
-              {{selectOptions genderType selected=value nameAttr=key}}
-              {{/select}}
-            </select>
-          {{else}}
-            <span>Genre : {{attributes.physical.gender}}</span>
-          {{/if}}
-        </div>
+    <div class="header-block character-infos flex1">
+      <div class="info">
+        <label for="pseudo">Pseudo :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="text"/>
+        {{else}}
+          <span>{{attributes.pseudo}}</span>
+        {{/if}}
+      </div>
+      <div class="info">
+        <label for="age">Age :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="number"/>
+        {{else}}
+          <span>{{attributes.physical.age}}</span>
+        {{/if}}
+      </div>
+      <div class="info">
+        <label for="height">Taille :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="number"/>
+        {{else}}
+          <span>{{attributes.physical.height}}</span>
+        {{/if}}
+      </div>
+      <div class="info">
+        <label for="weight">Poids :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="number"/>
+        {{else}}
+          <span>{{attributes.physical.weight}}</span>
+        {{/if}}
+      </div>
+      <div class="info">
+        <label for="gender">Genre :</label>
+        {{#if actor.editSheet}}
+          <select name="data.attributes.physical.gender" id="data.attributes.physical.gender">
+            {{#select attributes.physical.gender}}
+            {{selectOptions genderType selected=value nameAttr=key}}
+            {{/select}}
+          </select>
+        {{else}}
+          <span>{{attributes.physical.gender}}</span>
+        {{/if}}
       </div>
     </div>
-
-    <div class="healthAndStressLevel">
+    <div class="header-block levels">
       <div class="level">
-        <span>Niveau de blessures</span>
+        <span class="level-title">Niveau de blessures</span>
         <select name="data.attributes.health" class="healthAndStressLevel">
           {{#select data.attributes.health}}
            {{selectOptions healthLevel selected=value attr=key}}
@@ -72,7 +69,7 @@
         </select>
       </div>
       <div class="level">
-        <span>Niveau de stress</span>
+        <span class="level-title">Niveau de stress</span>
         <select name="data.attributes.stress" class="healthAndStressLevel">
           {{#select data.attributes.stress}}
            {{selectOptions stressLevel selected=value attr=key}}
@@ -80,21 +77,20 @@
         </select>
       </div>
       <div class="level">
-        <label for="data.attributes.xp" class="resource-label">Point de Personnage</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.attributes.xp.value" value="{{data.attributes.xp.value}}" data-dtype="Number"/>
-            <span> / {{data.attributes.xp.total}}</span>
-          </div>
+        <span class="level-title">Points de Personnage</span>
+        <div class="resource-content flexrow flex-center flex-between">
+          <span>Restants : {{data.attributes.xp.value}}</span>
+          <span>Totaux : {{data.attributes.xp.total}}</span>
+        </div>
       </div>
       <div class="level">
-        <label for="data.attributes.cojones" class="resource-label">Point de Cojones</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.attributes.cojones.value" value="{{data.attributes.cojones.value}}" data-dtype="Number"/>
-            <span> / {{data.attributes.cojones.total}}</span>
-          </div>
+        <span class="level-title">Points de Cojones</span>
+        <div class="resource-content flexrow flex-center flex-between">
+          <span>Restants : {{data.attributes.cojones.value}}</span>
+          <span>Totaux : {{data.attributes.cojones.total}}</span>
+        </div>
       </div>
     </div>
-    
   </header>
 
   {{!-- Sheet Tab Navigation --}}
@@ -103,23 +99,22 @@
     <a class="item" data-tab="features">Fiche de Perso</a>
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="assets">Equipements</a>
-    <a class="item" data-tab="effects">Effects</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
 
     {{!-- Owned Features Tab --}}
-    <div class="tab features caracs" data-group="primary" data-tab="features">
+    <div class="tab features attributes" data-group="primary" data-tab="features">
       <section class="grid grid-1col" style="margin-top:0;">
 
         {{!-- For the main features list, span the right two columns --}}
         <section class="main grid-span-2">
           
-          <ul class="carac">
+          <ul class="attributes-block">
             {{#each caracs as |carac caracId|}}
-              <li data-item-id="{{caracs.name}}">
-                <div class="carac-title">
+              <li data-item-id="{{caracs.name}}" class="attribute">
+                <div class="attribute-title">
                   <div>{{carac.name}}</div>
                   {{#if ../actor.editSheet}}
                     <input class="setDice" type="text" name="data.caracs.{{caracId}}.value" value="{{carac.value}}" data-dtype="number"/>
@@ -179,10 +174,7 @@
        {{> "systems/zcorps/templates/actor/parts/actor-items.html"}}
     </div>
 
-    {{!-- Active Effects Tab --}}
-    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-      {{> "systems/zcorps/templates/actor/parts/actor-effects.html"}}
-    </div>
+    
 
   </section>
 </form>

@@ -5,5 +5,15 @@
   "ZCORPS.EffectEdit": "Edit Effect",
   "ZCORPS.EffectDelete": "Delete Effect",
 
-  "ZCORPS.Add": "Add"
+  "ZCORPS.Add": "Add",
+
+  "TODO-LIST": {
+      
+    "settings": {
+      "inject-button": {
+        "Name": "Display To-Do List button?",
+        "Hint": "Controls whether or not the To-Do List can be opened from the player list."
+      }
+    }
+  }
 }
