@@ -34,7 +34,7 @@
   "dependencies": [],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/piment/zcorps-foundryvtt/main/system.json",
-  "download": "https://github.com/piment/zcorps-foundryvtt/raw/main/archive/v0.0.1.zip",
+  "download": "https://github.com/piment/zcorps-foundryvtt/raw/main/archive/v0.0.2.zip",
   "protected": false,
   "gridDistance": 1,
   "gridUnits": "m",
