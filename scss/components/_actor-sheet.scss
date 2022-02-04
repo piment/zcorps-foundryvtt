@@ -69,15 +69,18 @@
                     flex-direction: row;
                     justify-content: flex-start;
                     align-items: center;
-                    padding-left: 10px;
+                    margin-left: 10px;
+                    padding-bottom: 3px;
+                    border-bottom: 1px solid #222;
                     label {
                         font-weight: bold;
-                        margin-right: 5px;
                         display: block;
                         width: 100%;
                     }
                     span {
                         font-style: italic;
+                        width: 100%;
+                        text-align: center;
                     }
                     input {
                         max-height: 22px;
@@ -89,6 +92,7 @@
                 flex-direction: column;
                 align-items: center;
                 padding-top: 5px;
+                padding-right: 10px;
                 .level {
                     height: 100%;
                     width: 100%;
@@ -100,6 +104,7 @@
                     .level-title {
                         text-decoration: underline;
                         font-size: 0.8em;
+                        padding-bottom: 2px;
                     }
                 }
             }
@@ -154,52 +159,83 @@
         .tab {
             background-color: #111;
         }
-        .attributes {
-            
+        .caracteristics {
             margin: 0;
             padding: 0;
             background-color: #111;
-            ul.attributes-block {
+            ul.caracteristics-block {
                 margin: 0;
                 padding: 0;
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
-                li.attribute {
+                align-items: stretch;
+                li.caracteristic {
                     margin: 0;
                     padding: 0;
                     flex-basis: 50%;
                     display: flex;
                     flex-direction: column;
-                    align-content: flex-start;
-                    .attribute-title {
+                    &:nth-child(even) {
+                        border-left: 1px dashed #333;
+                    }
+                    
+                    .caracteristic-info {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
                         background-color: rgb(104, 28, 28);
-                        text-transform: uppercase;
-                        font-weight: 600;
                         padding: 5px;
                         margin: 0;
+                        
+                        .caracteristic-title {
+                            text-transform: uppercase;
+                            font-weight: 600;
+                        }
+                        
+                        
                     }
-                    ul.skills {
+                    ul.skills-block {
                         display: flex;
                         flex-direction: column;
-                        margin: 0;
-                        padding: 0;
-                        li.carac-li {
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: space-between;
-                            margin: 2px 0;
-                            padding: 0 5px;
-                            list-style-type: none;
-                            .skill {
+                        height: 100%;
+                        color: #222;
+                        li.skill {
+                            list-style-type: disc;
+                            padding-right: 5px;
+                            .skill-info {
                                 display: flex;
                                 flex-direction: row;
                                 justify-content: space-between;
+                                color: #BBB;
+                                .checkbox {
+                                    display: block;
+                                    border: 1px solid #222;
+                                    width: 10px;
+                                    height: 10px;
+                                    border-radius: 50%;
+                                    &.checked {
+                                        background-color: $zcorps-red-light;
+                                    }
+                                }
+                                .skill-title {
+                                    margin-right: auto;
+                                }
+                            }
+                            &.list-style-none {
+                                list-style-type: none;
+                                padding: -15px;
+                                margin-left: -15px;
+                                .skill-title {
+                                    margin-left: 5px;
+                                    margin-top: -3px;
+                                }
                             }
                         }
+                        .owned {
+                            color: $zcorps-red-light !important;
+                        }
+                        
                         ul.specialisations {
                             padding-left: 0;
                             margin: 3px 0 0 0;
@@ -212,11 +248,53 @@
                         }
                     }
                 }
+                .rollable {
+                    margin-right: 5px;
+                }
+                .level-block-right {
+                    display: flex;
+                    flex-direction: row;
+                    width: 100px;
+                    justify-content: flex-end;
+                    align-items: center;
+                    .tiers {
+                        display: flex;
+                        flex-direction: row;
+                        margin-left: 5px;
+                        margin-right: 5px;
+                        .tier {
+                            border-radius: 50%;
+                            display: block;
+                            width: 8px;
+                            height: 8px;
+                            background-color: #222;
+                            &:first-child {
+                                margin-right: 5px;
+                            }
+                            &.checked {
+                                background-color: $c-white;
+                            }
+                        }
+                    }
+                    
+                }
             }
+            input[type="text"] {
+                text-align: center;
+                color: white;
+                background-color: #222;
+                border: none;
+                max-width: 20px;
+                max-height: 20px;
+                padding-top: 4px;
+                &:focus-within {
+                    box-shadow: none;
+                    
+                }
+            }
+            
+            
         }
-        .owned {
-            color: $zcorps-red;
-            font-weight: bold;
-        }
+        
     }
 }

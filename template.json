@@ -7,330 +7,384 @@
           "agility": {
             "name": "Agilité",
             "value": 3,
-            "tier": 0,
+            "tier_1": 0,
+            "tier_2": 0,
             "skills": {
               "acrobaties" : {
                 "name": "Acrobaties",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "bagarre" : {
                 "name": "Bagarre",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "contorsion" : {
                 "name": "Contorsion",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "equitation" : {
                 "name": "Equitation",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "discretion" : {
                 "name": "Discrétion",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "esquive" : {
                 "name": "Esquive",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "grimper" : {
                 "name": "Grimper",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "melee" : {
                 "name": "Mêlée",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "sauter" : {
                 "name": "Sauter",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               }
             }
           },
           "knowledge": {
             "name": "Connaissances",
             "value": 2,
-            "tier": 0,
+            "tier_1": 0,
+            "tier_2": 0,
             "skills": {
               "affaires" : {
                 "name": "Affaires",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "contrefacon" : {
                 "name": "Contrefaçon",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "demolition" : {
                 "name": "Démolition",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "electronique" : {
                 "name": "Electronique",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "erudition" : {
                 "name": "Erudition",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "informatique" : {
                 "name": "Informatique",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "langues" : {
                 "name": "Langues",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "medecine" : {
                 "name": "Médecine",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "navigation" : {
                 "name": "Navigation",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "securite" : {
                 "name": "Sécurité",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "sciencesoccultes" : {
                 "name": "Sciences occultes",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               }
             }
           },
           "deftness": {
             "name": "Adresse",
             "value": 4,
-            "tier": 0,
+            "tier_1": 0,
+            "tier_2": 0,
             "skills": {
               "armeafeu" : {
                 "name": "Armes à feu",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "armedejet" : {
                 "name": "Arme de jet",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "crochetage" : {
                 "name": "Crochetage",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "dexterite" : {
                 "name": "Dextérité",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "lancer" : {
                 "name": "Lancer",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "pilotage" : {
                 "name": "Pilotage",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "reparer" : {
                 "name": "Réparer",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               }
             }
           },
           "perception": {
             "name": "Perception",
             "value": 1,
-            "tier": 0,
+            "tier_1": 0,
+            "tier_2": 0,
             "skills": {
               "artiste" : {
                 "name": "Artiste",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "camouflage" : {
                 "name": "Camouflage",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "chercher" : {
                 "name": "Chercher",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "connaissance_de_la_rue" : {
                 "name": "Connaissance de la rue",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "investigation" : {
                 "name": "Investigation",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "jeux" : {
                 "name": "Jeux",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "pister" : {
                 "name": "Pister",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "survie" : {
                 "name": "Survie",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               }
             }
           },
           "strength": {
             "name": "Puissance",
             "value": 3,
-            "tier": 0,
+            "tier_1": 0,
+            "tier_2": 0,
             "skills": {
               "courir" : {
                 "name": "Courir",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "endurance" : {
                 "name": "Endurance",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "nager" : {
                 "name": "Nager",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "soulever" : {
                 "name": "Soulever",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               }
             }
           },
           "presence": {
             "name": "Présence",
             "value": 3,
-            "tier": 0,
+            "tier_1": 0,
+            "tier_2": 0,
             "skills": {
               "charmer" : {
                 "name": "Charmer",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "commander" : {
                 "name": "Commander",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "deguisement" : {
                 "name": "Déguisement",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "dressage" : {
                 "name": "Dressage",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "empathie" : {
                 "name": "Empathie",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "escroquerie" : {
                 "name": "Escroquerie",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "intimidation" : {
                 "name": "Intimidation",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "persuasion" : {
                 "name": "Persuasion",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               },
               "volonte" : {
                 "name": "Volonté",
                 "owned": false,
                 "value": 0,
-                "tier": 0
+                "tier_1": 0,
+                "tier_2": 0
               }
             }
           }
@@ -356,7 +410,7 @@
           "weight": 0,
           "gender": ""
         }, 
-        "pseudo": ""
+        "skillOwned": 0
       }
     },
     "npc": {

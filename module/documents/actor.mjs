@@ -71,4 +71,14 @@ export class zcorpsActor extends Actor {
       data.lvl = data.attributes.level.value ?? 0;
     }
   }
+  _getTiersValue(tiers) {
+    const tiersObject = {"tier_1": 0, "tier_2": 0};
+    if (tiers == 1) {
+      tiersObject.tier_1 = 1;
+    } else if (tiers == 2) {
+      tiersObject.tier_1 = 1;
+      tiersObject.tier_2 = 1;
+    }
+    return tiersObject;
+  }
 }

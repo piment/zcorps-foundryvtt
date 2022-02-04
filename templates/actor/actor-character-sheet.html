@@ -15,7 +15,7 @@
     </div>
     <div class="header-block character-infos flex1">
       <div class="info">
-        <label for="pseudo">Pseudo :</label>
+        <label for="pseudo">{{localize 'ZCORPS.actor.attributes.nickname'}} :</label>
         {{#if actor.editSheet}}
           <input name="data.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="text"/>
         {{else}}
@@ -23,7 +23,7 @@
         {{/if}}
       </div>
       <div class="info">
-        <label for="age">Age :</label>
+        <label for="age">{{localize 'ZCORPS.actor.attributes.age'}} :</label>
         {{#if actor.editSheet}}
           <input name="data.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="number"/>
         {{else}}
@@ -31,7 +31,7 @@
         {{/if}}
       </div>
       <div class="info">
-        <label for="height">Taille :</label>
+        <label for="height">{{localize 'ZCORPS.actor.attributes.height'}} :</label>
         {{#if actor.editSheet}}
           <input name="data.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="number"/>
         {{else}}
@@ -39,7 +39,7 @@
         {{/if}}
       </div>
       <div class="info">
-        <label for="weight">Poids :</label>
+        <label for="weight">{{localize 'ZCORPS.actor.attributes.weight'}} :</label>
         {{#if actor.editSheet}}
           <input name="data.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="number"/>
         {{else}}
@@ -47,7 +47,7 @@
         {{/if}}
       </div>
       <div class="info">
-        <label for="gender">Genre :</label>
+        <label for="gender">{{localize 'ZCORPS.actor.attributes.gender'}} :</label>
         {{#if actor.editSheet}}
           <select name="data.attributes.physical.gender" id="data.attributes.physical.gender">
             {{#select attributes.physical.gender}}
@@ -61,7 +61,7 @@
     </div>
     <div class="header-block levels">
       <div class="level">
-        <span class="level-title">Niveau de blessures</span>
+        <span class="level-title">{{localize 'ZCORPS.actor.attributes.injuriesLevel'}}</span>
         <select name="data.attributes.health" class="healthAndStressLevel">
           {{#select data.attributes.health}}
            {{selectOptions healthLevel selected=value attr=key}}
@@ -69,7 +69,7 @@
         </select>
       </div>
       <div class="level">
-        <span class="level-title">Niveau de stress</span>
+        <span class="level-title">{{localize 'ZCORPS.actor.attributes.stressLevel'}}</span>
         <select name="data.attributes.stress" class="healthAndStressLevel">
           {{#select data.attributes.stress}}
            {{selectOptions stressLevel selected=value attr=key}}
@@ -105,40 +105,61 @@
   <section class="sheet-body">
 
     {{!-- Owned Features Tab --}}
-    <div class="tab features attributes" data-group="primary" data-tab="features">
+    <div class="tab features caracteristics" data-group="primary" data-tab="features">
       <section class="grid grid-1col" style="margin-top:0;">
 
         {{!-- For the main features list, span the right two columns --}}
         <section class="main grid-span-2">
           
-          <ul class="attributes-block">
+          <ul class="caracteristics-block">
             {{#each caracs as |carac caracId|}}
-              <li data-item-id="{{caracs.name}}" class="attribute">
-                <div class="attribute-title">
-                  <div>{{carac.name}}</div>
-                  {{#if ../actor.editSheet}}
-                    <input class="setDice" type="text" name="data.caracs.{{caracId}}.value" value="{{carac.value}}" data-dtype="number"/>
-                  {{else}}
-                    <div>{{carac.value}}D <a class="rollable" data-roll="{{carac.value}}" data-label="{{carac.name}}"><i class="fas fa-dice-d6"></i></a></div>
-                  {{/if}}
+              <li class="caracteristic" data-item-id="{{caracs.name}}">
+                <div class="caracteristic-info">
+                  <span class="caracteristic-title"><a class="rollable" data-roll="{{carac.value}}" data-label="{{carac.name}}"><i class="fas fa-dice-d6"></i></a> {{carac.name}}</span>
                   
+                  <div class="level-block-right">
+                    
+                    {{#if ../actor.editSheet}}
+                    <input class="setDice" type="text" name="data.caracs.{{caracId}}.value" value="{{carac.value}}" data-dtype="number"/>
+                    {{else}}
+                    <div>{{carac.value}}D</div>
+                    {{/if}}
+                    <div class="level-block">
+                      <div class="tiers">
+                        <span class="tier {{#if carac.tier_1}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="1" data-carac="{{caracId}}"></span>
+                        <span class="tier  {{#if carac.tier_2}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}"></span>
+                      </div>
+                    </div>
+                </div>
                 </div>
                 
-                <ul class="skills">
+                <ul class="skills-block {{#if ../../actor.editSheet}}list-style-none{{/if}}">
                   {{#each carac.skills as |skill skillId|}}
-                    <li class="carac-li">
-                      <div class="skill {{#if skill.owned}}owned{{/if}}">
-                        <div >
-                          {{#if ../../actor.editSheet}}
-                            <input type="checkbox" name="data.caracs.{{caracId}}.skills.{{skillId}}.owned" {{#if skill.owned}}checked{{/if}} class="skillCheckbox error"/>
-                          {{/if}}
-                          {{skill.name}}
-                        </div>
+                    <li class="skill {{#if skill.owned}}owned{{/if}} {{#if ../../actor.editSheet}}list-style-none{{/if}}">
+                      <div class="skill-info ">
                         {{#if ../../actor.editSheet}}
-                          <input class="setDice" type="text" name="data.caracs.{{caracId}}.skills.{{skillId}}.value" value="{{skill.value}}" data-dtype="number"/>
-                        {{else}}
-                        <div>{{showTotalForSkill skill.total}} <a class="rollable" data-roll="{{skill.total}}" data-label="{{skill.name}}"><i class="fas fa-dice-d6"></i></a></div>
+                          <span class="checkbox {{#if skill.owned}}checked{{/if}}" data-carac="{{caracId}}" data-skill="{{skillId}}"></span><!--<input type="checkbox" name="data.caracs.{{caracId}}.skills.{{skillId}}.owned" {{#if skill.owned}}checked{{/if}}/>-->
                         {{/if}}
+                        <span class="skill-title"> <a class="rollable" data-roll="{{skill.total}}" data-label="{{skill.name}}"><i class="fas fa-dice-d6"></i></a> {{skill.name}}</span>
+                        
+                        <div class="level-block-right">
+                          {{#if ../../actor.editSheet}}
+                          {{#if skill.owned}}
+                            <input class="setDice" type="text" name="data.caracs.{{caracId}}.skills.{{skillId}}.value" value="{{skill.value}}" data-dtype="number"/>
+                            {{else}}
+                            <span>{{showTotalForSkill skill.total}}</span>
+                          {{/if}}
+                          {{else}}
+                          <span>{{showTotalForSkill skill.total}}</span>
+                          {{/if}}
+                          <div class="level-block">
+                            <div class="tiers">
+                              <span class="tier {{#if skill.tier_1}}checked{{/if}} {{#if ../../actor.editSheet}}{{#if skill.owned}}tiers-editable{{/if}}{{/if}}" data-tier="1" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
+                              <span class="tier {{#if skill.tier_2}}checked{{/if}} {{#if ../../actor.editSheet}}{{#if skill.owned}}tiers-editable{{/if}}{{/if}}" data-tier="2" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
+                            </div>
+                          </div>
+                        </div>
+                        
                       </div>
                       <ul class="specialisations">
                         {{#each ../../specialisation as |spec specId|}}

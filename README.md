@@ -18,9 +18,17 @@ Autheur: *[Romain MURA](https://www.mura.io)*
 ---
 ## ▶️ A Faire :
 ### Fiche de perso :
-  - Gestion de tiers de dés pour les Attributs et Compétences
+#### Base commune
+  - Gestion de tiers de dés pour les Caractéristiques/Compétences
   - Gestion du glisser/Déposer pour les objets de l'inventaire d'une fiche à une autre
   - Gestion de l'utilisation des points de personnage/cojones
+  - Gestion de l'equipement :
+    - Création de contenants (sac, sacoche, ...) avec définition d'une capacité (poids/encombrement), pour stocker l'équipement que possède le PJ.
+    - Gestion des protections (Armures, vêtements, ...)
+#### Survivvant
+#### Contrôleur
+  - Création d'un pad (OWPad) avec possibilité d'envoi/reception de message Joueur/Joueur et MJ/Joueur
+  - Activimètre pour le suivi de l'infection des PJ (Gérer par le MJ)
 
 ## 🛠️ En Cours :
 ### Fiche de perso :
@@ -34,6 +42,6 @@ Autheur: *[Romain MURA](https://www.mura.io)*
 
 ## ✅ Terminé :
 ### Fiche de perso :
-  - Liste des Attributs et des Compétences liées
+  - Liste des Caractéristiques et des Compétences liées
   - Gestion des jets de dés liés aux Caractéristiques/Compétences directement depuis la fiche de perso
   -  Edition des Caractéristiques et Compétences par le joueur 

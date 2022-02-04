@@ -586,18 +586,21 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  padding-left: 10px;
+  margin-left: 10px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #222;
 }
 
 .actor .window-content .sheet-header .header-block.character-infos .info label {
   font-weight: bold;
-  margin-right: 5px;
   display: block;
   width: 100%;
 }
 
 .actor .window-content .sheet-header .header-block.character-infos .info span {
   font-style: italic;
+  width: 100%;
+  text-align: center;
 }
 
 .actor .window-content .sheet-header .header-block.character-infos .info input {
@@ -616,6 +619,7 @@
   -ms-flex-align: center;
   align-items: center;
   padding-top: 5px;
+  padding-right: 10px;
 }
 
 .actor .window-content .sheet-header .header-block.levels .level {
@@ -640,6 +644,7 @@
 .actor .window-content .sheet-header .header-block.levels .level .level-title {
   text-decoration: underline;
   font-size: 0.8em;
+  padding-bottom: 2px;
 }
 
 .actor .window-content .sheet-header .header-block select {
@@ -707,13 +712,13 @@
   background-color: #111;
 }
 
-.actor .window-content .sheet-body .attributes {
+.actor .window-content .sheet-body .caracteristics {
   margin: 0;
   padding: 0;
   background-color: #111;
 }
 
-.actor .window-content .sheet-body .attributes ul.attributes-block {
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block {
   margin: 0;
   padding: 0;
   display: -webkit-box;
@@ -725,9 +730,12 @@
   flex-direction: row;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
 }
 
-.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute {
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic {
   margin: 0;
   padding: 0;
   -ms-flex-preferred-size: 50%;
@@ -739,11 +747,13 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  -ms-flex-line-pack: start;
-  align-content: flex-start;
 }
 
-.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute .attribute-title {
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic:nth-child(even) {
+  border-left: 1px dashed #333;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic .caracteristic-info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -754,13 +764,16 @@
   -ms-flex-align: center;
   align-items: center;
   background-color: #681c1c;
-  text-transform: uppercase;
-  font-weight: 600;
   padding: 5px;
   margin: 0;
 }
 
-.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills {
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic .caracteristic-info .caracteristic-title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -768,27 +781,16 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin: 0;
-  padding: 0;
+  height: 100%;
+  color: #222;
 }
 
-.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills li.carac-li {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  margin: 2px 0;
-  padding: 0 5px;
-  list-style-type: none;
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill {
+  list-style-type: disc;
+  padding-right: 5px;
 }
 
-.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills li.carac-li .skill {
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill .skill-info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -799,14 +801,46 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  color: #BBB;
 }
 
-.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills ul.specialisations {
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill .skill-info .checkbox {
+  display: block;
+  border: 1px solid #222;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill .skill-info .checkbox.checked {
+  background-color: #922020;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill .skill-info .skill-title {
+  margin-right: auto;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill.list-style-none {
+  list-style-type: none;
+  padding: -15px;
+  margin-left: -15px;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill.list-style-none .skill-title {
+  margin-left: 5px;
+  margin-top: -3px;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block .owned {
+  color: #922020 !important;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block ul.specialisations {
   padding-left: 0;
   margin: 3px 0 0 0;
 }
 
-.actor .window-content .sheet-body .attributes ul.attributes-block li.attribute ul.skills ul.specialisations li.specialisation {
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block ul.specialisations li.specialisation {
   margin-left: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -820,9 +854,68 @@
   justify-content: space-between;
 }
 
-.actor .window-content .sheet-body .owned {
-  color: #681c1c;
-  font-weight: bold;
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block .rollable {
+  margin-right: 5px;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block .level-block-right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100px;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block .level-block-right .tiers {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block .level-block-right .tiers .tier {
+  border-radius: 50%;
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: #222;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block .level-block-right .tiers .tier:first-child {
+  margin-right: 5px;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block .level-block-right .tiers .tier.checked {
+  background-color: #fff;
+}
+
+.actor .window-content .sheet-body .caracteristics input[type="text"] {
+  text-align: center;
+  color: white;
+  background-color: #222;
+  border: none;
+  max-width: 20px;
+  max-height: 20px;
+  padding-top: 4px;
+}
+
+.actor .window-content .sheet-body .caracteristics input[type="text"]:focus-within {
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 .item .window-content .sheet-body .hidden {
@@ -889,4 +982,19 @@
 .item .window-content .sheet-body .category-element .input-short {
   max-width: 30px;
   text-align: center;
+}
+
+#logo {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+body {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(192, 18, 18, 0.822)), to(#2225)), url(../img/background.jpg);
+  background-image: -o-linear-gradient(rgba(192, 18, 18, 0.822), #2225), url(../img/background.jpg);
+  background-image: linear-gradient(rgba(192, 18, 18, 0.822), #2225), url(../img/background.jpg);
+  background-position: bottom right;
+  -webkit-box-shadow: 20px 0 50vw 10vw #381b1b inset;
+  box-shadow: 20px 0 50vw 10vw #381b1b inset;
 }

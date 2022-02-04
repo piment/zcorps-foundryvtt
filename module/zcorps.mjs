@@ -30,11 +30,11 @@ Hooks.once('init', async function() {
     config: true,
     hint: `ZCORPS.settings.test.hint`,
   });
-  console.log(game.settings);
+ 
   // Add custom constants for configuration.
   CONFIG.ZCORPS = ZCORPS;
   CONFIG.debug.hooks = false;
-
+  console.log(CONFIG);
   /**
    * Set an initiative formula for the system
    * @type {String}
@@ -135,6 +135,7 @@ Handlebars.registerHelper("getHealthStatus", level => {
 /* -------------------------------------------- */
 
 Hooks.once("ready", async function() {
+  $("#logo").attr('src', "systems/zcorps/img/DiscordServerIMG.jpg");
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
