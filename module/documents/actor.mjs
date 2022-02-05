@@ -95,7 +95,34 @@ export class zcorpsActor extends Actor {
     return data;
   }
 
-  _calculateTotalValueForSkill(skill, carac) {
-    return 0;
+  _calculateTotalValueForSkill(skill) {
+    
+    if(skill.owned) {
+      let totalTiers = 0;
+      for(const [key, tier] of Object.entries(skill.tiers)) {
+        totalTiers += tier;
+      }
+      let tierKeep = totalTiers % 3;
+      let diceValue = (totalTiers - tierKeep) / 3;
+      console.log(skill.name, " => dés ajoutés = ", diceValue, " / tiers restant = ", tierKeep);
+      skill.value_augmented = +skill.total + +diceValue;
+      console.log(skill.value);
+      if(tierKeep == 1) {
+        skill.tiers.skill_1_augmented = 1;
+        skill.tiers.skill_2_augmented = 0;
+      } else if(tierKeep == 2) {
+        skill.tiers.skill_1_augmented = 1;
+        skill.tiers.skill_2_augmented = 1;
+      } else {
+        skill.tiers.skill_1_augmented = 0;
+        skill.tiers.skill_2_augmented = 0;
+      }
+    } else {
+      skill.tiers.skill_1_augmented = skill.tiers.skill_1;
+      skill.tiers.skill_2_augmented = skill.tiers.skill_2;
+      skill.value_augmented = +skill.total;
+    }
+    return skill;  
   }
+  
 }

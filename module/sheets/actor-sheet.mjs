@@ -94,8 +94,9 @@ export class zcorpsActorSheet extends ActorSheet {
           skillItem.tiers.carac_1 = caracItem.tiers.carac_1;
           skillItem.tiers.carac_2 = caracItem.tiers.carac_2;
           context.skillsOwned = context.skillsOwned + 1;
+         
         }
-        
+        console.log(this.actor._calculateTotalValueForSkill(skillItem));
       }
     }
     
