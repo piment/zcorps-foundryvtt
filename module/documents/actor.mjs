@@ -122,6 +122,7 @@ export class zcorpsActor extends Actor {
       skill.tiers.skill_2_augmented = skill.tiers.skill_2;
       skill.value_augmented = +skill.total;
     }
+    skill.formula = `${skill.value_augmented}D+${+skill.tiers.skill_1_augmented + +skill.tiers.skill_2_augmented}`;
     return skill;  
   }
   

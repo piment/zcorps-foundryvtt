@@ -96,7 +96,8 @@ export class zcorpsActorSheet extends ActorSheet {
           context.skillsOwned = context.skillsOwned + 1;
          
         }
-        console.log(this.actor._calculateTotalValueForSkill(skillItem));
+        this.actor._calculateTotalValueForSkill(skillItem);
+        console.log(skillItem.formula);
       }
     }
     
