@@ -63,8 +63,7 @@ export class zcorpsActorSheet extends ActorSheet {
     context.genderType = {"homme": "homme", "femme": "femme"};
     context.stressLevel = {0: "Calme", 1: "Enervé", 2: "Stressé", 3: "Angoissé", 4: "Paniqué", 5: "Choqué"};
     context.healthLevel = {0: "Pas de blessure", 1: "Sonné", 2: "Blessé", 3: "Gravement blessé", 4: "Handicapé", 5: "Mortellement blessé", 6: "Mort"};
-    context.tiers = {0:"0", 1:"1", 2:"2"};
-    //console.log("TIERS => ", context.tiers);
+
     this.actor.context = context;
     
     return context;
@@ -78,24 +77,28 @@ export class zcorpsActorSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareCharacterData(context) {
-    context.caracs = context.data.caracs;
-    this.actor.data.data.attributes.skillOwned = 0;
-    for (const [keyC, carac] of Object.entries(context.caracs)) {
-      for (const [keyS, skill] of Object.entries(carac.skills)) {
-        if (!skill.owned) {
-          skill.value = carac.value - 1;
-          skill.total = skill.value;
+    context.caracs = context.data.caracs; 
+    
+    context.skillsOwned = 0;
+    //Calculate the skills base on the caracteristic
+    
+    
+    for (const [caracKey, caracItem] of Object.entries(context.caracs)) {
+      for (const [skillKey, skillItem] of Object.entries(caracItem.skills)) {
+        if (!skillItem.owned) { 
+          skillItem.total = caracItem.value - 1;
+          skillItem.tiers.skill_1 = caracItem.tiers.carac_1;
+          skillItem.tiers.skill_2 = caracItem.tiers.carac_2;
         } else {
-          this.actor.data.data.attributes.skillOwned = this.actor.data.data.attributes.skillOwned + 1;
-          skill.total = parseInt(carac.value) + parseInt(skill.value);
+          skillItem.total = +skillItem.value + +caracItem.value;
+          skillItem.tiers.carac_1 = caracItem.tiers.carac_1;
+          skillItem.tiers.carac_2 = caracItem.tiers.carac_2;
+          context.skillsOwned = context.skillsOwned + 1;
         }
-        this.actor.data.data.caracs[keyC].skills[keyS].tier_1 = this.actor.data.data.caracs[keyC].tier_1;
-        this.actor.data.data.caracs[keyC].skills[keyS].tier_2 = this.actor.data.data.caracs[keyC].tier_2;
-        console.log("## CARAC ## => ", this.actor.data.data.caracs[keyC].tier_1);
-        console.log("## SKILL ## => ", keyS, this.actor.data.data.caracs[keyC].skills[keyS].tier_1);
+        
       }
     }
-    //console.log("## TOTAL SKILL AT START: ", this.actor.data.data.attributes.skillOwned);
+    
     context.attributes = context.data.attributes;
   }
 
@@ -194,7 +197,8 @@ export class zcorpsActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-    
+
+    // Render the Actor sheet for viewing/editing prior to the editable check.
     html.find(".edit-sheet-btn").click((ev) => {
       ev.preventDefault();
       if(this.actor.editSheet === undefined) {
@@ -217,20 +221,26 @@ export class zcorpsActorSheet extends ActorSheet {
       const tier =  ev.target;
       const tierClicked = tier.dataset.tier;
       let tierValue = 0;
+      let click = "CLICK TIER INFO => ";
       if(tierClicked == 1) {
+        click += "Tier 1 ("
         if(tier.classList.contains("checked")) {
+          click += "checked)";
           if(tier.nextElementSibling.classList.contains("checked")) {
               tier.nextElementSibling.classList.toggle("checked");
               tierValue = 1;
+              click += " [tier 2 checked]";
           }
           else {
             tier.classList.toggle("checked");
             tierValue = 0;
+            click += " [tier 2 unchecked]"
           }
         }
         else {
           tier.classList.toggle("checked");
           tierValue = 1;
+          click += "unchecked) [tier 2 unchecked]";
         }
       }
       else {
@@ -249,24 +259,26 @@ export class zcorpsActorSheet extends ActorSheet {
           }
         }
       }
+      //console.log(tierValue);
+      const tiersData = {
+        value : tierValue,
+        carac : {
+          "name": tier.dataset.carac,
+          "array": this.actor.data.data.caracs[tier.dataset.carac].tiers
+        },
+        skill : 
+          tier.dataset.skill ? {
+            "name": tier.dataset.skill,
+            "array": this.actor.data.data.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers
+          } : null
+      };
       
-      const tiers = this.actor._getTiersValue(tierValue);
-
-      let temp;
-      //console.log(JSON.stringify(tiers));
-      if(tier.dataset.skill) {
-        temp = JSON.parse(`{"data" : {"caracs" : { "${tier.dataset.carac}" : {"skills" : { "${tier.dataset.skill}" : ${JSON.stringify(tiers)}}}}}}`);
-        //console.log(temp);
-        
-      }
-      else {
-        console.log(`{"data" : {"caracs" : { "${tier.dataset.carac}" :  ${JSON.stringify(tiers)} }}}`);
-        temp = JSON.parse(`{"data" : {"caracs" : { "${tier.dataset.carac}" :  ${JSON.stringify(tiers)} }}}`);
-        //console.log(temp);
-        //return this.actor.update(temp);
-      }
-      
-      return this.actor.update(temp);
+      const dataFormatted = this.actor._getFormattedTiersData(tiersData, this.actor);
+      console.log(click);
+      console.log(dataFormatted);
+      dataFormatted.skill ? this.actor.data.data.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers = dataFormatted.skill.array : this.actor.data.data.caracs[tier.dataset.carac].tiers = dataFormatted.carac.array;
+      this.actor.update({"data": this.actor.data.data});
+      this.actor.sheet.render(true);
     })
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable
@@ -330,19 +342,29 @@ export class zcorpsActorSheet extends ActorSheet {
     html.find(".checkbox").click(ev => {
       const checkbox = ev.currentTarget;
       const checked = checkbox.classList.contains("checked");
-      //console.log("## BEFORE CHECKED ",  this.actor.data.data.attributes.skillOwned);
-      if(this.actor.data.data.attributes.skillOwned >= 12 && !checked){
+
+      console.log("## BEFORE CHECKED ",  this.actor.context.skillsOwned);
+
+      if(this.actor.context.skillsOwned >= 12 && !checked){
         ui.notifications.warn("Vous ne pouvez posséder que 12 compétences maximum!");
       }
       else {
-        
-        //this.actor.data.data.caracs[checkbox.dataset.carac].skills[checkbox.dataset.skill].owned = checkbox.classList.contains("checked");
+        this.actor.data.data.caracs[checkbox.dataset.carac].skills[checkbox.dataset.skill].owned = checkbox.classList.contains("checked");
         checkbox.classList.toggle("checked");
-        const temp = JSON.parse(`{"data" : {"caracs" : { "${checkbox.dataset.carac}" : {"skills" : { "${checkbox.dataset.skill}" : {"owned" : ${checkbox.classList.contains("checked")}}}}}}}`);
-        checkbox.classList.contains("checked") ? this.actor.data.data.attributes.skillOwned++ : this.actor.data.data.attributes.skillOwned--; 
-        //console.log("## WHEN CHECKED ",  this.actor.data.data.attributes.skillOwned);
+        
+        if(checkbox.classList.contains("checked")) {
+          this.actor.context.skillsOwned = this.actor.context.skillsOwned + 1 
+        }
+        else { 
+          this.actor.context.skillsOwned = this.actor.context.skillsOwned - 1
+        }; 
+
+        console.log("## WHEN CHECKED ",  this.actor.context.skillsOwned);
+        this.actor.data.data.caracs[checkbox.dataset.carac].skills[checkbox.dataset.skill].owned = checkbox.classList.contains("checked");
         this.actor.sheet.render(true);
-        return this.actor.update(temp);
+        const temp = JSON.parse(`{"data" : {"caracs" : { "${checkbox.dataset.carac}" : {"skills" : { "${checkbox.dataset.skill}" : {"owned" : ${checkbox.classList.contains("checked")}}}}}}}`);
+        console.log(this.actor.data);
+        return this.actor.update({"data": this.actor.data.data});
       }
     });
   }

@@ -126,8 +126,8 @@
                     {{/if}}
                     <div class="level-block">
                       <div class="tiers">
-                        <span class="tier {{#if carac.tier_1}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="1" data-carac="{{caracId}}"></span>
-                        <span class="tier  {{#if carac.tier_2}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}"></span>
+                        <span class="tier {{#if carac.tiers.carac_1}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="1" data-carac="{{caracId}}"></span>
+                        <span class="tier {{#if carac.tiers.carac_2}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}"></span>
                       </div>
                     </div>
                 </div>
@@ -154,8 +154,8 @@
                           {{/if}}
                           <div class="level-block">
                             <div class="tiers">
-                              <span class="tier {{#if skill.tier_1}}checked{{/if}} {{#if ../../actor.editSheet}}{{#if skill.owned}}tiers-editable{{/if}}{{/if}}" data-tier="1" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
-                              <span class="tier {{#if skill.tier_2}}checked{{/if}} {{#if ../../actor.editSheet}}{{#if skill.owned}}tiers-editable{{/if}}{{/if}}" data-tier="2" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
+                              <span class="tier {{#if skill.tiers.skill_1}}checked{{/if}} {{#if ../../actor.editSheet}}{{#if skill.owned}}tiers-editable{{/if}}{{/if}}" data-tier="1" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
+                              <span class="tier {{#if skill.tiers.skill_2}}checked{{/if}} {{#if ../../actor.editSheet}}{{#if skill.owned}}tiers-editable{{/if}}{{/if}}" data-tier="2" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
                             </div>
                           </div>
                         </div>

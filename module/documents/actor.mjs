@@ -3,7 +3,6 @@
  * @extends {Actor}
  */
 export class zcorpsActor extends Actor {
-
   /** @override */
   prepareData() {
     // Prepare data for the actor. Calling the super version of this executes
@@ -42,7 +41,7 @@ export class zcorpsActor extends Actor {
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
-    if (actorData.type !== 'character') return;
+    if (actorData.type !== "character") return;
 
     // Make modifications to data here. For example:
     const data = actorData.data;
@@ -64,21 +63,39 @@ export class zcorpsActor extends Actor {
    * Prepare character roll data.
    */
   _getCharacterRollData(data) {
-    if (this.data.type !== 'character') return;
+    if (this.data.type !== "character") return;
 
     // Add level for easier access, or fall back to 0.
     if (data.attributes.level) {
       data.lvl = data.attributes.level.value ?? 0;
     }
   }
-  _getTiersValue(tiers) {
-    const tiersObject = {"tier_1": 0, "tier_2": 0};
-    if (tiers == 1) {
-      tiersObject.tier_1 = 1;
-    } else if (tiers == 2) {
-      tiersObject.tier_1 = 1;
-      tiersObject.tier_2 = 1;
+  _getFormattedTiersData(data, actor) {
+    const caracObject = { carac_1: 0, carac_2: 0 };
+    const skillObject = { skill_1: 0, skill_2: 0 };
+
+    if (data.value == 1) {
+      data.skill
+        ? (data.skill.array.skill_1 = 1)
+        : (data.carac.array.carac_1 = 1);
+        data.skill ? (data.skill.array.skill_2 = 0) : (data.carac.array.carac_2 = 0);
+    } else if (data.value == 2) {
+      data.skill
+        ? (data.skill.array.skill_1 = 1)
+        : (data.carac.array.carac_1 = 1);
+      data.skill
+        ? (data.skill.array.skill_2 = 1)
+        : (data.carac.array.carac_2 = 1);
     }
-    return tiersObject;
+    else {
+      data.skill ? (data.skill.array.skill_1 = 0) : (data.carac.array.carac_1 = 0);
+      data.skill ? (data.skill.array.skill_2 = 0) : (data.carac.array.carac_2 = 0);
+    }
+    
+    return data;
+  }
+
+  _calculateTotalValueForSkill(skill, carac) {
+    return 0;
   }
 }
