@@ -1,0 +1,13 @@
+<form class="bonus-dialog">
+    {{log max}}
+    <div class="form-group">
+        <label class="XPBTN">XP <span id="xp-range-value">0</span> (Max: {{xp}})</label>
+        <div class="range-selection">{{createRange 'xp' max}}</div>
+    </div>
+    <div class="form-group">
+        <label>COJONES <span id="cojones-range-value">0</span> (Max: {{cojones}})</label>
+        <div class="range-selection">{{createRange 'cojones' max}}</div>
+    </div>
+    <span class="formula-dice" data-dice="{{dice}}">{{dice}}</span>D +<span class="formula-tier" data-tier="{{tier}}">{{tier}}</span>
+    <input type="text" value="0" class="formula_bonus" name="formula_Bonus" />
+</form>
