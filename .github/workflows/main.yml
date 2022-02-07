@@ -28,7 +28,7 @@ jobs:
         download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/archive.zip
 
     # Create a zip file with all files required by the module to add to the release
-    - run: zip -r ./system.zip system.json template.json README.md CHANGELOG LICENSE css/ lang/ module/ packs/ templates/ ui/
+    - run: zip -r ./archive.zip system.json template.json README.md CHANGELOG LICENSE css/ lang/ module/ packs/ templates/ ui/
 
     # Create a release for this specific version
     - name: Update Release with Files
@@ -40,6 +40,6 @@ jobs:
         draft: ${{ github.event.release.unpublished }}
         prerelease: ${{ github.event.release.prerelease }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: './module.json, ./module.zip'
+        artifacts: './system.json, ./archive.zip'
         tag: ${{ github.event.release.tag_name }}
         body: ${{ github.event.release.body }}
