@@ -15,7 +15,7 @@ jobs:
       id: get_version
       uses: battila7/get-version-action@v2
 
-    # Substitute the Manifest and Download URLs in the module.json
+    # Substitute the Manifest and Download URLs in the system.json
     - name: Substitute Manifest and Download Links For Versioned Ones
       id: sub_manifest_link_version
       uses: microsoft/variable-substitution@v1
@@ -27,7 +27,7 @@ jobs:
         manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
         download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/archive.zip
 
-    # Create a zip file with all files required by the module to add to the release
+    # Create a zip file with all files required by the system to add to the release
     - run: zip -r ./system.zip system.json template.json README.md CHANGELOG LICENSE css/ lang/ module/ packs/ templates/ ui/
 
     # Create a release for this specific version
@@ -40,6 +40,6 @@ jobs:
         draft: ${{ github.event.release.unpublished }}
         prerelease: ${{ github.event.release.prerelease }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: './module.json, ./module.zip'
+        artifacts: './system.json, ./archive.zip'
         tag: ${{ github.event.release.tag_name }}
         body: ${{ github.event.release.body }}
