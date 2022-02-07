@@ -10,7 +10,7 @@
 
 Développé sur Foundry VTT V9. Non testé sur les versions précédentes
 
-Version 0.0.2 
+Version 0.0.3
 *(Basée sur le Boilerplate de ["asacolips"](https://github.com/asacolips))*
 
 Autheur: *[Romain MURA](https://www.mura.io)* 
@@ -19,7 +19,6 @@ Autheur: *[Romain MURA](https://www.mura.io)*
 ## ▶️ A Faire :
 ### Fiche de perso :
 #### Base commune
-  - Gestion de tiers de dés pour les Caractéristiques/Compétences
   - Gestion du glisser/Déposer pour les objets de l'inventaire d'une fiche à une autre
   - Gestion de l'utilisation des points de personnage/cojones
   - Gestion de l'equipement :
@@ -42,6 +41,7 @@ Autheur: *[Romain MURA](https://www.mura.io)*
 
 ## ✅ Terminé :
 ### Fiche de perso :
+  - Gestion de tiers de dés pour les Caractéristiques/Compétences
   - Liste des Caractéristiques et des Compétences liées
   - Gestion des jets de dés liés aux Caractéristiques/Compétences directement depuis la fiche de perso
-  -  Edition des Caractéristiques et Compétences par le joueur 
+  - Edition des Caractéristiques et Compétences par le joueur 
