@@ -597,6 +597,10 @@
   width: 100%;
 }
 
+.actor .window-content .sheet-header .header-block.character-infos .info label.info-title-sm {
+  font-size: 0.8em;
+}
+
 .actor .window-content .sheet-header .header-block.character-infos .info span {
   font-style: italic;
   width: 100%;
@@ -645,6 +649,39 @@
   text-decoration: underline;
   font-size: 0.8em;
   padding-bottom: 2px;
+}
+
+.actor .window-content .sheet-header .header-block.levels .level .resource-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.actor .window-content .sheet-header .header-block.levels .level .resource-content span {
+  width: auto;
+}
+
+.actor .window-content .sheet-header .header-block.levels .level .resource-content span .fa-check-circle {
+  color: yellowgreen;
+}
+
+.actor .window-content .sheet-header .header-block.levels .level .resource-content span .fa-dot-circle {
+  color: #333;
+}
+
+.actor .window-content .sheet-header .header-block.levels .level .resource-content span .fa-times-circle {
+  color: #381b1b;
+}
+
+.actor .window-content .sheet-header .header-block.levels .level .use-bonus {
+  text-align: center;
 }
 
 .actor .window-content .sheet-header .header-block select {
@@ -997,4 +1034,72 @@ body {
   background-position: bottom right;
   -webkit-box-shadow: 20px 0 50vw 10vw #381b1b inset;
   box-shadow: 20px 0 50vw 10vw #381b1b inset;
+}
+
+.dialog.bonus .window-header {
+  background-color: #681c1c;
+}
+
+.dialog.bonus .window-content {
+  background-image: none;
+  background-color: #222;
+}
+
+.dialog.bonus .window-content .hidden {
+  display: none;
+}
+
+.dialog.bonus .window-content .range-selection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.dialog.bonus .window-content .range-selection datalist {
+  margin-top: 3px;
+  width: 100%;
+  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 5px;
+  color: #fff;
+  background-color: none;
+}
+
+.dialog.bonus .window-content .range-selection datalist option {
+  background-color: inherit;
+}
+
+.dialog.bonus .window-content .range-selection input[type=range]::-webkit-slider-runnable-track {
+  background-color: #111;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.dialog.bonus .window-content .range-selection input[type=range]::-webkit-slider-thumb {
+  background-color: #fff;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  margin-top: -7px;
+}
+
+.dialog.bonus .bonus-dialog {
+  color: #fff;
 }

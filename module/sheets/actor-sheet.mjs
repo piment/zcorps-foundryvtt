@@ -94,14 +94,16 @@ export class zcorpsActorSheet extends ActorSheet {
           skillItem.tiers.carac_1 = caracItem.tiers.carac_1;
           skillItem.tiers.carac_2 = caracItem.tiers.carac_2;
           context.skillsOwned = context.skillsOwned + 1;
-         
         }
         this.actor._calculateTotalValueForSkill(skillItem);
-        console.log(skillItem.formula);
       }
+      caracItem.formula = `${caracItem.value}D+${+caracItem.tiers.carac_1 + +caracItem.tiers.carac_2}`;
     }
-    
     context.attributes = context.data.attributes;
+    context.attributes.movement = +context.caracs.strength.value + +context.caracs.agility.value;
+    context.attributes.dammageBonus = parseInt(Math.ceil(context.caracs.strength.value / 2));
+    
+    
   }
 
   /**
@@ -210,6 +212,7 @@ export class zcorpsActorSheet extends ActorSheet {
         this.actor.editSheet = !this.actor.editSheet;
       }
       this.actor.sheet.render(true);
+      
     });
     // Render the item sheet for viewing/editing prior to the editable check.
     html.find(".item-edit").click((ev) => {
@@ -369,6 +372,39 @@ export class zcorpsActorSheet extends ActorSheet {
         return this.actor.update({"data": this.actor.data.data});
       }
     });
+
+    html.find(".bonus-icon").click(ev => {
+      const bonus = ev.target;
+      const bonusId = bonus.id;
+      if(bonusId == "bonus_xp") {
+        if(bonus.classList.contains("fa-check-circle")) {
+          bonus.classList.replace("fa-check-circle", "fa-dot-circle");
+          bonus.dataset.bonus = false;
+          html.find("#bonus_cojones")[0].classList.replace("fa-times-circle", "fa-dot-circle");
+          html.find("#bonus_cojones")[0].dataset.bonus = false;
+        }
+        else {
+          bonus.classList.replace("fa-dot-circle", "fa-check-circle");
+          bonus.dataset.bonus = true;
+          html.find("#bonus_cojones")[0].classList.replace("fa-dot-circle", "fa-times-circle");
+          html.find("#bonus_cojones")[0].dataset.bonus = false;
+        }
+      }
+      else {
+        if(bonus.classList.contains("fa-check-circle")) {
+          bonus.classList.replace("fa-check-circle", "fa-dot-circle");
+          bonus.dataset.bonus = false;
+          html.find("#bonus_xp")[0].classList.replace("fa-times-circle", "fa-dot-circle");
+          html.find("#bonus_xp")[0].dataset.bonus = false;
+        }
+        else {
+          bonus.classList.replace("fa-dot-circle", "fa-check-circle");
+          bonus.dataset.bonus = true;
+          html.find("#bonus_xp")[0].classList.replace("fa-dot-circle", "fa-times-circle");
+          html.find("#bonus_xp")[0].dataset.bonus = false;
+        }
+      }
+    })
   }
   _getFormula(die, malus) {
     console.log(game.modules["dice-so-nice"]);
@@ -435,11 +471,10 @@ export class zcorpsActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onRoll(event) {
+  async _onRoll(event) {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
-
     // Handle item rolls.
     if (dataset.rollType) {
       if (dataset.rollType == "item") {
@@ -486,15 +521,28 @@ export class zcorpsActorSheet extends ActorSheet {
 
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
+      
       const healthStatus = this.actor.data.data.attributes.health;
       const malus = parseInt(this._getMalus(+healthStatus));
-      let label = dataset.label ? `[lance] ${dataset.label} (${dataset.roll}D6) (Malus: ${this.actor.context.healthLevel[healthStatus]})` : "";
+      let label = dataset.label ? `[lance] ${dataset.label} (${dataset.roll}) (Malus: ${this.actor.context.healthLevel[healthStatus]})` : "";
       if(malus == -1) {
         ui.notifications.error("Le personnage est mort, désolé!..");
         return;
       }
-      //let formula = (parseInt(dataset.roll) - 1 - malus) + "d6 + 1d6x"
-      let formula = this._getFormula(parseInt(dataset.roll), malus);
+      let formula;
+      if(event.shiftKey) {
+        const xp = this.actor.data.data.attributes.xp.value;
+        const cojones = this.actor.data.data.attributes.cojones.value;
+        const req = await game.zcorps.rollWithBonus(dataset.roll, xp, cojones);
+        if(!req) {
+          return;
+        }
+        formula = this.actor._parseRollFormulaWithMalus(req, malus);
+      }
+      else {
+        formula = this.actor._parseRollFormulaWithMalus(dataset.roll, malus);
+      }
+      
       console.log("formula", formula);
       if(!formula) {
         ui.notifications.error("Le personnage n'est pas en capacité d'agir");
@@ -506,7 +554,10 @@ export class zcorpsActorSheet extends ActorSheet {
         flavor: label,
         rollMode: game.settings.get("core", "rollMode"),
       });
+      
       return roll;
     }
+
+    
   }
 }

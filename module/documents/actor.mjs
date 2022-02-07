@@ -104,9 +104,7 @@ export class zcorpsActor extends Actor {
       }
       let tierKeep = totalTiers % 3;
       let diceValue = (totalTiers - tierKeep) / 3;
-      console.log(skill.name, " => dés ajoutés = ", diceValue, " / tiers restant = ", tierKeep);
       skill.value_augmented = +skill.total + +diceValue;
-      console.log(skill.value);
       if(tierKeep == 1) {
         skill.tiers.skill_1_augmented = 1;
         skill.tiers.skill_2_augmented = 0;
@@ -126,4 +124,17 @@ export class zcorpsActor extends Actor {
     return skill;  
   }
   
+  _parseRollFormula(formula) {
+    formula = formula.split("D+");
+    return formula;
+  }
+  _parseRollFormulaWithMalus(formula, malus) {
+    console.log("##parse with malus");
+    const [die, tier] = this._parseRollFormula(formula);
+    console.log(die);
+    if(die - malus <= 0) {
+      return 0;
+    }
+    return `${(die - malus) - 1}D6[black] + 1D6x[bloodmoon] + ${tier}`;
+  }
 }

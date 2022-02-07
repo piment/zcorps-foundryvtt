@@ -58,6 +58,15 @@
           <span>{{attributes.physical.gender}}</span>
         {{/if}}
       </div>
+      <div class="info">
+        <label for="mouvement">Mouvement</label>
+        
+        <span>{{attributes.movement}} m</span>
+      </div>
+      <div class="info">
+        <label class="info-title-sm" for="dammageBonus">Bonus aux dégâts</label>
+        <span>{{attributes.dammageBonus}}D &nbsp;&nbsp;<a class="rollable" data-roll="{{attributes.dammageBonus}}D+0" data-label="Bonus aux dégâts"> <i class="fas fa-dice-d6"></i></a></span>
+      </div>
     </div>
     <div class="header-block levels">
       <div class="level">
@@ -81,6 +90,7 @@
         <div class="resource-content flexrow flex-center flex-between">
           <span>Restants : {{data.attributes.xp.value}}</span>
           <span>Totaux : {{data.attributes.xp.total}}</span>
+          <span class="use-bonus"><i id="bonus_xp" class="bonus-icon fas fa-dot-circle" data-bonus="false"></i></span>
         </div>
       </div>
       <div class="level">
@@ -88,6 +98,7 @@
         <div class="resource-content flexrow flex-center flex-between">
           <span>Restants : {{data.attributes.cojones.value}}</span>
           <span>Totaux : {{data.attributes.cojones.total}}</span>
+          <span class="use-bonus"><i id="bonus_cojones" class="bonus-icon fas fa-dot-circle" data-bonus="false"></i></span>
         </div>
       </div>
     </div>
@@ -103,7 +114,6 @@
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
-
     {{!-- Owned Features Tab --}}
     <div class="tab features caracteristics" data-group="primary" data-tab="features">
       <section class="grid grid-1col" style="margin-top:0;">
@@ -115,7 +125,7 @@
             {{#each caracs as |carac caracId|}}
               <li class="caracteristic" data-item-id="{{caracs.name}}">
                 <div class="caracteristic-info">
-                  <span class="caracteristic-title"><a class="rollable" data-roll="{{carac.value}}" data-label="{{carac.name}}"><i class="fas fa-dice-d6"></i></a> {{carac.name}}</span>
+                  <span class="caracteristic-title"><a class="rollable" data-roll="{{carac.formula}}" data-label="{{carac.name}}" title="appuyer sur MAJ pour utiliser des points de personnage/cojones"><i class="fas fa-dice-d6"></i></a> {{carac.name}}</span>
                   
                   <div class="level-block-right">
                     
@@ -140,7 +150,7 @@
                         {{#if ../../actor.editSheet}}
                           <span class="checkbox {{#if skill.owned}}checked{{/if}}" data-carac="{{caracId}}" data-skill="{{skillId}}"></span><!--<input type="checkbox" name="data.caracs.{{caracId}}.skills.{{skillId}}.owned" {{#if skill.owned}}checked{{/if}}/>-->
                         {{/if}}
-                        <span class="skill-title"> <a class="rollable" data-roll="{{skill.total}}" data-label="{{skill.name}}"><i class="fas fa-dice-d6"></i></a> {{skill.name}}</span>
+                        <span class="skill-title"> <a class="rollable" data-roll="{{skill.formula}}" data-label="{{skill.name}}" title="appuyer sur MAJ pour utiliser des points de personnage/cojones"><i class="fas fa-dice-d6"></i></a> {{skill.name}}</span>
                         
                         <div class="level-block-right">
                           {{#if ../../actor.editSheet}}

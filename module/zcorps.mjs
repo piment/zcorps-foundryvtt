@@ -19,22 +19,24 @@ Hooks.once('init', async function() {
   game.zcorps = {
     zcorpsActor,
     zcorpsItem,
-    rollItemMacro
+    rollItemMacro,
+    rollWithBonus
   };
   
-  game.settings.register("zcorps", "test", {
-    name: `ZCORPS.settings.test.name`,
-    default: true,
-    type: Boolean,
+  game.settings.register("zcorps", "XPPointPerRollMax", {
+    name: `Points de personnage Max`,
+    default: "3",
+    type: String,
+    choices: {"0":"0", "1":"1", "2":"2", "3":"3", "4":"4", "5":"5"},
     scope: 'world',
     config: true,
-    hint: `ZCORPS.settings.test.hint`,
+    hint: `Points de personnage maximum utilisable par jet de dé`,
+    onChange: value => game.settings.set("zcorps", "XPPointPerRollMax", value)
   });
  
   // Add custom constants for configuration.
   CONFIG.ZCORPS = ZCORPS;
   CONFIG.debug.hooks = false;
-  console.log(CONFIG);
   /**
    * Set an initiative formula for the system
    * @type {String}
@@ -130,6 +132,15 @@ Handlebars.registerHelper("getHealthStatus", level => {
       break;
   }
 });
+
+Handlebars.registerHelper("createRange", (rangeName, max) => {
+  let list = `<datalist id="${rangeName}-list">`;
+  for(let i = 0; i <= max; i++) {
+    list += `<option value="${i}" label="${i}">${i}</option>`
+  }
+  list += '</datalist>'
+  return new Handlebars.SafeString(`<input list="${rangeName}-list" class="bonus-range" name="${rangeName}" type="range" min="0" max="${max}" step="0" value="0"/>${list}`);
+})
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
@@ -140,6 +151,32 @@ Hooks.once("ready", async function() {
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
 
+Hooks.on("renderDialog", (dialog, id, context) => {
+  
+  const bonusDialog = document.querySelector("#" + id[0].id);
+  bonusDialog.classList.add("bonus");
+
+  let dice = document.querySelector(".formula-dice");
+  let tier = document.querySelector(".formula-tier");
+  const formula_bonus_input = document.querySelector(".formula_bonus")
+  formula_bonus_input.classList.add("hidden");
+  formula_bonus_input.value = dice.innerHTML + "D+" + tier.innerHTML;
+
+  document.querySelectorAll(".bonus-range").forEach(el => {
+
+    el.addEventListener("input", ev => {
+
+      const label = document.querySelector(`#${ev.target.name}-range-value`);
+
+      if(ev.target.name == "xp") {
+        dice.innerHTML = +dice.dataset.dice + +ev.currentTarget.value;
+        formula_bonus_input.value = dice.innerHTML + "D+" + tier.innerHTML;
+      }
+
+      label.innerHTML = ev.currentTarget.value;
+    })
+  })
+});
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
@@ -189,4 +226,38 @@ function rollItemMacro(itemName) {
 
   // Trigger the item roll
   return item.roll();
+}
+
+async function rollWithBonus(formula, xp, cojones) {
+  const template = "systems/zcorps/templates/gamemaster/actorsResume.hbs";
+  const [dice, tier] = formula.split("D+");
+  const html = await renderTemplate(template, {dice: dice, tier: tier, xp: xp, cojones: cojones, max: game.settings.get("zcorps", "XPPointPerRollMax")});
+
+  return new Promise(resolve => {
+    const data = {
+      title: "Utiliser des pts de Perso/Cojones",
+      content: html,
+      buttons: {
+        normal : {
+          label: "Valider",
+          callback: html => resolve(_proccessRollWithBonusData(html[0].querySelector("form")))
+        },
+        cancel : {
+          label : "Annuler",
+          callback : html => resolve(false)
+        }
+      },
+      default: "normal",
+      close : () => resolve(false),
+      
+    }
+    new Dialog(data, {
+      with: 500,
+    }).render(true);
+  });
+
+  
+}
+function _proccessRollWithBonusData(form) {
+  return form[2].value;
 }
