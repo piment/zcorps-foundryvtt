@@ -48,3 +48,8 @@ jobs:
         artifacts: './system.json, ./archive.zip'
         tag: ${{ github.event.release.tag_name }}
         body: ${{ github.event.release.body }}
+
+    - name: Update Version
+      shell: bash
+      id: set-version
+      run: echo "::set-output name=version::$(node ./.github/workflows/set-version.js ${{ github.ref }})"
