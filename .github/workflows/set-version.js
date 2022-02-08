@@ -14,9 +14,8 @@ if (!tagVersion || !tagVersion.startsWith('v')) {
 } else {
     console.log("Application des nouvelles variables...");
   manifest.version = tagVersion.substring(1); // strip the 'v'-prefix
-  manifest.manifest = `https://github.com/piment/zcorps-foundryvtt/releases/download/${tagVersion.substring(1)}/system.json`;
+  manifest.manifest = `https://github.com/piment/zcorps-foundryvtt/releases/latest/download/system.json`;
   manifest.download = `https://github.com/piment/zcorps-foundryvtt/releases/download/${tagVersion.substring(1)}/archive.zip`;
-  manifest.workflow = true;
   console.log("Fin d'application des nouvelles variables...");
   fs.writeFileSync('system.json', JSON.stringify(manifest, null, 2)); // pretty print JSON back to module.json
   console.log("Ecriture du fichier réussi");
