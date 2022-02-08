@@ -43,10 +43,6 @@ jobs:
         tag: ${{ github.event.release.tag_name }}
         body: ${{ github.event.release.body }}
     
-    - name: list dir
-      shell: bash
-      id: list-dir
-      run: mkdir temp
     - name: Update Version
       shell: bash
       id: set-version
