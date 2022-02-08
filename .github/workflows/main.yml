@@ -26,10 +26,9 @@ jobs:
         url: https://github.com/${{github.repository}}
         manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
         download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/archive.zip
-
     # Create a zip file with all files required by the system to add to the release
-    - run: zip -r ./system.zip system.json template.json README.md CHANGELOG LICENSE css/ lang/ module/ packs/ templates/ ui/
-
+    - run: zip -r ./archive.zip system.json template.json README.md CHANGELOG LICENSE css/ lang/ module/ packs/ templates/ ui/
+  
     # Create a release for this specific version
     - name: Update Release with Files
       id: create_version_release
@@ -43,8 +42,21 @@ jobs:
         artifacts: './system.json, ./archive.zip'
         tag: ${{ github.event.release.tag_name }}
         body: ${{ github.event.release.body }}
-
+    
     - name: Update Version
       shell: bash
       id: set-version
-      run: echo "::set-output name=version::$(node ./.github/workflows/set-version.js ${{ github.ref }})"
+      run: echo "::set-output name=version::$(node .github/workflows/set-version.js ${{ github.ref }})"
+    
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: main
+
+    - name: Foundry Manifest Update
+      id: foundry-manifest-update
+      uses: foundryvtt-dcc/foundry-manifest-update-action@main
+      with:
+        actionToken: ${{ secrets.GITHUB_TOKEN }}
+        manifestFileName: 'system.json'
