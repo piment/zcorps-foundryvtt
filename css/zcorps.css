@@ -1047,6 +1047,7 @@ body {
 
 .dialog.bonus .window-content .hidden {
   display: none;
+  color: b;
 }
 
 .dialog.bonus .window-content .range-selection {
