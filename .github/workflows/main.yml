@@ -46,7 +46,7 @@ jobs:
     - name: list dir
       shell: bash
       id: list-dir
-      run: ls | ls ../ 
+      run: cd zcorps-foundryvtt | ls
     - name: Update Version
       shell: bash
       id: set-version
