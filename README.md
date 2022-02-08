@@ -1,5 +1,5 @@
 # :zombie_man: Z-Corps pour Foundry VTT :zombie_woman: 
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/piment/zcorps-foundryvtt?color=green)](https://github.com/piment/zcorps-foundryvtt/releases/latest/download/system.json)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/piment/zcorps-foundryvtt?color=green)](https://github.com/piment/zcorps-foundryvtt/releases/latest/)
 
 *Système Foundry VTT (Non-officiel) pour le jeu de rôle Z-Corps, édité par la société [7eme Cercle](https://www.7emecercle.com/7C_site/jeux-de-roles/z-corps/)*
 
