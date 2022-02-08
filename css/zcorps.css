@@ -1028,9 +1028,9 @@
 }
 
 body {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(192, 18, 18, 0.822)), to(#2225)), url(../img/background.jpg);
-  background-image: -o-linear-gradient(rgba(192, 18, 18, 0.822), #2225), url(../img/background.jpg);
-  background-image: linear-gradient(rgba(192, 18, 18, 0.822), #2225), url(../img/background.jpg);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(192, 18, 18, 0.822)), to(#2225)), url(../ui/background.jpg);
+  background-image: -o-linear-gradient(rgba(192, 18, 18, 0.822), #2225), url(../ui/background.jpg);
+  background-image: linear-gradient(rgba(192, 18, 18, 0.822), #2225), url(../ui/background.jpg);
   background-position: bottom right;
   -webkit-box-shadow: 20px 0 50vw 10vw #381b1b inset;
   box-shadow: 20px 0 50vw 10vw #381b1b inset;
