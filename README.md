@@ -5,7 +5,7 @@
 ### :warning: Le système est encore en version Alpha et non utilisable en "production" :warning:
 
 
-:information_source: Fichier ["manifest"](https://github.com/piment/zcorps-foundryvtt/releases/lastest/download/system.json) pour l'installation directe.
+:information_source: Fichier ["manifest"](https://github.com/piment/zcorps-foundryvtt/releases/latest/download/system.json) pour l'installation directe.
 :gear: Serveur [Discord](https://discord.gg/rbsvujHH) pour participer au développement.
 
 Développé sur Foundry VTT V9. Non testé sur les versions précédentes
