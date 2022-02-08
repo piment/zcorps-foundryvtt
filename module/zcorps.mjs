@@ -19,8 +19,7 @@ Hooks.once('init', async function() {
   game.zcorps = {
     zcorpsActor,
     zcorpsItem,
-    rollItemMacro,
-    rollWithBonus
+    rollItemMacro
   };
   
   game.settings.register("zcorps", "XPPointPerRollMax", {
@@ -141,26 +140,38 @@ Handlebars.registerHelper("createRange", (rangeName, max) => {
   list += '</datalist>'
   return new Handlebars.SafeString(`<input list="${rangeName}-list" class="bonus-range" name="${rangeName}" type="range" min="0" max="${max}" step="0" value="0"/>${list}`);
 })
+
+Handlebars.registerHelper("parseResults", (results) => {
+  Object.entries(results).forEach((el, key) => {
+      console.log("EL[0] => ", el[0]);
+      if(el[0] == "results") {
+        console.log("el[0] == results");
+        console.log("RESULTS :");
+        console.log(results["faces"]);
+      }
+      
+
+  })
+});
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
 Hooks.once("ready", async function() {
-  $("#logo").attr('src', "systems/zcorps/img/DiscordServerIMG.jpg");
+  $("#logo").attr('src', "systems/zcorps/ui/zc_logo.png");
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
 
 Hooks.on("renderDialog", (dialog, id, context) => {
   
-  const bonusDialog = document.querySelector("#" + id[0].id);
-  bonusDialog.classList.add("bonus");
 
-  let dice = document.querySelector(".formula-dice");
-  let tier = document.querySelector(".formula-tier");
+
+  //let dice = document.querySelector(".formula-dice");
+  //let tier = document.querySelector(".formula-tier");
   const formula_bonus_input = document.querySelector(".formula_bonus")
   formula_bonus_input.classList.add("hidden");
-  formula_bonus_input.value = dice.innerHTML + "D+" + tier.innerHTML;
+  //formula_bonus_input.value = ev.currentTarget.value;
 
   document.querySelectorAll(".bonus-range").forEach(el => {
 
@@ -169,14 +180,16 @@ Hooks.on("renderDialog", (dialog, id, context) => {
       const label = document.querySelector(`#${ev.target.name}-range-value`);
 
       if(ev.target.name == "xp") {
-        dice.innerHTML = +dice.dataset.dice + +ev.currentTarget.value;
-        formula_bonus_input.value = dice.innerHTML + "D+" + tier.innerHTML;
+        //dice.innerHTML = +dice.dataset.dice + +ev.currentTarget.value;
+        //formula_bonus_input.value = dice.innerHTML + "D+" + tier.innerHTML;
+        formula_bonus_input.value = ev.currentTarget.value;
       }
 
       label.innerHTML = ev.currentTarget.value;
     })
   })
 });
+
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
@@ -228,36 +241,3 @@ function rollItemMacro(itemName) {
   return item.roll();
 }
 
-async function rollWithBonus(formula, xp, cojones) {
-  const template = "systems/zcorps/templates/gamemaster/actorsResume.hbs";
-  const [dice, tier] = formula.split("D+");
-  const html = await renderTemplate(template, {dice: dice, tier: tier, xp: xp, cojones: cojones, max: game.settings.get("zcorps", "XPPointPerRollMax")});
-
-  return new Promise(resolve => {
-    const data = {
-      title: "Utiliser des pts de Perso/Cojones",
-      content: html,
-      buttons: {
-        normal : {
-          label: "Valider",
-          callback: html => resolve(_proccessRollWithBonusData(html[0].querySelector("form")))
-        },
-        cancel : {
-          label : "Annuler",
-          callback : html => resolve(false)
-        }
-      },
-      default: "normal",
-      close : () => resolve(false),
-      
-    }
-    new Dialog(data, {
-      with: 500,
-    }).render(true);
-  });
-
-  
-}
-function _proccessRollWithBonusData(form) {
-  return form[2].value;
-}

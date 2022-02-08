@@ -1023,7 +1023,7 @@
 
 #logo {
   border-radius: 50%;
-  width: 100px;
+  width: 75px;
   height: 100px;
 }
 
@@ -1036,21 +1036,21 @@ body {
   box-shadow: 20px 0 50vw 10vw #381b1b inset;
 }
 
-.dialog.bonus .window-header {
+.app.bonus .window-header {
   background-color: #681c1c;
 }
 
-.dialog.bonus .window-content {
+.app.bonus .window-content {
   background-image: none;
   background-color: #222;
 }
 
-.dialog.bonus .window-content .hidden {
+.app.bonus .window-content .hidden {
   display: none;
   color: b;
 }
 
-.dialog.bonus .window-content .range-selection {
+.app.bonus .window-content .range-selection {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1060,7 +1060,7 @@ body {
   flex-direction: column;
 }
 
-.dialog.bonus .window-content .range-selection datalist {
+.app.bonus .window-content .range-selection datalist {
   margin-top: 3px;
   width: 100%;
   display: block;
@@ -1079,18 +1079,18 @@ body {
   background-color: none;
 }
 
-.dialog.bonus .window-content .range-selection datalist option {
+.app.bonus .window-content .range-selection datalist option {
   background-color: inherit;
 }
 
-.dialog.bonus .window-content .range-selection input[type=range]::-webkit-slider-runnable-track {
+.app.bonus .window-content .range-selection input[type=range]::-webkit-slider-runnable-track {
   background-color: #111;
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
-.dialog.bonus .window-content .range-selection input[type=range]::-webkit-slider-thumb {
+.app.bonus .window-content .range-selection input[type=range]::-webkit-slider-thumb {
   background-color: #fff;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -1101,6 +1101,6 @@ body {
   margin-top: -7px;
 }
 
-.dialog.bonus .bonus-dialog {
+.app.bonus .bonus-dialog {
   color: #fff;
 }

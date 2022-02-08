@@ -1,3 +1,13 @@
 <form>
+    {{log this}}
+    <p>Nouveau jet</p>
+    <ul>
+        {{#each this as |item key|}}
+            <li>
+                {{parseResults item}}
+                
+            </li>
+        {{/each}}
+    </ul>
     
 </form>

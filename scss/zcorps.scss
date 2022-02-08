@@ -72,7 +72,7 @@
 
 #logo {
   border-radius: 50%;
-  width: 100px;
+  width: 75px;
   height: 100px;
 }
 
@@ -81,7 +81,7 @@ body {
   background-position: bottom right;
   box-shadow: 20px 0 50vw 10vw $zcorps-red-darker inset;
 }
-.dialog.bonus {
+.app.bonus {
   
   .window-header {
     background-color: $zcorps-red;

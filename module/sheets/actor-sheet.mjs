@@ -1,14 +1,15 @@
-import {
-  onManageActiveEffect,
-  prepareActiveEffectCategories,
-} from "../helpers/effects.mjs";
-
+import { diceRollHelper } from "../helpers/diceRollHelper.mjs";
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
 export class zcorpsActorSheet extends ActorSheet {
   
+
+  chatTemplate = {
+    "character": "systems/zcorps/templates/chat/actions.hbs"
+  };
+
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -58,14 +59,13 @@ export class zcorpsActorSheet extends ActorSheet {
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
 
-    // Prepare active effects
-    context.effects = prepareActiveEffectCategories(this.actor.effects);
+
     context.genderType = {"homme": "homme", "femme": "femme"};
     context.stressLevel = {0: "Calme", 1: "Enervé", 2: "Stressé", 3: "Angoissé", 4: "Paniqué", 5: "Choqué"};
     context.healthLevel = {0: "Pas de blessure", 1: "Sonné", 2: "Blessé", 3: "Gravement blessé", 4: "Handicapé", 5: "Mortellement blessé", 6: "Mort"};
 
     this.actor.context = context;
-    
+    this.actor.useBonus = false;
     return context;
   }
   
@@ -380,12 +380,14 @@ export class zcorpsActorSheet extends ActorSheet {
         if(bonus.classList.contains("fa-check-circle")) {
           bonus.classList.replace("fa-check-circle", "fa-dot-circle");
           bonus.dataset.bonus = false;
+          this.actor.useBonus = false;
           html.find("#bonus_cojones")[0].classList.replace("fa-times-circle", "fa-dot-circle");
           html.find("#bonus_cojones")[0].dataset.bonus = false;
         }
         else {
           bonus.classList.replace("fa-dot-circle", "fa-check-circle");
           bonus.dataset.bonus = true;
+          this.actor.useBonus = "xp";
           html.find("#bonus_cojones")[0].classList.replace("fa-dot-circle", "fa-times-circle");
           html.find("#bonus_cojones")[0].dataset.bonus = false;
         }
@@ -394,50 +396,22 @@ export class zcorpsActorSheet extends ActorSheet {
         if(bonus.classList.contains("fa-check-circle")) {
           bonus.classList.replace("fa-check-circle", "fa-dot-circle");
           bonus.dataset.bonus = false;
+          this.actor.useBonus = false;
           html.find("#bonus_xp")[0].classList.replace("fa-times-circle", "fa-dot-circle");
           html.find("#bonus_xp")[0].dataset.bonus = false;
         }
         else {
           bonus.classList.replace("fa-dot-circle", "fa-check-circle");
           bonus.dataset.bonus = true;
+          this.actor.useBonus = "cojones";
           html.find("#bonus_xp")[0].classList.replace("fa-dot-circle", "fa-times-circle");
           html.find("#bonus_xp")[0].dataset.bonus = false;
         }
       }
     })
   }
-  _getFormula(die, malus) {
-    console.log(game.modules["dice-so-nice"]);
-    let pool = die - malus;
-    console.log("pool => ", pool, malus);
-    if(!pool) {return 0}
-    else {
-      if(pool == 1) {
-        return "1D6x[bloodmoon]";
-      }
-      else {
-        return `${pool - 1}D6[black] + 1D6x[bloodmoon]`;
-      }
-    }
-  }
-  _getMalus(health) {
-    if(health === 0) {return 0}
-    if(health <= 2 ) {
-      return 1;
-    }
-    else if(health == 3) {
-      return 2;
-    }
-    else if(health == 4) {
-      return 3;
-    }
-    else if(health == 5) {
-      return 4;
-    }
-    else {
-      return -1;
-    }
-  }
+  
+  
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @param {Event} event   The originating click event
@@ -522,42 +496,107 @@ export class zcorpsActorSheet extends ActorSheet {
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
       
+      
+      const bonus = this.actor.useBonus;
       const healthStatus = this.actor.data.data.attributes.health;
-      const malus = parseInt(this._getMalus(+healthStatus));
+      //const malus = parseInt(this._getMalus(+healthStatus));
       let label = dataset.label ? `[lance] ${dataset.label} (${dataset.roll}) (Malus: ${this.actor.context.healthLevel[healthStatus]})` : "";
-      if(malus == -1) {
+
+      const dicePool = new diceRollHelper({actor: this.actor, formula: dataset.roll});
+      
+      if(dicePool.getHealthStatus() == -1) {
         ui.notifications.error("Le personnage est mort, désolé!..");
         return;
       }
-      let formula;
-      if(event.shiftKey) {
-        const xp = this.actor.data.data.attributes.xp.value;
-        const cojones = this.actor.data.data.attributes.cojones.value;
-        const req = await game.zcorps.rollWithBonus(dataset.roll, xp, cojones);
-        if(!req) {
-          return;
-        }
-        formula = this.actor._parseRollFormulaWithMalus(req, malus);
-      }
-      else {
-        formula = this.actor._parseRollFormulaWithMalus(dataset.roll, malus);
-      }
-      
-      console.log("formula", formula);
-      if(!formula) {
+    
+      //If the player choose to use character or cojones points
+      console.log("start formula => ", dicePool.baseDicePool.base, dicePool.baseDicePool.joker);
+      if(!dicePool.canAct){
         ui.notifications.error("Le personnage n'est pas en capacité d'agir");
         return;
       }
-      let roll = new Roll(formula, this.actor.getRollData());
+      if(bonus) {
+        await dicePool.useBonus(bonus);
+      }
+      
+      console.log(dicePool.getFinalFormula());
+      //BUG Use health/stress malus
+      let roll = await new Roll(dicePool.getFinalFormula(), this.actor.getRollData()).roll();
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label,
-        rollMode: game.settings.get("core", "rollMode"),
-      });
+          flavor: label,
+          rollMode: game.settings.get("core", "rollMode"),
+          
+      })
+      document.querySelectorAll(".bonus-icon").forEach(el => {
+        el.classList.remove("fa-check-circle", "fa-times-circle");
+        el.classList.add("fa-dot-circle");
+      })
+      this.actor.useBonus = false;
+        // if(bonus == "xp"){ //Use of character point
+        //   const bonusAvailable = this.actor.data.data.attributes[bonus].value; //We get the available character point.
+        //   const numberOfPoints = await game.zcorps.rollWithBonus(dataset.roll, bonus, bonusAvailable);
+        //   if(!numberOfPoints) {
+        //     return;
+        //   }
+        //   formula = this.actor._parseRollFormulaWithMalus(numberOfPoints, malus);
+        // }
+        // else {
+        //   console.log("Player choosed to use COJONES");
+        //   return;
+        // }
+
       
-      return roll;
+      // else {
+      //   formula = this.actor._parseRollFormulaWithMalus(dataset.roll, malus);
+      // }
+      
+      
+      // if(!formula) {
+      //   ui.notifications.error("Le personnage n'est pas en capacité d'agir");
+      //   return;
+      // }
+      
+      // let roll = await new Roll(formula, this.actor.getRollData()).roll();
+      // const rollResult = this._parseRollResult(roll.terms, 'bonus');
+      // //console.log(rollResult);
+      // //console.log(rollResult.terms[0].results[0].result);
+      // // const message = ChatMessage.create({
+      // //   speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      // //   flavor: "test",
+      // //   content: await renderTemplate(this.chatTemplate["character"], roll.terms)
+      // // });
+      // // roll.toMessage({
+      // //   speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      // //   flavor: label,
+      // //   rollMode: game.settings.get("core", "rollMode"),
+      // //   content : await renderTemplate(this.chatTemplate["character"], roll.terms)
+      // // })
+      // return roll;
     }
 
     
   }
+  _parseRollResult(terms, bonus) {
+    //console.log("Use Bonus ? => ", this.actor.useBonus);
+    //console.log(terms);
+    const diePool = {};
+    terms.forEach(el => {
+      if(el.results)
+        if(el.modifiers[0] == "x") {
+          if(el.flavor == "bloodmoon") {
+            diePool["joker"] = el.results.map(dice => dice.result);
+          }
+          else {
+            diePool["joker_xp"] = diePool["joker"] = el.results.map(dice => dice.result);
+          }
+        }
+        else {
+          diePool["diceBase"] = el.results.map(dice => dice.result);
+        }
+    })
+    console.log(diePool);
+      return "result du parse";
+  }
+
 }

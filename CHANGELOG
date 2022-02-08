@@ -1,4 +1,4 @@
 0.0.4
-- Corrections de bugs
-- Ajout de la gestion de l'utilisation des points de personnages / cojones lors des jets de dés (avant / après un jet).
+- Corrections du bug des images manquantes
+- Ajout de la gestion de l'utilisation des points de personnages / cojones lors des jets de dés (avant un jet).
 - Ajout d'un paramétrage pour le gamemaster pour choisir la limite de points de personnages utilisable.
