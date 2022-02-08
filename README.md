@@ -10,11 +10,7 @@
 
 Développé sur Foundry VTT V9. Non testé sur les versions précédentes
 
-Version 0.0.3
-*(Basée sur le Boilerplate de ["asacolips"](https://github.com/asacolips))*
-
-Autheur: *[Romain MURA](https://www.mura.io)* 
-
+Vous pouvez suivre l'avancement ["ici"](https://github.com/users/piment/projects/1/views/1)
 ---
 ## ▶️ A Faire :
 ### Fiche de perso :
