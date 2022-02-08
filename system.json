@@ -1,43 +1,4 @@
 {
-  "name": "zcorps",
-  "title": "Z-Corps - FR (non-officiel)",
-  "description": "Système de jeu FoundryVTT pour Z-Corps - FR (non-officiel)",
-  "author": "Romain MURA",
-  "authors": [],
-  "url": "https://github.com/piment/zcorps-foundryvtt",
-  "license": "LICENSE.txt",
-  "flags": {},
-  "version": "0.0.3",
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "9",
-  "scripts": [],
-  "esmodules": [
-    "module/zcorps.mjs"
-  ],
-  "styles": [
-    "css/zcorps.css"
-  ],
-  "languages": [
-    {
-      "lang": "fr",
-      "name": "Français",
-      "path": "lang/fr.json"
-    },
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    }
-  ],
-  "packs": [],
-  "system": [],
-  "dependencies": [],
-  "socket": false,
-  "manifest": "https://raw.githubusercontent.com/piment/zcorps-foundryvtt/main/system.json",
-  "download": "https://github.com/piment/zcorps-foundryvtt/raw/main/archive/v0.0.3.zip",
-  "protected": false,
-  "gridDistance": 1,
-  "gridUnits": "m",
-  "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "cojones"
+  "message": "Not Found",
+  "documentation_url": "https://docs.github.com/rest/reference/repos#get-a-release-asset"
 }
