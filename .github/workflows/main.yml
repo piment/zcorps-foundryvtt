@@ -49,14 +49,14 @@ jobs:
       run: echo "::set-output name=version::$(node .github/workflows/set-version.js ${{ github.ref }})"
     
     - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: main
 
-      - name: Foundry Manifest Update
-        id: foundry-manifest-update
-        uses: foundryvtt-dcc/foundry-manifest-update-action@main
-        with:
-          actionToken: ${{ secrets.GITHUB_TOKEN }}
-          manifestFileName: 'system.json'
+    - name: Foundry Manifest Update
+      id: foundry-manifest-update
+      uses: foundryvtt-dcc/foundry-manifest-update-action@main
+      with:
+        actionToken: ${{ secrets.GITHUB_TOKEN }}
+        manifestFileName: 'system.json'
