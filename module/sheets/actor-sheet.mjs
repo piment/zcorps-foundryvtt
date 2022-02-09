@@ -374,8 +374,11 @@ export class zcorpsActorSheet extends ActorSheet {
     });
 
     html.find(".bonus-icon").click(ev => {
+      
       const bonus = ev.target;
       const bonusId = bonus.id;
+      const availablePoints = this.actor.data.data.attributes[bonusId.split("_")[1]].value;
+      
       if(bonusId == "bonus_xp") {
         if(bonus.classList.contains("fa-check-circle")) {
           bonus.classList.replace("fa-check-circle", "fa-dot-circle");
@@ -385,11 +388,13 @@ export class zcorpsActorSheet extends ActorSheet {
           html.find("#bonus_cojones")[0].dataset.bonus = false;
         }
         else {
-          bonus.classList.replace("fa-dot-circle", "fa-check-circle");
-          bonus.dataset.bonus = true;
-          this.actor.useBonus = "xp";
-          html.find("#bonus_cojones")[0].classList.replace("fa-dot-circle", "fa-times-circle");
-          html.find("#bonus_cojones")[0].dataset.bonus = false;
+          if(availablePoints > 0){
+            bonus.classList.replace("fa-dot-circle", "fa-check-circle");
+            bonus.dataset.bonus = true;
+            this.actor.useBonus = "xp";
+            html.find("#bonus_cojones")[0].classList.replace("fa-dot-circle", "fa-times-circle");
+            html.find("#bonus_cojones")[0].dataset.bonus = false;
+          }
         }
       }
       else {
@@ -401,11 +406,13 @@ export class zcorpsActorSheet extends ActorSheet {
           html.find("#bonus_xp")[0].dataset.bonus = false;
         }
         else {
-          bonus.classList.replace("fa-dot-circle", "fa-check-circle");
-          bonus.dataset.bonus = true;
-          this.actor.useBonus = "cojones";
-          html.find("#bonus_xp")[0].classList.replace("fa-dot-circle", "fa-times-circle");
-          html.find("#bonus_xp")[0].dataset.bonus = false;
+          if(availablePoints > 0) {
+            bonus.classList.replace("fa-dot-circle", "fa-check-circle");
+            bonus.dataset.bonus = true;
+            this.actor.useBonus = "cojones";
+            html.find("#bonus_xp")[0].classList.replace("fa-dot-circle", "fa-times-circle");
+            html.find("#bonus_xp")[0].dataset.bonus = false;
+          }
         }
       }
     })
@@ -503,7 +510,7 @@ export class zcorpsActorSheet extends ActorSheet {
       let label = dataset.label ? `[lance] ${dataset.label} (${dataset.roll}) (Malus: ${this.actor.context.healthLevel[healthStatus]})` : "";
 
       const dicePool = new diceRollHelper({actor: this.actor, formula: dataset.roll});
-      console.log("dicepool health statuts", dicePool.getHealthStatus())
+      
       if(dicePool.getHealthStatus() == -1) {
         ui.notifications.error("Le personnage est mort, désolé!..");
         return;
@@ -515,7 +522,17 @@ export class zcorpsActorSheet extends ActorSheet {
         return;
       }
       if(bonus) {
-        await dicePool.useBonus(bonus);
+        const bonusValue = await dicePool.useBonus(bonus);
+        if(!bonusValue) {
+          document.querySelectorAll(".bonus-icon").forEach(el => {
+            el.classList.remove("fa-check-circle", "fa-times-circle");
+            el.classList.add("fa-dot-circle");
+          })
+          return;
+        }
+        this.actor.data.data.attributes[bonus].value -= bonusValue;
+        this.actor.update({data: this.actor.data.data});
+        
       }
       
       //BUG Use health/stress malus

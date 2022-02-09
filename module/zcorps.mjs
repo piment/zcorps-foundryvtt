@@ -132,13 +132,15 @@ Handlebars.registerHelper("getHealthStatus", level => {
   }
 });
 
-Handlebars.registerHelper("createRange", (rangeName, max) => {
-  let list = `<datalist id="${rangeName}-list">`;
-  for(let i = 0; i <= max; i++) {
+Handlebars.registerHelper("createRange", (limit, available) => {
+  let list = `<datalist id="xp-list">`;
+  limit = limit > available ? available : limit;
+  console.log(limit);
+  for(let i = 0; i <= limit; i++) {
     list += `<option value="${i}" label="${i}">${i}</option>`
   }
   list += '</datalist>'
-  return new Handlebars.SafeString(`<input list="${rangeName}-list" class="bonus-range" name="${rangeName}" type="range" min="0" max="${max}" step="0" value="0"/>${list}`);
+  return new Handlebars.SafeString(`<input list="xp-list" class="bonus-range" name="xp" type="range" min="0" max="${limit}" step="0" value="0"/>${list}`);
 });
 
 Handlebars.registerHelper("getDiceByColor", (dice, color) => {

@@ -20,11 +20,9 @@ export class diceRollHelper {
     }
 
     static parseBaseFormula(params) {
-
         const baseDice = dicePool.base;
         const roll = new Roll("1D6 +2");
         roll.evaluate();
-        console.log(params.useBonus);
     }
 
     _getMalus(health) {
@@ -71,23 +69,25 @@ export class diceRollHelper {
 
     async useBonus(bonus){
         if(bonus == "xp"){
-            console.log("adding bonus xp");
+            //console.log("adding bonus xp");
             const bonusValue = await this._getBonusValue();
             if(bonusValue){
                 this.baseDicePool.xp = +bonusValue - 1;
                 this.baseDicePool.joker_xp = 1;
+                return bonusValue;
             }
             else {
                 return 0;
             }
-            console.log(this.baseDicePool);
+            //console.log(this.baseDicePool);
         }
         else {
-            console.log("adding bonus cojones");
+            //console.log("adding bonus cojones");
             this.baseDicePool.base = (this.baseDicePool.base + 1) * 2 - 1;
             this.baseDicePool.tier *= 2;
+            return 1;
             //this.baseDicePool.joker = 1;
-            console.log(this.baseDicePool);
+            //console.log(this.baseDicePool);
         }
         
         
@@ -113,10 +113,10 @@ export class diceRollHelper {
         // }
     }
 
-    async _askForBonusValue(formula, max) {
+    async _askForBonusValue(formula, available) {
         const template = `systems/zcorps/templates/actor/parts/bonusSelection.hbs`;
         const [dice, tier] = formula.split("D+");
-        const html = await renderTemplate(template, {dice: dice, tier: tier, max: max, limit: game.settings.get("zcorps", "XPPointPerRollMax")});
+        const html = await renderTemplate(template, {dice: dice, tier: tier, available: available, limit: game.settings.get("zcorps", "XPPointPerRollMax")});
 
         return new Promise(resolve => {
             const data = {
