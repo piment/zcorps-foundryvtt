@@ -159,13 +159,16 @@ Handlebars.registerHelper("parseResults", (results) => {
 
 Hooks.on("renderPlayerList", async function(playerList, html) {
   
-  const loggedInUser = html.find(`[data-user-id="${game.userId}"]`);
+  if(game.user.data.role == 4){
+    const loggedInUser = html.find(`[data-user-id="${game.userId}"]`);
   const tooltip = game.i18n.localize('ZCORPS.gamemaster.title');
   loggedInUser.append(`<button type="button" class="gamemaster_button flex0" title="${tooltip}"><i class="fas fa-dungeon"></i></button>`);
 
   html.on('click', '.gamemaster_button', event => {
     openGamemasterToolsDialog();
   });
+  }
+  
   
 })
 

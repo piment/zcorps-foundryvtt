@@ -1,5 +1,9 @@
+0.0.6
+- Modification pour affichage de la boite à outils MJ uniquement pour les "Game master".
+---
+
 0.0.5
-- Ajout d'une boîte à outils pour le MJ :
+- Ajout d'une boite à outils pour le MJ :
     - Edition du nombre de points de personnages / cojones.
 - Correction d'un bug d'affichage sur la FICHE PERSO (Commune) lorsque de la valeur des points de perso/cojones est composée de 2 chiffres (ex. 18).
 ---
