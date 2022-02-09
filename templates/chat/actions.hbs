@@ -1,12 +1,9 @@
-<form>
-    {{log this}}
+<form class="chat-actions-card">
+    {{log data.dice}}
     <p>Nouveau jet</p>
-    <ul>
-        {{#each this as |item key|}}
-            <li>
-                {{parseResults item}}
-                
-            </li>
+    <ul class="base_dice">
+        {{#each (getDiceByColor data.dice 'black') as |dice key|}}
+            {{dice.}}
         {{/each}}
     </ul>
     

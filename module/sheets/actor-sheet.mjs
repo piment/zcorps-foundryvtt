@@ -503,29 +503,30 @@ export class zcorpsActorSheet extends ActorSheet {
       let label = dataset.label ? `[lance] ${dataset.label} (${dataset.roll}) (Malus: ${this.actor.context.healthLevel[healthStatus]})` : "";
 
       const dicePool = new diceRollHelper({actor: this.actor, formula: dataset.roll});
-      
+      console.log("dicepool health statuts", dicePool.getHealthStatus())
       if(dicePool.getHealthStatus() == -1) {
         ui.notifications.error("Le personnage est mort, désolé!..");
         return;
       }
     
       //If the player choose to use character or cojones points
-      console.log("start formula => ", dicePool.baseDicePool.base, dicePool.baseDicePool.joker);
       if(!dicePool.canAct){
-        ui.notifications.error("Le personnage n'est pas en capacité d'agir");
+        ui.notifications.warn("Le personnage n'est pas en capacité d'agir");
         return;
       }
       if(bonus) {
         await dicePool.useBonus(bonus);
       }
       
-      console.log(dicePool.getFinalFormula());
       //BUG Use health/stress malus
       let roll = await new Roll(dicePool.getFinalFormula(), this.actor.getRollData()).roll();
+      const template = "systems/zcorps/templates/chat/actions.hbs";
+      const templateRendered = await renderTemplate(template, {data : roll});
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
           flavor: label,
           rollMode: game.settings.get("core", "rollMode"),
+          content: templateRendered
           
       })
       document.querySelectorAll(".bonus-icon").forEach(el => {

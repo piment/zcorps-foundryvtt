@@ -139,6 +139,11 @@ Handlebars.registerHelper("createRange", (rangeName, max) => {
   }
   list += '</datalist>'
   return new Handlebars.SafeString(`<input list="${rangeName}-list" class="bonus-range" name="${rangeName}" type="range" min="0" max="${max}" step="0" value="0"/>${list}`);
+});
+
+Handlebars.registerHelper("getDiceByColor", (dice, color) => {
+  console.log(dice);
+  return dice.filter(die => die.flavor == color);
 })
 
 Handlebars.registerHelper("parseResults", (results) => {
@@ -161,12 +166,12 @@ Hooks.on("renderPlayerList", async function(playerList, html) {
   
   if(game.user.data.role == 4){
     const loggedInUser = html.find(`[data-user-id="${game.userId}"]`);
-  const tooltip = game.i18n.localize('ZCORPS.gamemaster.title');
-  loggedInUser.append(`<button type="button" class="gamemaster_button flex0" title="${tooltip}"><i class="fas fa-dungeon"></i></button>`);
+    const tooltip = game.i18n.localize('ZCORPS.gamemaster.title');
+    loggedInUser.append(`<button type="button" class="gamemaster_button flex0" title="${tooltip}"><i class="fas fa-dungeon"></i></button>`);
 
-  html.on('click', '.gamemaster_button', event => {
-    openGamemasterToolsDialog();
-  });
+    html.on('click', '.gamemaster_button', event => {
+      openGamemasterToolsDialog();
+    });
   }
   
   

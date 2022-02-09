@@ -1,5 +1,7 @@
-# :zombie_man: Z-Corps pour Foundry VTT :zombie_woman: 
+# :zombie_man: Z-Corps pour Foundry VTT :zombie_woman: [![Latest release dowbloads](https://img.shields.io/github/downloads/piment/zcorps-foundryvtt/total)](https://github.com/piment/zcorps-foundryvtt/releases/latest/)
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/piment/zcorps-foundryvtt?color=blue)](https://github.com/piment/zcorps-foundryvtt/releases/latest/) 
+[![Release Creation](https://github.com/piment/zcorps-foundryvtt/actions/workflows/main.yml/badge.svg)](https://github.com/piment/zcorps-foundryvtt/actions/workflows/main.yml)
+
 ![Foundry Core Compatible Version](https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https%3A%2F%2Fgithub.com%2Fpiment%2Fzcorps-foundryvtt%2Freleases%2Flatest%2Fdownload%2Fsystem.json&color=orange)
 ![Repository License](https://img.shields.io/github/license/piment/zcorps-foundryvtt?color=lightgrey)
 [![discord](https://img.shields.io/badge/-DISCORD-%23?color=blueviolet)](https://discord.gg/rbsvujHH)

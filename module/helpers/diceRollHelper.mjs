@@ -2,9 +2,8 @@ export class diceRollHelper {
     constructor(params) {
         this.data = params.actor.data.data;
         this.bonus = params.actor.useBonus;
-        this.healtStatus = this._getMalus(parseInt(this.data.attributes.health));
+        this.healthMalus = this._getMalus(parseInt(this.data.attributes.health));
         this.canAct = false;
-
         this.baseDicePool = {
             formula: params.formula,
             base: 0,
@@ -12,7 +11,7 @@ export class diceRollHelper {
             joker: 0,
             xp: 0,
             joker_xp: 0,
-            health_malus: 0,
+            health_malus: this.healthMalus,
             stress_malus: 0
         };
         this._parseFormula();
@@ -67,7 +66,7 @@ export class diceRollHelper {
     }
 
     getHealthStatus(){
-        return this.healtStatus;
+        return this.healthMalus;
     }
 
     async useBonus(bonus){
@@ -98,11 +97,12 @@ export class diceRollHelper {
         const bonusValue = await this._askForBonusValue(this.baseDicePool.formula, this.data.attributes.xp.value);
         return bonusValue;
     }
+
     _parseFormula() {
         
         [this.baseDicePool.base, this.baseDicePool.tier] = this.baseDicePool.formula.split("D+");
-        console.log("At start ", this.baseDicePool.base);
-        if(parseInt(this.baseDicePool.base)){
+        console.log("health malus ", parseInt(this.baseDicePool.base) - this.baseDicePool.health_malus);
+        if(this.baseDicePool.base - this.baseDicePool.health_malus > 0 && this.baseDicePool.health_malus != -1){
             this.canAct = true;
             this.baseDicePool.base -= 1;
             this.baseDicePool.joker += 1;
@@ -149,7 +149,7 @@ export class diceRollHelper {
     }
 
     getFinalFormula() {
-        
+        this.baseDicePool.base = this.baseDicePool.base - this.baseDicePool.health_malus;
         const base = `${this.baseDicePool.base}D6[black] + ${this.baseDicePool.joker}D6x[bloodmoon]`;
         let xp = "";
         if (this.baseDicePool.joker_xp) {
