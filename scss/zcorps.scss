@@ -132,3 +132,16 @@ body {
     color:$c-white;
   }
 }
+
+button.gamemaster_button {
+  background: transparent;
+  padding: 0;
+  color: white;
+  line-height: normal;
+  border: 0;
+  align-self: center;
+  &:hover {
+    box-shadow: none;
+    text-shadow: 0 0 5px red;
+  }
+}

@@ -6,6 +6,11 @@
   "ZCORPS.EffectDelete": "Delete Effect",
 
   "ZCORPS.Add": "Add",
+  "ZCORPS.validate": "Valider",
+  
+  "ZCORPS.gamemaster" : {
+    "title": "Outils du MJ"
+  },
   "ZCORPS.actor" : {
     "caracteristics" : {
       "agility": "Agilité",

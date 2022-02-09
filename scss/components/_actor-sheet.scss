@@ -114,7 +114,13 @@
                         flex-direction: row;
                         justify-content: space-between;
                         span {
+                            text-align: center;
                             width: auto;
+                            em {
+                                font-size: 0.9em;
+                                color: $zcorps-red-light;
+                                margin-right: 5px;
+                            }
                             .fa-check-circle {
                                 color: yellowgreen;
                             }
@@ -122,7 +128,7 @@
                                 color: #333;
                             }
                             .fa-times-circle {
-                                color: $zcorps-red-darker;
+                                color: $zcorps-red;
                             }
                         }
                     }

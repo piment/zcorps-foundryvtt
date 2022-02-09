@@ -1,0 +1,23 @@
+<form>
+    <h1>GAME MASTER TOOLS V0.0.1</h1>
+    <h3>Edition des points de personnage / cojones</h3>
+    <ol>
+        {{#each actors as |actor keyActor|}}
+            
+            <div class="form-group">
+                <p>{{actor.name}}</p>
+                <div>
+                    <h5>point de personnage</h5>
+                    <input type="text" name="xp" value="{{actor.data.attributes.xp.value}}" data-actor_id="{{actor._id}}" data-value="xp"/>
+                    <button class="gm_validate_value">{{localize 'ZCORPS.validate'}}</button>
+                </div>
+                <div>
+                    <h5>point de cojones</h5>
+                    <input type="text" name="cojones" value="{{actor.data.attributes.cojones.value}}" data-actor_id="{{actor._id}}" data-value="cojones"/>
+                    <button class="gm_validate_value">{{localize 'ZCORPS.validate'}}</button>
+                </div>
+            </div>
+            
+        {{/each}}
+    </ol>
+</form>

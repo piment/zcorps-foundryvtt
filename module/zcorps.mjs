@@ -157,6 +157,18 @@ Handlebars.registerHelper("parseResults", (results) => {
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
+Hooks.on("renderPlayerList", async function(playerList, html) {
+  
+  const loggedInUser = html.find(`[data-user-id="${game.userId}"]`);
+  const tooltip = game.i18n.localize('ZCORPS.gamemaster.title');
+  loggedInUser.append(`<button type="button" class="gamemaster_button flex0" title="${tooltip}"><i class="fas fa-dungeon"></i></button>`);
+
+  html.on('click', '.gamemaster_button', event => {
+    openGamemasterToolsDialog();
+  });
+  
+})
+
 Hooks.once("ready", async function() {
   $("#logo").attr('src', "systems/zcorps/ui/zc_logo.png");
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
@@ -165,29 +177,36 @@ Hooks.once("ready", async function() {
 
 Hooks.on("renderDialog", (dialog, id, context) => {
   
+  if(document.querySelector(".gamemaster_tools_dialog")) {
+    document.querySelectorAll('.gm_validate_value').forEach(el =>{
+      el.addEventListener("click", ev => {
+        const input_value = ev.target.parentNode.children[1].value;
+        const actor_id = ev.target.parentNode.children[1].dataset.actor_id;
+        const value = ev.target.parentNode.children[1].dataset.value;
+        console.log(input_value, actor_id, value);
+        const actor = game.actors.get(actor_id);
+        actor.data.data.attributes[value].value = input_value;
+        actor.update({data: actor.data.data});
+      })
+    });
+    console.log(dialog);
+  }
 
-
-  //let dice = document.querySelector(".formula-dice");
-  //let tier = document.querySelector(".formula-tier");
-  const formula_bonus_input = document.querySelector(".formula_bonus")
+  if(document.querySelector(".formula_bonus")) {
+    const formula_bonus_input = document.querySelector(".formula_bonus")
   formula_bonus_input.classList.add("hidden");
-  //formula_bonus_input.value = ev.currentTarget.value;
-
   document.querySelectorAll(".bonus-range").forEach(el => {
 
     el.addEventListener("input", ev => {
-
       const label = document.querySelector(`#${ev.target.name}-range-value`);
-
       if(ev.target.name == "xp") {
-        //dice.innerHTML = +dice.dataset.dice + +ev.currentTarget.value;
-        //formula_bonus_input.value = dice.innerHTML + "D+" + tier.innerHTML;
         formula_bonus_input.value = ev.currentTarget.value;
       }
-
       label.innerHTML = ev.currentTarget.value;
     })
   })
+  }
+  
 });
 
 
@@ -241,3 +260,29 @@ function rollItemMacro(itemName) {
   return item.roll();
 }
 
+async function openGamemasterToolsDialog() {
+  const template = "systems/zcorps/templates/gamemaster/tools-dialog.hbs";
+  const actors = getActorsList();
+  console.log(actors);
+  const renderedTemplate = await renderTemplate(template, {actors: actors});
+  const data = {
+    title: game.i18n.localize('ZCORPS.gamemaster.title'),
+    content: renderedTemplate,
+    buttons: {}
+}
+
+new Dialog(data, {
+    with: 500,
+    classes: ["gamemaster_tools_dialog"],
+}).render(true);
+}
+
+function getActorsList() {
+  const actors = [];
+  game.actors.forEach(actor => {
+    if(actor.data.type == "character"){
+      actors.push(actor.data);
+    }
+  });
+  return actors;
+}

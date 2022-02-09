@@ -665,7 +665,14 @@
 }
 
 .actor .window-content .sheet-header .header-block.levels .level .resource-content span {
+  text-align: center;
   width: auto;
+}
+
+.actor .window-content .sheet-header .header-block.levels .level .resource-content span em {
+  font-size: 0.9em;
+  color: #922020;
+  margin-right: 5px;
 }
 
 .actor .window-content .sheet-header .header-block.levels .level .resource-content span .fa-check-circle {
@@ -677,7 +684,7 @@
 }
 
 .actor .window-content .sheet-header .header-block.levels .level .resource-content span .fa-times-circle {
-  color: #381b1b;
+  color: #681c1c;
 }
 
 .actor .window-content .sheet-header .header-block.levels .level .use-bonus {
@@ -1103,4 +1110,20 @@ body {
 
 .app.bonus .bonus-dialog {
   color: #fff;
+}
+
+button.gamemaster_button {
+  background: transparent;
+  padding: 0;
+  color: white;
+  line-height: normal;
+  border: 0;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+button.gamemaster_button:hover {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  text-shadow: 0 0 5px red;
 }

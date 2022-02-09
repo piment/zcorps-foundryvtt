@@ -1,4 +1,10 @@
+0.0.5
+- Ajout d'une boîte à outils pour le MJ :
+    - Edition du nombre de points de personnages / cojones.
+- Correction d'un bug d'affichage sur la FICHE PERSO (Commune) lorsque de la valeur des points de perso/cojones est composée de 2 chiffres (ex. 18).
+---
+
 0.0.4
-- Corrections du bug des images manquantes
+- Correction du bug des images manquantes
 - Ajout de la gestion de l'utilisation des points de personnages / cojones lors des jets de dés (avant un jet).
 - Ajout d'un paramétrage pour le gamemaster pour choisir la limite de points de personnages utilisable.
