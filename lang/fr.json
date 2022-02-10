@@ -20,8 +20,7 @@
   "ZCORPS.strength": "Puissance",
   "ZCORPS.presence": "Présence",
 
-  "ZCORPS.actor" : {
-    "skills" : {
+  "ZCORPS.skills" : {
       "acrobatics": "Acrobaties",
       "fight": "Bagarre",
       "contortion": "Contorsion",
@@ -69,8 +68,9 @@
       "intimidation": "Intimidation",
       "persuasion": "Persuasion",
       "will": "Volonté"
-    },
-    "attributes" : {
+  },
+  
+  "ZCORPS.attributes" : {
       "nickname": "Pseudo",
       "age": "Age",
       "height": "Taille",
@@ -86,7 +86,6 @@
       "cojones" : {
         "hint": "Point de cojones"
       }
-    }
   },
 
   "TODO-LIST": {

@@ -1,0 +1,13 @@
+<form autocomplete="off">
+    <h3>Création d'une nouvelle compétence</h3>
+    <div class="form-group">
+        <label for="data.caracteristic">Caractéristique associée : </label>
+        <select name="data.caracteristic" id="data.caracteristic">
+        {{#select data.caracteristic}}
+            {{selectOptions caracteristics selected=value nameAttr=key}}
+        {{/select}}
+        </select>
+    </div>
+    
+    
+</form>

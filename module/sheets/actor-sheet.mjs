@@ -42,15 +42,13 @@ export class zcorpsActorSheet extends ActorSheet {
     // sheets are the actor object, the data object, whether or not it's
     // editable, the items array, and the effects array.
     const context = super.getData();
-
+    
     
     // Use a safe clone of the actor data for further operations.
     const actorData = this.actor.data.toObject(false);
-
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = actorData.data;
     context.flags = actorData.flags;
-
     // Prepare character data and items.
     if (actorData.type == "character") {
       //this.totalSkill = 0;
@@ -80,11 +78,11 @@ export class zcorpsActorSheet extends ActorSheet {
    */
   _prepareCharacterData(context) {
     context.caracs = context.data.caracs; 
-    
     context.skillsOwned = 0;
-    //Calculate the skills base on the caracteristic
     
-    
+    for(let skill of context.skillsAdded) {
+      context.caracs[skill.carac].skills[skill.name] = skill;
+    }
     for (const [caracKey, caracItem] of Object.entries(context.caracs)) {
       for (const [skillKey, skillItem] of Object.entries(caracItem.skills)) {
         if (!skillItem.owned) { 
@@ -123,7 +121,8 @@ export class zcorpsActorSheet extends ActorSheet {
     const gear = [];
     const arme = [];
     const ammo = [];
-    const specialisation = [];
+    const skills = [];
+    const specialisations = [];
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -156,7 +155,10 @@ export class zcorpsActorSheet extends ActorSheet {
         //console.log(ammoFinal);
       }
       else if (i.type === "specialisation") {
-        specialisation.push(i);
+        specialisations.push(i);
+      }
+      else if (i.type === "skill") {
+        skills.push({name: i.name, carac: i.data.caracteristic, value: 0, owned: true, tiers: i.data.tiers, added: true, id: i._id})
       }
     }
 
@@ -164,7 +166,9 @@ export class zcorpsActorSheet extends ActorSheet {
     context.gear = gear;
     context.arme = arme;
     context.ammo = ammo;
-    context.specialisation = specialisation;
+    context.specialisations = specialisations;
+    context.skillsAdded = skills;
+    console.log(context.skillsAdded)
   }
 
   async _onDropItem(event, data) {
@@ -192,10 +196,11 @@ export class zcorpsActorSheet extends ActorSheet {
         this.ActorSheet.render(true);
       }
       else {
+        console.log(this.actor.items);
         return this._onDropItemCreate(droppedItemData);
       } 
     }
-
+    
     else {
       return this._onDropItemCreate(droppedItemData);
     }
@@ -299,10 +304,13 @@ export class zcorpsActorSheet extends ActorSheet {
 
     // Delete Inventory Item
     html.find(".item-delete").click((ev) => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
-      item.delete();
-      li.slideUp(200, () => this.render(false));
+      const li = $(ev.currentTarget).parents(".item")[0];
+      console.log(li.dataset["item_id"]);
+        const item = this.actor.items.get(li.dataset["item_id"]);
+        item.delete();
+        li.slideUp(200, () => this.render(false));
+      
+      
     });
 
     

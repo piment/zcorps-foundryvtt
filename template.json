@@ -615,7 +615,8 @@
           "gender": ""
         },
         "skillOwned": 0
-      }
+      },
+      "skillAdded": {}
     },
     "npc": {
       "templates": ["base"]

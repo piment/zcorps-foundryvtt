@@ -145,7 +145,7 @@
                 
                 <ul class="skills-block {{#if ../../actor.editSheet}}list-style-none{{/if}}">
                   {{#each carac.skills as |skill skillId|}}
-                    <li class="skill {{#if skill.owned}}owned{{/if}} {{#if ../../actor.editSheet}}list-style-none{{/if}}">
+                    <li class="skill item {{#if skill.owned}}owned{{/if}} {{#if ../../actor.editSheet}}list-style-none{{/if}}" data-skill="{{skillId}}" data-item_id="{{skill.id}}">
                       <div class="skill-info ">
                         {{#if ../../actor.editSheet}}
                           <span class="checkbox {{#if skill.owned}}checked{{/if}}" data-carac="{{caracId}}" data-skill="{{skillId}}"></span><!--<input type="checkbox" name="data.caracs.{{caracId}}.skills.{{skillId}}.owned" {{#if skill.owned}}checked{{/if}}/>-->
@@ -169,6 +169,11 @@
                                 <span class="tier {{#if skill.tiers.skill_2}}checked{{/if}} {{#if skill.owned}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
                               </div>
                             </div>
+                              {{#if skill.added}}
+                              <div>
+                                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                              </div>
+                              {{/if}}
                             {{else}}
                             <div class="level-block">
                               <div class="tiers">

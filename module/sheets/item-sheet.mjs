@@ -1,3 +1,4 @@
+import { ZCORPS } from "../helpers/config.mjs";
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
@@ -31,7 +32,17 @@ export class zcorpsItemSheet extends ItemSheet {
   getData() {
     // Retrieve base data structure.
     const context = super.getData();
-    context.ammoType = {0: ".38", 1: "9mm", 2: ".22"};
+    const itemType = context.item.type;
+    //SKILL PART
+    if(itemType == "skill"){
+      context.caracteristics = {}
+      for(let [key, skill] of Object.entries(ZCORPS.caracteristics)) {
+        context.caracteristics[key] = game.i18n.localize(ZCORPS.caracteristics[key]);
+      }
+    }
+    
+
+    //context.ammoType = {0: ".38", 1: "9mm", 2: ".22"};
     // Use a safe clone of the item data for further operations.
     const itemData = context.item.data;
 
@@ -45,7 +56,7 @@ export class zcorpsItemSheet extends ItemSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = itemData.data;
     context.flags = itemData.flags;
-    context.armeType = {"armedepoing": "arme de poing", "armedejet": "arme de jet", "armedepaule" : "arme d'épaule", "armecontandante": "arme contandante"};
+    //context.armeType = {"armedepoing": "arme de poing", "armedejet": "arme de jet", "armedepaule" : "arme d'épaule", "armecontandante": "arme contandante"};
     //console.log(Object.keys(context))
     //console.log(context.item.data);
     return context;
