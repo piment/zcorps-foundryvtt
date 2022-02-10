@@ -79,10 +79,12 @@ export class zcorpsActorSheet extends ActorSheet {
   _prepareCharacterData(context) {
     context.caracs = context.data.caracs; 
     context.skillsOwned = 0;
-    
-    for(let skill of context.skillsAdded) {
-      context.caracs[skill.carac].skills[skill.name] = skill;
+    if(context.skillsAdded.length){
+      for(let skill of context.skillsAdded) {
+        context.caracs[skill.carac].skills[skill.name] = skill;
+      }
     }
+    
     for (const [caracKey, caracItem] of Object.entries(context.caracs)) {
       for (const [skillKey, skillItem] of Object.entries(caracItem.skills)) {
         if (!skillItem.owned) { 
@@ -125,6 +127,7 @@ export class zcorpsActorSheet extends ActorSheet {
     const specialisations = [];
 
     // Iterate through items, allocating to containers
+    console.log("Prepare Items : ", this.actor.items);
     for (let i of context.items) {
       i.img = i.img || DEFAULT_TOKEN;
       // Append to gear.
@@ -306,11 +309,10 @@ export class zcorpsActorSheet extends ActorSheet {
     html.find(".item-delete").click((ev) => {
       const li = $(ev.currentTarget).parents(".item")[0];
       console.log(li.dataset["item_id"]);
-        const item = this.actor.items.get(li.dataset["item_id"]);
-        item.delete();
-        li.slideUp(200, () => this.render(false));
-      
-      
+      console.log(this.actor.items);
+      const item = this.actor.items.get(li.dataset["item_id"]);
+      item.delete();
+      this.render(true);
     });
 
     

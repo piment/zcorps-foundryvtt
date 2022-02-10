@@ -1,3 +1,7 @@
+0.0.8
+- Correction d'un bug lors de la suppression d'une compétence ajoutée (impossible de ré-afficher la fiche de perso)
+---
+
 0.0.7
 - Correction du bug de non prise en compte des tiers lors des jets de dés
 - Ajout de la gestion de nouvelles compétences
