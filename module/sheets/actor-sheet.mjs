@@ -305,10 +305,7 @@ export class zcorpsActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
-    // Active Effect management
-    html
-      .find(".effect-control")
-      .click((ev) => onManageActiveEffect(ev, this.actor));
+    
 
     // Rollable abilities.
     html.find(".rollable").click(this._onRoll.bind(this));
@@ -504,10 +501,8 @@ export class zcorpsActorSheet extends ActorSheet {
         return item.update({"data.ammo-actual": item.data.data["ammo-actual"]});
       }
     }
-
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
-      
       
       const bonus = this.actor.useBonus;
       const healthStatus = this.actor.data.data.attributes.health;
@@ -544,12 +539,6 @@ export class zcorpsActorSheet extends ActorSheet {
       let roll = await new Roll(dicePool.getFinalFormula(), {}).roll();
       const template = "systems/zcorps/templates/chat/actions.hbs";
       const templateRendered = await renderTemplate(template, {roll : this._parseRollResult(roll.dice), actor: this.actor.data, label: dataset.label});
-      console.log(this._parseRollResult(roll.dice));
-      // roll.toMessage({
-      //     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      //     rollMode: game.settings.get("core", "rollMode"),
-      //     content: templateRendered
-      // }, {classes: ["TEST"]}, {})
       
       document.querySelectorAll(".bonus-icon").forEach(el => {
         el.classList.remove("fa-check-circle", "fa-times-circle");
@@ -564,32 +553,16 @@ export class zcorpsActorSheet extends ActorSheet {
         speaker: ChatMessage.getSpeaker({actor: this.actor}),
         content: templateRendered,
         rollMode: game.settings.get('core', 'rollMode')
-      })
-      
-      //game.dice3d.showForRoll(roll, myMessage.id);
-     
-      //console.log("message = ", myMessage);
-      
-      // let roll = await new Roll(formula, this.actor.getRollData()).roll();
-      // const rollResult = this._parseRollResult(roll.terms, 'bonus');
-      // //console.log(rollResult);
-      // //console.log(rollResult.terms[0].results[0].result);
-      // // const message = ChatMessage.create({
-      // //   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-      // //   flavor: "test",
-      // //   content: await renderTemplate(this.chatTemplate["character"], roll.terms)
-      // // });
-      // // roll.toMessage({
-      // //   speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      // //   flavor: label,
-      // //   rollMode: game.settings.get("core", "rollMode"),
-      // //   content : await renderTemplate(this.chatTemplate["character"], roll.terms)
-      // // })
-      // return roll;
+      });
     }
-
-    
   }
+
+  /**
+   * 
+   * @param {Array} dice 
+   * @returns calculated results for roll
+   * @private
+   */
   _parseRollResult(dice) {
     const results = {
       base: [],
@@ -620,10 +593,7 @@ export class zcorpsActorSheet extends ActorSheet {
       else {
         results.total_fail = 0;
       }
-      
-      
     }
-
     return results;
   }
 }

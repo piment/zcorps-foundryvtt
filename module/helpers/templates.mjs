@@ -10,5 +10,8 @@
     "systems/zcorps/templates/actor/parts/actor-caracs.html",
     "systems/zcorps/templates/actor/parts/actor-items.html",
     "systems/zcorps/templates/actor/parts/actor-effects.html",
+    "systems/zcorps/templates/actor/parts/bonusSelection.hbs",
+    "systems/zcorps/templates/chat/actions.hbs",
+    "systems/zcorps/templates/gamemaster/tools-dialog.hbs",
   ]);
 };

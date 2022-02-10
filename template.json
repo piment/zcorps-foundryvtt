@@ -625,7 +625,7 @@
     }
   },
   "Item": {
-    "types": ["item", "specialisation", "arme", "ammo"],
+    "types": ["item", "skill", "specialisation", "arme", "ammo"],
     "templates": {
       "base": {
         "description": ""
@@ -636,6 +636,18 @@
       "quantity": 1,
       "weight": 0,
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
+    "skill": {
+      "name": "",
+      "caracteristic": "",
+      "owned": true,
+      "value": 0,
+      "tiers": {
+        "carac_1": 0,
+        "carac_2": 0,
+        "skill_1": 0,
+        "skill_2": 0
+      }
     },
     "specialisation": {
       "name": "",
