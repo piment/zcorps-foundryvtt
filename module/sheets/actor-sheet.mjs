@@ -546,7 +546,8 @@ export class zcorpsActorSheet extends ActorSheet {
       //BUG Use health/stress malus
       let roll = await new Roll(dicePool.getFinalFormula(), {}).roll();
       const template = "systems/zcorps/templates/chat/actions.hbs";
-      const templateRendered = await renderTemplate(template, {roll : this._parseRollResult(roll.dice), actor: this.actor.data, label: dataset.label});
+      const tier = roll.terms.slice(roll.terms.length - 1);
+      const templateRendered = await renderTemplate(template, {roll : this._parseRollResult(roll.dice, tier), actor: this.actor.data, label: dataset.label});
       
       document.querySelectorAll(".bonus-icon").forEach(el => {
         el.classList.remove("fa-check-circle", "fa-times-circle");
@@ -571,14 +572,16 @@ export class zcorpsActorSheet extends ActorSheet {
    * @returns calculated results for roll
    * @private
    */
-  _parseRollResult(dice) {
+  _parseRollResult(dice, tier) {
+    console.log(tier[0])
     const results = {
       base: [],
       joker: [],
       xp: [],
       total_base: 0,
       total_fail: 0,
-      fail: false
+      fail: false,
+      tier: !tier[0].results ? tier[0].total : 0
     }
     dice.forEach(die => {
       if(die.flavor == "black"){
@@ -592,7 +595,7 @@ export class zcorpsActorSheet extends ActorSheet {
         results.xp = die.results.map(el => el.result)
       }
     })
-    results.total_base = [...results.base, ...results.joker, ...results.xp].reduce((init, current) => init + current);
+    results.total_base = [...results.base, ...results.joker, ...results.xp].reduce((init, current) => init + current) + results.tier;
     if(results.joker[0] == 1){
       results.fail = true;
       if(results.base[0]) {
