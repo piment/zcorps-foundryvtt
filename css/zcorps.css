@@ -465,6 +465,171 @@
   border: none;
 }
 
+.system-zcorps .chat-message.actions-message {
+  color: #fff;
+  border: none;
+  border-radius: 0;
+  background: none;
+  background-color: #222;
+  padding: 0;
+  margin: 20px 0;
+  border-top: 1px solid #333;
+}
+
+.system-zcorps .chat-message.actions-message .message-header {
+  background-color: #444;
+  margin: 0;
+  padding: 3px;
+  color: #aaa;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card {
+  padding: 0;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .card-header {
+  width: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .card-header .actor-img {
+  width: 30px;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .card-header .header-infos {
+  background-color: #333;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .card-header .header-infos .pseudo {
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .card-header .header-infos .label {
+  justify-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice .die {
+  margin: 5px 0 0 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice .die span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  color: white;
+  text-align: center;
+  border-radius: 2px;
+  margin: 0 2px;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice .die span.fail {
+  width: auto;
+  color: red;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice .die .base-die {
+  background-color: #111;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice .die .joker-die {
+  background-color: #681c1c;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice .die .xp-die {
+  background-color: #689213;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice .total {
+  background-color: #333;
+  display: block;
+  width: auto;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice .total_fail {
+  background-color: #922020;
+  display: block;
+  width: auto;
+  padding: 5px;
+}
+
 .actor .window-content {
   padding: 0;
   color: #fff;
@@ -960,6 +1125,14 @@
 .actor .window-content .sheet-body .caracteristics input[type="text"]:focus-within {
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+#chat {
+  background-color: #111;
+}
+
+#chat #chat-log {
+  padding: 0;
 }
 
 .item .window-content .sheet-body .hidden {

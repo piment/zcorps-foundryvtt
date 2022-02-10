@@ -5,21 +5,22 @@
   "ZCORPS.EffectEdit": "Edit Effect",
   "ZCORPS.EffectDelete": "Delete Effect",
 
-  "ZCORPS.Add": "Add",
+  "ZCORPS.Add": "Ajouter",
   "ZCORPS.validate": "Valider",
+  "ZCORPS.rollFail": "Echec critique / Complication",
   
   "ZCORPS.gamemaster" : {
     "title": "Outils du MJ"
   },
+  
+  "ZCORPS.agility": "Agilité",
+  "ZCORPS.knowledge": "Connaissances",
+  "ZCORPS.deftness": "Adresse",
+  "ZCORPS.perception": "Perception",
+  "ZCORPS.strength": "Puissance",
+  "ZCORPS.presence": "Présence",
+
   "ZCORPS.actor" : {
-    "caracteristics" : {
-      "agility": "Agilité",
-      "knowledgge": "Connaissances",
-      "deftness": "Adresse",
-      "perception": "Perception",
-      "strength": "Puissance",
-      "presence": "Présence"
-    },
     "skills" : {
       "acrobatics": "Acrobaties",
       "fight": "Bagarre",

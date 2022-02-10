@@ -1,0 +1,101 @@
+.chat-message.actions-message {
+    color: $c-white;
+    border: none;
+    border-radius: 0;
+    background: none;
+    background-color: #222;
+    padding: 0;
+    margin: 20px 0;
+    border-top: 1px solid #333;
+    .message-header {
+        background-color: #444;
+        margin: 0;
+        padding: 3px;
+        color: #aaa;
+    }
+    .chat-actions-card {
+        padding: 0;
+        .card-header {
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            .actor-img {
+                width: 30px;
+            }
+            .header-infos {
+                background-color: #333;
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                justify-content: flex-start;
+                align-items: flex-start;
+                .pseudo {
+                    align-self: stretch;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                }
+                .label {
+                    justify-self: stretch;
+                    align-self: stretch;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    text-transform: uppercase;
+                    width: 100%;
+                }
+            }
+        }
+        .dice {
+            display: flex;
+            flex-direction: column;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            .die {
+                margin: 5px 0 0 5px;
+                display: flex;
+                flex-direction: row;
+                span {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 20px;
+                    height: 20px;
+                    color: white;
+                    text-align: center;
+                    border-radius: 2px;
+                    margin: 0 2px;
+                    &.fail {
+                        width: auto;
+                        color: red;
+                    }
+                }
+                .base-die {
+                    background-color: #111;
+                }
+                .joker-die {
+                    background-color: $zcorps-red;
+                }
+                .xp-die {
+                    background-color: rgb(104, 146, 19);
+                }
+            }
+            .total {
+                background-color: #333;
+                display: block;
+                width: auto;
+                padding: 5px;
+                margin-top: 10px;
+            }
+            .total_fail {
+                background-color: $zcorps-red-light;
+                display: block;
+                width: auto;
+                padding: 5px;
+            }
+        }
+    }
+}
+
