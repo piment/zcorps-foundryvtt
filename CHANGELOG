@@ -1,3 +1,9 @@
+0.0.7
+- Correction du bug de non prise en compte des tiers lors des jets de dés
+- Ajout de la gestion de nouvelles compétences
+- Mise en forme du résultat des jets de dés dans le tchat
+---
+
 0.0.6
 - Modification pour affichage de la boite à outils MJ uniquement pour les "Game master".
 ---
