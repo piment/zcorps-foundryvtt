@@ -6,7 +6,7 @@
         "caracs": {
           "agility": {
             "name": "Agilité",
-            "value": 3,
+            "value": 2,
             "tiers": {
               "carac_1": 0,
               "carac_2": 0
@@ -246,7 +246,7 @@
           },
           "deftness": {
             "name": "Adresse",
-            "value": 4,
+            "value": 2,
             "tiers": {
               "carac_1":0,
               "carac_2":0
@@ -333,7 +333,7 @@
           },
           "perception": {
             "name": "Perception",
-            "value": 1,
+            "value": 2,
             "tiers": {
               "carac_1":0,
               "carac_2":0
@@ -431,7 +431,7 @@
           },
           "strength": {
             "name": "Puissance",
-            "value": 3,
+            "value": 2,
             "tiers": {
               "carac_1":0,
               "carac_2":0
@@ -485,7 +485,7 @@
           },
           "presence": {
             "name": "Présence",
-            "value": 3,
+            "value": 2,
             "tiers": {
               "carac_1":0,
               "carac_2":0
@@ -625,7 +625,7 @@
     }
   },
   "Item": {
-    "types": ["item", "specialisation", "arme", "ammo"],
+    "types": ["item", "skill", "specialisation", "arme", "ammo"],
     "templates": {
       "base": {
         "description": ""
@@ -636,6 +636,18 @@
       "quantity": 1,
       "weight": 0,
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
+    "skill": {
+      "name": "",
+      "caracteristic": "",
+      "owned": true,
+      "value": 0,
+      "tiers": {
+        "carac_1": 0,
+        "carac_2": 0,
+        "skill_1": 0,
+        "skill_2": 0
+      }
     },
     "specialisation": {
       "name": "",

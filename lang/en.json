@@ -5,16 +5,22 @@
   "ZCORPS.EffectEdit": "Edit Effect",
   "ZCORPS.EffectDelete": "Delete Effect",
 
-  "ZCORPS.Add": "Add",
+  "ZCORPS.Add": "Ajouter",
+  "ZCORPS.validate": "Valider",
+  "ZCORPS.rollFail": "Echec critique / Complication",
+  
+  "ZCORPS.gamemaster" : {
+    "title": "Outils du MJ"
+  },
+
+  "ZCORPS.agility": "Agility",
+  "ZCORPS.knowledge": "Knowledge",
+  "ZCORPS.deftness": "Deftness",
+  "ZCORPS.perception": "Perception",
+  "ZCORPS.strength": "Strength",
+  "ZCORPS.presence": "Presence",
+
   "ZCORPS.actor" : {
-    "caracteristics" : {
-      "agility": "Agilité",
-      "knowledgge": "Connaissances",
-      "deftness": "Adresse",
-      "perception": "Perception",
-      "strength": "Puissance",
-      "presence": "Présence"
-    },
     "skills" : {
       "acrobatics": "Acrobaties",
       "fight": "Bagarre",
@@ -67,18 +73,18 @@
     "attributes" : {
       "nickname": "Pseudo",
       "age": "Age",
-      "size": "Taille",
-      "weight": "Poids",
-      "gender": "Genre",
-      "injuriesLevel": "Niveaux de blessures",
-      "stressLevel": "Niveaux de stress",
+      "height": "Height",
+      "weight": "Weight",
+      "gender": "Gender",
+      "injuriesLevel": "Dammage level",
+      "stressLevel": "Stress level",
       "experience" : {
-        "hint": "Point de personnage",
-        "remaining": "Restant",
+        "hint": "Character points",
+        "remaining": "remaining",
         "total": "Total"
       },
       "cojones" : {
-        "hint": "Point de cojones"
+        "hint": "Cojones points"
       }
     }
   },

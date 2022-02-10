@@ -135,7 +135,6 @@ Handlebars.registerHelper("getHealthStatus", level => {
 Handlebars.registerHelper("createRange", (limit, available) => {
   let list = `<datalist id="xp-list">`;
   limit = limit > available ? available : limit;
-  console.log(limit);
   for(let i = 0; i <= limit; i++) {
     list += `<option value="${i}" label="${i}">${i}</option>`
   }
@@ -144,7 +143,6 @@ Handlebars.registerHelper("createRange", (limit, available) => {
 });
 
 Handlebars.registerHelper("getDiceByColor", (dice, color) => {
-  console.log(dice);
   return dice.filter(die => die.flavor == color);
 })
 
@@ -195,8 +193,10 @@ Hooks.on("renderDialog", (dialog, id, context) => {
         const value = ev.target.parentNode.children[1].dataset.value;
         console.log(input_value, actor_id, value);
         const actor = game.actors.get(actor_id);
-        actor.data.data.attributes[value].value = input_value;
+        actor.data.data.attributes[value].value = parseInt(actor.data.data.attributes[value].value) + parseInt(input_value);;
+        actor.data.data.attributes[value].total = parseInt(actor.data.data.attributes[value].total) + parseInt(input_value);
         actor.update({data: actor.data.data});
+        ev.target.parentNode.children[1].value = 0;
       })
     });
     console.log(dialog);
@@ -219,6 +219,13 @@ Hooks.on("renderDialog", (dialog, id, context) => {
   
 });
 
+Hooks.on("renderChatMessage", (msg, html, data) => {
+  //Type 5 = Roll
+  if(msg.data.type == 5) {
+    const message = html.find(`[data-message-id="${msg.id}"]`);
+    message.prevObject[0].classList.add("actions-message");
+  }
+})
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

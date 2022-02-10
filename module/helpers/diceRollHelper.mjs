@@ -101,7 +101,7 @@ export class diceRollHelper {
     _parseFormula() {
         
         [this.baseDicePool.base, this.baseDicePool.tier] = this.baseDicePool.formula.split("D+");
-        console.log("health malus ", parseInt(this.baseDicePool.base) - this.baseDicePool.health_malus);
+        //console.log("health malus ", parseInt(this.baseDicePool.base) - this.baseDicePool.health_malus);
         if(this.baseDicePool.base - this.baseDicePool.health_malus > 0 && this.baseDicePool.health_malus != -1){
             this.canAct = true;
             this.baseDicePool.base -= 1;

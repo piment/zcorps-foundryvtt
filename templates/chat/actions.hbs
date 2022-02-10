@@ -1,10 +1,30 @@
 <form class="chat-actions-card">
-    {{log data.dice}}
-    <p>Nouveau jet</p>
-    <ul class="base_dice">
-        {{#each (getDiceByColor data.dice 'black') as |dice key|}}
-            {{dice.}}
-        {{/each}}
+    <div class="card-header">
+        <img src="{{actor.img}}" alt="actor picture" class="actor-img">
+        <div class="header-infos">
+            <div class="pseudo">{{#if actor.data.attributes.pseudo}}{{actor.data.attributes.pseudo}}{{else}}{{actor.name}}{{/if}}</div>
+            <div class="label">{{ label }}</div>
+        </div>
+    </div>
+    <ul class="dice">
+        <li class="die">
+            {{#each roll.base as |base key|}}
+            <span class="base-die">{{base}}</span>
+            {{/each}}
+        </li>
+        <li class="die">
+            {{#each roll.joker as |joker key|}}
+            <span class="joker-die">{{joker}}</span>
+            {{/each}}
+            <span class="fail">{{#if roll.fail}}{{ localize 'ZCORPS.rollFail'}}{{/if}}</span>
+        </li>
+        <li class="die">
+            {{#each roll.xp as |xp key|}}
+            <span class="xp-die">{{xp}}</span>
+            {{/each}}
+        </li>
+        <li class="total">TOTAL : {{roll.total_base}}</li>
+        {{#if roll.fail}}<li class="total_fail">SI ECHEC : {{roll.total_fail}}</li>{{/if}}
     </ul>
-    
+    {{!-- {{log actor}} --}}
 </form>

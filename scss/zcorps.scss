@@ -21,9 +21,20 @@
   
   background-color: red;
 }
+
+.system-zcorps {
+  @import 'components/actions_card';
+}
 .actor {
   @import 'components/actor-sheet';
 }
+#chat {
+  background-color: #111;
+  #chat-log {
+    padding: 0;
+  }
+}
+
 
 
 

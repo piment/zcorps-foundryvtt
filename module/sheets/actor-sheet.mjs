@@ -1,4 +1,5 @@
 import { diceRollHelper } from "../helpers/diceRollHelper.mjs";
+import { ZCORPS } from "../helpers/config.mjs";
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -42,6 +43,7 @@ export class zcorpsActorSheet extends ActorSheet {
     // editable, the items array, and the effects array.
     const context = super.getData();
 
+    
     // Use a safe clone of the actor data for further operations.
     const actorData = this.actor.data.toObject(false);
 
@@ -103,6 +105,9 @@ export class zcorpsActorSheet extends ActorSheet {
     context.attributes.movement = +context.caracs.strength.value + +context.caracs.agility.value;
     context.attributes.dammageBonus = parseInt(Math.ceil(context.caracs.strength.value / 2));
     
+    for(let [key, carac] of Object.entries(context.caracs)) {
+      carac.name = game.i18n.localize(ZCORPS.caracteristics[key]);
+    }
     
   }
 
@@ -300,10 +305,7 @@ export class zcorpsActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
-    // Active Effect management
-    html
-      .find(".effect-control")
-      .click((ev) => onManageActiveEffect(ev, this.actor));
+    
 
     // Rollable abilities.
     html.find(".rollable").click(this._onRoll.bind(this));
@@ -499,10 +501,8 @@ export class zcorpsActorSheet extends ActorSheet {
         return item.update({"data.ammo-actual": item.data.data["ammo-actual"]});
       }
     }
-
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
-      
       
       const bonus = this.actor.useBonus;
       const healthStatus = this.actor.data.data.attributes.health;
@@ -536,85 +536,64 @@ export class zcorpsActorSheet extends ActorSheet {
       }
       
       //BUG Use health/stress malus
-      let roll = await new Roll(dicePool.getFinalFormula(), this.actor.getRollData()).roll();
+      let roll = await new Roll(dicePool.getFinalFormula(), {}).roll();
       const template = "systems/zcorps/templates/chat/actions.hbs";
-      const templateRendered = await renderTemplate(template, {data : roll});
-      roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-          flavor: label,
-          rollMode: game.settings.get("core", "rollMode"),
-          content: templateRendered
-          
-      })
+      const templateRendered = await renderTemplate(template, {roll : this._parseRollResult(roll.dice), actor: this.actor.data, label: dataset.label});
+      
       document.querySelectorAll(".bonus-icon").forEach(el => {
         el.classList.remove("fa-check-circle", "fa-times-circle");
         el.classList.add("fa-dot-circle");
       })
       this.actor.useBonus = false;
-        // if(bonus == "xp"){ //Use of character point
-        //   const bonusAvailable = this.actor.data.data.attributes[bonus].value; //We get the available character point.
-        //   const numberOfPoints = await game.zcorps.rollWithBonus(dataset.roll, bonus, bonusAvailable);
-        //   if(!numberOfPoints) {
-        //     return;
-        //   }
-        //   formula = this.actor._parseRollFormulaWithMalus(numberOfPoints, malus);
-        // }
-        // else {
-        //   console.log("Player choosed to use COJONES");
-        //   return;
-        // }
 
-      
-      // else {
-      //   formula = this.actor._parseRollFormulaWithMalus(dataset.roll, malus);
-      // }
-      
-      
-      // if(!formula) {
-      //   ui.notifications.error("Le personnage n'est pas en capacité d'agir");
-      //   return;
-      // }
-      
-      // let roll = await new Roll(formula, this.actor.getRollData()).roll();
-      // const rollResult = this._parseRollResult(roll.terms, 'bonus');
-      // //console.log(rollResult);
-      // //console.log(rollResult.terms[0].results[0].result);
-      // // const message = ChatMessage.create({
-      // //   speaker: ChatMessage.getSpeaker({actor: this.actor}),
-      // //   flavor: "test",
-      // //   content: await renderTemplate(this.chatTemplate["character"], roll.terms)
-      // // });
-      // // roll.toMessage({
-      // //   speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      // //   flavor: label,
-      // //   rollMode: game.settings.get("core", "rollMode"),
-      // //   content : await renderTemplate(this.chatTemplate["character"], roll.terms)
-      // // })
-      // return roll;
+      const myMessage = await ChatMessage.create({
+        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+        roll : roll,
+        user: this.actor._id,
+        speaker: ChatMessage.getSpeaker({actor: this.actor}),
+        content: templateRendered,
+        rollMode: game.settings.get('core', 'rollMode')
+      });
     }
-
-    
   }
-  _parseRollResult(terms, bonus) {
-    //console.log("Use Bonus ? => ", this.actor.useBonus);
-    //console.log(terms);
-    const diePool = {};
-    terms.forEach(el => {
-      if(el.results)
-        if(el.modifiers[0] == "x") {
-          if(el.flavor == "bloodmoon") {
-            diePool["joker"] = el.results.map(dice => dice.result);
-          }
-          else {
-            diePool["joker_xp"] = diePool["joker"] = el.results.map(dice => dice.result);
-          }
-        }
-        else {
-          diePool["diceBase"] = el.results.map(dice => dice.result);
-        }
+
+  /**
+   * 
+   * @param {Array} dice 
+   * @returns calculated results for roll
+   * @private
+   */
+  _parseRollResult(dice) {
+    const results = {
+      base: [],
+      joker: [],
+      xp: [],
+      total_base: 0,
+      total_fail: 0,
+      fail: false
+    }
+    dice.forEach(die => {
+      if(die.flavor == "black"){
+        results.base.push(...die.results.map(el => el.result));
+        results.base.sort((a, b) => b - a);
+      }
+      else if(die.flavor == "bloodmoon") {
+        results.joker = die.results.map(el => el.result)
+      }
+      else {
+        results.xp = die.results.map(el => el.result)
+      }
     })
-    console.log(diePool);
-      return "result du parse";
+    results.total_base = [...results.base, ...results.joker, ...results.xp].reduce((init, current) => init + current);
+    if(results.joker[0] == 1){
+      results.fail = true;
+      if(results.base[0]) {
+        results.total_fail = results.total_base - results.base[0];
+      }
+      else {
+        results.total_fail = 0;
+      }
+    }
+    return results;
   }
-
 }
