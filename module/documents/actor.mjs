@@ -70,7 +70,7 @@ export class zcorpsActor extends Actor {
       data.lvl = data.attributes.level.value ?? 0;
     }
   }
-  _getFormattedTiersData(data, actor) {
+  _getFormattedTiersData(data) {
     const caracObject = { carac_1: 0, carac_2: 0 };
     const skillObject = { skill_1: 0, skill_2: 0 };
 

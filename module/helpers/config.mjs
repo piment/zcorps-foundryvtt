@@ -30,7 +30,7 @@ ZCORPS.skills = {
   "medicine": "Médecine",
   "navigation": "Navigation",
   "security": "Sécurité",
-  "occultSciencs": "Sciences occultes",
+  "occultSciences": "Sciences occultes",
   "firearm": "Arme à feu",
   "throwingWeapon": "Arme de jet",
   "lockPicking": "Crochetage",

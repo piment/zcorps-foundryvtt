@@ -35,7 +35,7 @@ Hooks.once('init', async function() {
  
   // Add custom constants for configuration.
   CONFIG.ZCORPS = ZCORPS;
-  CONFIG.debug.hooks = false;
+  CONFIG.debug.hooks = true;
   /**
    * Set an initiative formula for the system
    * @type {String}
@@ -230,6 +230,18 @@ Hooks.on("renderChatMessage", (msg, html, data) => {
   }
 })
 
+Hooks.on("createItem", (item, info, tempData, actorId) => {
+  console.log("preCreateItem : ", item);
+  if(item.data.type === "skill"){
+    item.data.img = "systems/zcorps/ui/icons/vial-solid.svg";
+  }
+})
+
+Hooks.on('renderItemSheet', (item, sheet, option) => {
+  sheet[0].classList.add("item-skill");
+  const resizeIcon = sheet[0].querySelector(".window-resizable-handle");
+  if(resizeIcon) {sheet[0].removeChild(resizeIcon)};
+})
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */

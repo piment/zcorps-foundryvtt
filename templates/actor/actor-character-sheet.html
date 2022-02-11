@@ -165,8 +165,9 @@
                           {{#if ../../actor.editSheet}}
                             <div class="level-block">
                               <div class="tiers">
-                                <span class="tier {{#if skill.tiers.skill_1}}checked{{/if}} {{#if skill.owned}}tiers-editable{{/if}}" data-tier="1" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
-                                <span class="tier {{#if skill.tiers.skill_2}}checked{{/if}} {{#if skill.owned}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
+                                {{#if skill.add}}{{log skill.tiers}}{{/if}}
+                                <span class="tier {{#if skill.tiers.skill_1}}checked{{/if}} {{#if skill.owned}}tiers-editable{{/if}}" data-tier="1" data-carac="{{caracId}}" data-skill="{{skillId}}" {{#if skill.added}}data-id="{{skill.id}}"{{/if}}></span>
+                                <span class="tier {{#if skill.tiers.skill_2}}checked{{/if}} {{#if skill.owned}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}" data-skill="{{skillId}}" {{#if skill.added}}data-id="{{skill.id}}"{{/if}}></span>
                               </div>
                             </div>
                               {{#if skill.added}}

@@ -277,6 +277,7 @@ export class zcorpsActorSheet extends ActorSheet {
           }
         }
       }
+      console.log(click);
       //console.log(tierValue);
       const tiersData = {
         value : tierValue,
@@ -290,13 +291,34 @@ export class zcorpsActorSheet extends ActorSheet {
             "array": this.actor.data.data.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers
           } : null
       };
+      //If skill modified is an added skill (item), we update the item directly
+      if(tier.dataset.id){
+        const item = this.actor.items.get(tier.dataset.id);
+        const itemSkillValues = item.data.data.tiers;
+        if(tierValue == 0) {
+          itemSkillValues.skill_1 = 0;
+          itemSkillValues.skill_2 = 0;
+        }
+        else if(tierValue == 1){
+          itemSkillValues.skill_1 = 1;
+          itemSkillValues.skill_2 = 0;
+        }
+        else {
+          itemSkillValues.skill_1 = 1;
+          itemSkillValues.skill_2 = 1;
+        }
+        item.update();
+      }
+      //Else we uptdate the actor data
+      else{
+        const dataFormatted = this.actor._getFormattedTiersData(tiersData);
       
-      const dataFormatted = this.actor._getFormattedTiersData(tiersData, this.actor);
-      console.log(click);
-      console.log(dataFormatted);
-      dataFormatted.skill ? this.actor.data.data.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers = dataFormatted.skill.array : this.actor.data.data.caracs[tier.dataset.carac].tiers = dataFormatted.carac.array;
-      this.actor.update({"data": this.actor.data.data});
-      this.actor.sheet.render(true);
+        console.log(dataFormatted);
+        dataFormatted.skill ? this.actor.data.data.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers = dataFormatted.skill.array : this.actor.data.data.caracs[tier.dataset.carac].tiers = dataFormatted.carac.array;
+        this.actor.update({"data": this.actor.data.data});
+        this.actor.sheet.render(true);
+      }
+      
     })
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable

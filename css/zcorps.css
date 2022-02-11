@@ -1300,3 +1300,79 @@ button.gamemaster_button:hover {
   box-shadow: none;
   text-shadow: 0 0 5px red;
 }
+
+.item-skill {
+  max-height: 160px;
+  max-width: 400px;
+  background-color: #111;
+}
+
+.item-skill .window-content {
+  background-image: none;
+  background-color: #222;
+  color: #fff;
+  overflow: hidden;
+}
+
+.item-skill .window-content form {
+  background-color: #222;
+}
+
+.item-skill .window-content form header img.profile-img {
+  max-width: 50px;
+  max-height: 50px;
+  color: white;
+  background-color: #333;
+}
+
+.item-skill .window-content form header input {
+  border: none;
+  background-color: #333;
+  color: #fff;
+  border-radius: 0;
+  padding-left: 5px;
+}
+
+.item-skill .window-content form header input:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid #555;
+  padding-left: 4px;
+}
+
+.item-skill .window-content form .form-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.item-skill .window-content form .form-group label {
+  width: 100%;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.item-skill .window-content form .form-group select {
+  max-width: 50%;
+  background-color: #333;
+  color: #fff;
+}
+
+.item-skill .window-content form .form-group select option {
+  background-color: #333;
+  color: #fff;
+  width: auto;
+  border-radius: 0;
+}
+
+.item-skill .window-content form .form-group select:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

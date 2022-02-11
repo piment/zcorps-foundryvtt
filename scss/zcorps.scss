@@ -156,3 +156,64 @@ button.gamemaster_button {
     text-shadow: 0 0 5px red;
   }
 }
+.item-skill {
+  max-height: 160px;
+  max-width: 400px;
+  background-color: #111;
+  
+
+  .window-content {
+    background-image: none;
+    background-color: #222;
+    color: $c-white;
+    overflow: hidden;
+    form {
+      background-color: #222;
+      header {
+        img.profile-img {
+          max-width: 50px;
+          max-height: 50px;
+          color: white;
+          background-color: #333;
+        }
+        input {
+          border: none;
+          background-color: #333;
+          color: $c-white;
+          border-radius: 0;
+          padding-left: 5px;
+          &:focus {
+            box-shadow: none;
+            border: 1px solid #555;
+            padding-left: 4px;
+          }
+        }
+      }
+      .form-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        label {
+          width: 100%;
+          text-align: right;
+          padding-right: 10px;
+        }
+        select {
+          max-width: 50%;
+          background-color: #333;
+          color: $c-white;
+          option {
+            background-color: #333;
+            color: $c-white;
+            width: auto;
+            border-radius: 0;
+          }
+          &:focus {
+            box-shadow: none;
+          }
+          
+        }
+      }
+    }
+  }
+}
