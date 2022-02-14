@@ -15,7 +15,7 @@
     </div>
     <div class="header-block character-infos flex1">
       <div class="info">
-        <label for="pseudo">{{localize 'ZCORPS.actor.attributes.nickname'}} :</label>
+        <label for="pseudo">{{localize 'ZCORPS.attributes.nickname'}} :</label>
         {{#if actor.editSheet}}
           <input name="data.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="text"/>
         {{else}}
@@ -23,7 +23,7 @@
         {{/if}}
       </div>
       <div class="info">
-        <label for="age">{{localize 'ZCORPS.actor.attributes.age'}} :</label>
+        <label for="age">{{localize 'ZCORPS.attributes.age'}} :</label>
         {{#if actor.editSheet}}
           <input name="data.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="number"/>
         {{else}}
@@ -31,7 +31,7 @@
         {{/if}}
       </div>
       <div class="info">
-        <label for="height">{{localize 'ZCORPS.actor.attributes.height'}} :</label>
+        <label for="height">{{localize 'ZCORPS.attributes.height'}} :</label>
         {{#if actor.editSheet}}
           <input name="data.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="number"/>
         {{else}}
@@ -39,7 +39,7 @@
         {{/if}}
       </div>
       <div class="info">
-        <label for="weight">{{localize 'ZCORPS.actor.attributes.weight'}} :</label>
+        <label for="weight">{{localize 'ZCORPS.attributes.weight'}} :</label>
         {{#if actor.editSheet}}
           <input name="data.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="number"/>
         {{else}}
@@ -47,7 +47,7 @@
         {{/if}}
       </div>
       <div class="info">
-        <label for="gender">{{localize 'ZCORPS.actor.attributes.gender'}} :</label>
+        <label for="gender">{{localize 'ZCORPS.attributes.gender'}} :</label>
         {{#if actor.editSheet}}
           <select name="data.attributes.physical.gender" id="data.attributes.physical.gender">
             {{#select attributes.physical.gender}}
@@ -70,7 +70,7 @@
     </div>
     <div class="header-block levels">
       <div class="level">
-        <span class="level-title">{{localize 'ZCORPS.actor.attributes.injuriesLevel'}}</span>
+        <span class="level-title">{{localize 'ZCORPS.attributes.injuriesLevel'}}</span>
         <select name="data.attributes.health" class="healthAndStressLevel">
           {{#select data.attributes.health}}
            {{selectOptions healthLevel selected=value attr=key}}
@@ -78,7 +78,7 @@
         </select>
       </div>
       <div class="level">
-        <span class="level-title">{{localize 'ZCORPS.actor.attributes.stressLevel'}}</span>
+        <span class="level-title">{{localize 'ZCORPS.attributes.stressLevel'}}</span>
         <select name="data.attributes.stress" class="healthAndStressLevel">
           {{#select data.attributes.stress}}
            {{selectOptions stressLevel selected=value attr=key}}
@@ -90,7 +90,7 @@
         <div class="resource-content flexrow flex-center flex-between">
           <span><em>Restants : </em> {{data.attributes.xp.value}}</span>
           <span><em>Totaux : </em> {{data.attributes.xp.total}}</span>
-          <span class="use-bonus flex0"><i id="bonus_xp" class="bonus-icon fas fa-dot-circle" data-bonus="false"></i></span>
+          <span class="use-bonus flex0"><i id="bonus_xp" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
         </div>
       </div>
       <div class="level">
@@ -98,7 +98,7 @@
         <div class="resource-content flexrow flex-center flex-between">
           <span><em>Restants : </em> {{data.attributes.cojones.value}}</span>
           <span><em>Totaux : </em> {{data.attributes.cojones.total}}</span>
-          <span class="use-bonus flex0"><i id="bonus_cojones" class="bonus-icon fas fa-dot-circle" data-bonus="false"></i></span>
+          <span class="use-bonus flex0"><i id="bonus_cojones" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
         </div>
       </div>
     </div>

@@ -42,7 +42,7 @@ export class zcorpsItemSheet extends ItemSheet {
     }
     
 
-    //context.ammoType = {0: ".38", 1: "9mm", 2: ".22"};
+    context.ammoType = {0: ".38", 1: "9mm", 2: ".22"};
     // Use a safe clone of the item data for further operations.
     const itemData = context.item.data;
 
@@ -56,7 +56,7 @@ export class zcorpsItemSheet extends ItemSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = itemData.data;
     context.flags = itemData.flags;
-    //context.armeType = {"armedepoing": "arme de poing", "armedejet": "arme de jet", "armedepaule" : "arme d'épaule", "armecontandante": "arme contandante"};
+    context.armeType = {"armedepoing": "arme de poing", "armedejet": "arme de jet", "armedepaule" : "arme d'épaule", "armecontandante": "arme contandante"};
     //console.log(Object.keys(context))
     //console.log(context.item.data);
     return context;

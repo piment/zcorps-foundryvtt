@@ -238,9 +238,12 @@ Hooks.on("createItem", (item, info, tempData, actorId) => {
 })
 
 Hooks.on('renderItemSheet', (item, sheet, option) => {
-  sheet[0].classList.add("item-skill");
-  const resizeIcon = sheet[0].querySelector(".window-resizable-handle");
-  if(resizeIcon) {sheet[0].removeChild(resizeIcon)};
+  if(item.type === "skill") {
+    sheet[0].classList.add("item-skill");
+    const resizeIcon = sheet[0].querySelector(".window-resizable-handle");
+    if(resizeIcon) {sheet[0].removeChild(resizeIcon)};
+  }
+  
 })
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

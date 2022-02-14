@@ -111,6 +111,7 @@ export class zcorpsActorSheet extends ActorSheet {
       carac.name = game.i18n.localize(ZCORPS.caracteristics[key]);
     }
     
+    
   }
 
   /**
@@ -411,43 +412,43 @@ export class zcorpsActorSheet extends ActorSheet {
     });
 
     html.find(".bonus-icon").click(ev => {
-      
+      console.log("bonus click")
       const bonus = ev.target;
       const bonusId = bonus.id;
       const availablePoints = this.actor.data.data.attributes[bonusId.split("_")[1]].value;
       
       if(bonusId == "bonus_xp") {
-        if(bonus.classList.contains("fa-check-circle")) {
-          bonus.classList.replace("fa-check-circle", "fa-dot-circle");
+        if(bonus.classList.contains("fa-check-square")) {
+          bonus.classList.replace("fa-check-square", "fa-square");
           bonus.dataset.bonus = false;
           this.actor.useBonus = false;
-          html.find("#bonus_cojones")[0].classList.replace("fa-times-circle", "fa-dot-circle");
+          html.find("#bonus_cojones")[0].classList.replace("fa-minus-square", "fa-square");
           html.find("#bonus_cojones")[0].dataset.bonus = false;
         }
         else {
           if(availablePoints > 0){
-            bonus.classList.replace("fa-dot-circle", "fa-check-circle");
+            bonus.classList.replace("fa-square", "fa-check-square");
             bonus.dataset.bonus = true;
             this.actor.useBonus = "xp";
-            html.find("#bonus_cojones")[0].classList.replace("fa-dot-circle", "fa-times-circle");
+            html.find("#bonus_cojones")[0].classList.replace("fa-square", "fa-minus-square");
             html.find("#bonus_cojones")[0].dataset.bonus = false;
           }
         }
       }
       else {
-        if(bonus.classList.contains("fa-check-circle")) {
-          bonus.classList.replace("fa-check-circle", "fa-dot-circle");
+        if(bonus.classList.contains("fa-check-square")) {
+          bonus.classList.replace("fa-check-square", "fa-square");
           bonus.dataset.bonus = false;
           this.actor.useBonus = false;
-          html.find("#bonus_xp")[0].classList.replace("fa-times-circle", "fa-dot-circle");
+          html.find("#bonus_xp")[0].classList.replace("fa-minus-square", "fa-square");
           html.find("#bonus_xp")[0].dataset.bonus = false;
         }
         else {
           if(availablePoints > 0) {
-            bonus.classList.replace("fa-dot-circle", "fa-check-circle");
+            bonus.classList.replace("fa-square", "fa-check-square");
             bonus.dataset.bonus = true;
             this.actor.useBonus = "cojones";
-            html.find("#bonus_xp")[0].classList.replace("fa-dot-circle", "fa-times-circle");
+            html.find("#bonus_xp")[0].classList.replace("fa-square", "fa-minus-square");
             html.find("#bonus_xp")[0].dataset.bonus = false;
           }
         }
