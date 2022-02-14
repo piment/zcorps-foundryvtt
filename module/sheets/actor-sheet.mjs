@@ -1,4 +1,5 @@
 import { diceRollHelper } from "../helpers/diceRollHelper.mjs";
+import { skillHelper } from "../helpers/characterHelper.mjs";
 import { ZCORPS } from "../helpers/config.mjs";
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -80,9 +81,10 @@ export class zcorpsActorSheet extends ActorSheet {
     context.caracs = context.data.caracs; 
     context.skillsOwned = 0;
     if(context.skillsAdded.length){
-      for(let skill of context.skillsAdded) {
-        context.caracs[skill.carac].skills[skill.name] = skill;
-      }
+      // for(let skill of context.skillsAdded) {
+      //   context.caracs[skill.carac].skills[skill.name] = skill;
+      // }
+      skillHelper.addItemToSkill(context);
     }
     
     for (const [caracKey, caracItem] of Object.entries(context.caracs)) {
@@ -279,18 +281,7 @@ export class zcorpsActorSheet extends ActorSheet {
       }
       console.log(click);
       //console.log(tierValue);
-      const tiersData = {
-        value : tierValue,
-        carac : {
-          "name": tier.dataset.carac,
-          "array": this.actor.data.data.caracs[tier.dataset.carac].tiers
-        },
-        skill : 
-          tier.dataset.skill ? {
-            "name": tier.dataset.skill,
-            "array": this.actor.data.data.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers
-          } : null
-      };
+      
       //If skill modified is an added skill (item), we update the item directly
       if(tier.dataset.id){
         const item = this.actor.items.get(tier.dataset.id);
@@ -311,6 +302,18 @@ export class zcorpsActorSheet extends ActorSheet {
       }
       //Else we uptdate the actor data
       else{
+        const tiersData = {
+          value : tierValue,
+          carac : {
+            "name": tier.dataset.carac,
+            "array": this.actor.data.data.caracs[tier.dataset.carac].tiers
+          },
+          skill : 
+            tier.dataset.skill ? {
+              "name": tier.dataset.skill,
+              "array": this.actor.data.data.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers
+            } : null
+        };
         const dataFormatted = this.actor._getFormattedTiersData(tiersData);
       
         console.log(dataFormatted);

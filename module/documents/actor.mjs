@@ -96,7 +96,6 @@ export class zcorpsActor extends Actor {
   }
 
   _calculateTotalValueForSkill(skill) {
-    
     if(skill.owned) {
       let totalTiers = 0;
       for(const [key, tier] of Object.entries(skill.tiers)) {
