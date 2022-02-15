@@ -232,6 +232,20 @@ Hooks.on("renderChatMessage", (msg, html, data) => {
   if(msg.data.type == 5) {
     const message = html.find(`[data-message-id="${msg.id}"]`);
     message.prevObject[0].classList.add("actions-message");
+
+    html.find(".rerollXP_btn").click(async ev => {
+      ev.preventDefault();
+      const actor = game.actors.get(data.message.speaker.actor);
+      const use_joker = ev.currentTarget.dataset.jokerUsed ? false : true;
+      const use_xp = parseInt(ev.currentTarget.dataset.xpUsed);
+      const xpFormula = await actor.reRoll(use_joker, use_xp, ev.currentTarget.dataset.label);
+      if(xpFormula) {
+        const msgCard = document.querySelector(`[data-message-id="${msg.id}"]`);
+        const btn = msgCard.querySelector(".rerollXP_btn");
+        msgCard.querySelector(".rerollXP").removeChild(btn);
+      }
+      
+    });
   }
 })
 

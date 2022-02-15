@@ -21,7 +21,7 @@
         </li>
         {{#if fail}}<li class="die"><span class="fail">{{ localize 'ZCORPS.rollFail'}}</span></li>{{/if}}
         <li class="die">
-            {{#if xp}}<span>({{total_xp}})</span>{{/if}}
+            {{#if xp_joker}}<span>({{total_xp}})</span>{{/if}}
             {{#each xp as |dice key|}}
             <span class="xp-die">{{dice}}</span>
             {{/each}}
@@ -32,7 +32,7 @@
         </li>
         <li class="total">TOTAL : {{total}}</li>
         {{#if fail}}<li class="total_fail">SI ECHEC : {{total_fail}}</li>{{/if}}
-        
+        {{#unless cojones}}<li class="rerollXP"><button class="rerollXP_btn" {{#if xp_joker}}data-joker-used="true"{{/if}} data-xp-used="{{xp_used}}" data-label="{{label}}">utiliser des points de personnage</button></li>{{/unless}}
     </ul>
     {{!-- {{log actor}} --}}
 </form>

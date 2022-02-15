@@ -1,0 +1,21 @@
+<form class="chat-actions-card">
+    <div class="card-header">
+        <img src="{{actor.img}}" alt="actor picture" class="actor-img">
+        <div class="header-infos">
+            <div class="pseudo">{{#if actor.data.attributes.pseudo}}{{actor.data.attributes.pseudo}}{{else}}{{actor.name}}{{/if}}</div>
+            <div class="label">utilisation de points de perso : {{ label }}</div>
+        </div>
+    </div>
+   <ul class="dice">
+        <li class="die">
+            <span>({{total_xp}})</span>
+            {{#each xp as |dice key|}}
+            <span class="xp-die">{{dice}}</span>
+            {{/each}}
+            {{#each xp_joker as |dice key|}}
+            <span class="xp-joker-die">{{dice}}</span>
+            {{/each}}
+            
+        </li>
+    </ul>
+</form>

@@ -127,24 +127,10 @@ export class zcorpsActor extends Actor {
           ui.notifications.warn("Le personnage n'est pas en capacité d'agir");
           return;
         }
-        
-        // const healthStatus = this.data.data.attributes.health;
-        // const dicePool = new diceRollHelper({
-        //     actor: this,
-        //     formula: dataset.roll,
-        // });
-        // if (dicePool.getHealthStatus() == -1) {
-        //     ui.notifications.error("Le personnage est mort, désolé!..");
-        //     return;
-        // }
-
-        // if (!dicePool.canAct) {
-        //     ui.notifications.warn("Le personnage n'est pas en capacité d'agir");
-        //     return;
-        // }
 
         if (bonus == "xp") {
-            var bonusRollFormula = await this._bonusRollFormula(true);
+            var [bonusRollFormula, used_xp] = await this._bonusRollFormula(true, 0);
+            console.log("Just after ", used_xp);
             document.querySelectorAll(".bonus-icon").forEach((el) => {
                 el.classList.remove("fa-check-square", "fa-minus-square");
                 el.classList.add("fa-square");
@@ -173,7 +159,6 @@ export class zcorpsActor extends Actor {
         let roll = await new Roll(finalFormula, {}).roll();
 
         const results = this._parseRollResult(roll);
-
         const template = "systems/zcorps/templates/chat/actions.hbs";
         const templateRendered = await renderTemplate(template, {
           black: results.black,
@@ -188,7 +173,9 @@ export class zcorpsActor extends Actor {
           total_fail: results.total_fail,
           actor: this.data,
           label: dataset.label,
-          malus: malus
+          malus: malus,
+          xp_used: used_xp ? used_xp : 0,
+          cojones: bonus == "cojones"? true : false
         });
         
         const myMessage = await ChatMessage.create({
@@ -201,6 +188,31 @@ export class zcorpsActor extends Actor {
         });
     }
 
+    async reRoll(joker, used_xp, label) {
+      var [bonusRollFormula, used_xp] = await this._bonusRollFormula(joker, used_xp);
+      console.log(bonusRollFormula);
+      if(!bonusRollFormula){ return false};
+      let roll = await new Roll(bonusRollFormula, {}).roll();
+      const results = this._parseRollResult(roll);
+      const template = "systems/zcorps/templates/chat/reroll.hbs";
+      const templateRendered = await renderTemplate(template, {
+          xp: results.white,
+          xp_joker: results.acid,
+          total_xp: results.total_xp,
+          actor: this.data,
+          label: label
+        });
+        
+        const myMessage = await ChatMessage.create({
+          type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+          roll: roll,
+          user: this._id,
+          speaker: ChatMessage.getSpeaker({ actor: this }),
+          content: templateRendered,
+          rollMode: game.settings.get("core", "rollMode"),
+        });
+        return true;
+    }
     
     //######## ALWAYS USED? #######
     _getMalus(caracteristic) {
@@ -322,10 +334,10 @@ export class zcorpsActor extends Actor {
       result.bloodmoon.length ? result.total_base =  result.total_black + result.bloodmoon.reduce((init, cur) => init + cur) + result.tier : result.total_base = result.total_black;
       
       
-      if(result.acid.length) {
+      
         result.white.length ? result.total_white = result.white.reduce((init, cur) => init + cur) : result.total_white = 0;
-        result.total_xp =  result.total_white + result.acid.reduce((init, cur) => init + cur);
-      }
+        result.total_xp =  result.acid.length ? result.total_white + result.acid.reduce((init, cur) => init + cur) : result.total_white;
+      console.log(result.total_xp);
       
       return result;
     }
@@ -347,13 +359,14 @@ export class zcorpsActor extends Actor {
         return finalFormula;
     }
 
-    async _bonusRollFormula(joker) {
-        console.log("Bonus Roll asked");
+    async _bonusRollFormula(joker, used) {
+        
         const template = `systems/zcorps/templates/actor/parts/bonusSelection.hbs`;
         const available = this.data.data.attributes.xp.value;
+        console.log(used);
         const html = await renderTemplate(template, {
             available: available,
-            limit: game.settings.get("zcorps", "XPPointPerRollMax"),
+            limit: game.settings.get("zcorps", "XPPointPerRollMax") - used,
         });
 
         const bonusValue = await new Promise((resolve) => {
@@ -384,7 +397,7 @@ export class zcorpsActor extends Actor {
         });
         //If player prefere not to use bonus points, just return
         if (!bonusValue) {
-            return false;
+            return [false, 0];
         }
         this.data.data.attributes.xp.value -= bonusValue;
         this.update({ data: this.data.data });
@@ -392,9 +405,9 @@ export class zcorpsActor extends Actor {
         if (joker) {
             var finalFormula = `${bonusValue - 1}D6[white] + 1D6x[acid]`;
         } else {
-            var finalFormula = `${bonusValue}D6[black]`;
+            var finalFormula = `${bonusValue}D6[white]`;
         }
       
-        return finalFormula;
+        return [finalFormula, bonusValue];
     }
 }

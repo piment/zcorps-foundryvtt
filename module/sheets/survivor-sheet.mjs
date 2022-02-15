@@ -535,5 +535,5 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         // Handle rolls that supply the formula directly.
         if (dataset.roll) { this.actor.roll(dataset); }
     }
-
+    
 }
