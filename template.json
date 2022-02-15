@@ -1,8 +1,8 @@
 {
   "Actor": {
-    "types": ["character", "npc", "zombie"],
+    "types": ["survivor", "controler", "npc", "zombie"],
     "templates": {
-      "base": {
+      "base_pc": {
         "caracs": {
           "agility": {
             "name": "Agilité",
@@ -595,8 +595,8 @@
         }
       }
     },
-    "character": {
-      "templates": ["base"],
+    "survivor": {
+      "templates": ["base_pc"],
       "attributes": {
         "xp": {
           "value": 5,
@@ -618,8 +618,30 @@
       },
       "skillAdded": {}
     },
+    "controler" :{
+      "templates": ["base_pc"],
+      "attributes": {
+        "xp": {
+          "value": 5,
+          "total": 5
+        },
+        "cojones": {
+          "value": 5,
+          "total": 5
+        },
+        "health": 0,
+        "stress": 0,
+        "physical": {
+          "age": 0,
+          "height": 0,
+          "weight": 0,
+          "gender": ""
+        },
+        "skillOwned": 0
+      }
+    },
     "npc": {
-      "templates": ["base"]
+      "templates": ["base_pc"]
     },
     "zombie": {
       "xp": 0

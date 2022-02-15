@@ -612,6 +612,11 @@
 }
 
 .system-zcorps .chat-message.actions-message .chat-actions-card .dice .die .xp-die {
+  background-color: white;
+  color: #222;
+}
+
+.system-zcorps .chat-message.actions-message .chat-actions-card .dice .die .xp-joker-die {
   background-color: #689213;
 }
 

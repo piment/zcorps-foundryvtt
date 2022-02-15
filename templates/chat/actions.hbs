@@ -6,26 +6,33 @@
             <div class="label">{{ label }}</div>
         </div>
     </div>
-    <ul class="dice">
+   <ul class="dice">
+        {{#if malus.health}}<li>Malus de santé : -{{malus.health}}D</li>{{/if}}
+        {{#if malus.stress}}<li>Malus de stress : -{{malus.stress}}D</li>{{/if}}
         <li class="die">
-            {{#each roll.base as |base key|}}
-            <span class="base-die">{{base}}</span>
+            <span>({{total_base}})</span>
+            {{#each black as |dice key|}}
+            <span class="base-die">{{dice}}</span>
             {{/each}}
-            <span class="tier"> + {{roll.tier}}</span>
+            {{#each joker as |dice key|}}
+            <span class="joker-die">{{dice}}</span>
+            {{/each}}
+            {{#if tier}}<span> + {{tier}} </span>{{/if}}
         </li>
+        {{#if fail}}<li class="die"><span class="fail">{{ localize 'ZCORPS.rollFail'}}</span></li>{{/if}}
         <li class="die">
-            {{#each roll.joker as |joker key|}}
-            <span class="joker-die">{{joker}}</span>
+            {{#if xp}}<span>({{total_xp}})</span>{{/if}}
+            {{#each xp as |dice key|}}
+            <span class="xp-die">{{dice}}</span>
             {{/each}}
-            <span class="fail">{{#if roll.fail}}{{ localize 'ZCORPS.rollFail'}}{{/if}}</span>
-        </li>
-        <li class="die">
-            {{#each roll.xp as |xp key|}}
-            <span class="xp-die">{{xp}}</span>
+            {{#each xp_joker as |dice key|}}
+            <span class="xp-joker-die">{{dice}}</span>
             {{/each}}
+            
         </li>
-        <li class="total">TOTAL : {{roll.total_base}}</li>
-        {{#if roll.fail}}<li class="total_fail">SI ECHEC : {{roll.total_fail}}</li>{{/if}}
+        <li class="total">TOTAL : {{total}}</li>
+        {{#if fail}}<li class="total_fail">SI ECHEC : {{total_fail}}</li>{{/if}}
+        
     </ul>
     {{!-- {{log actor}} --}}
 </form>

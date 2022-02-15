@@ -1,0 +1,226 @@
+<form class="{{cssClass}} {{actor.type}} flexcol characSheet" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <button class="edit-sheet-btn"><i class="fas fa-pencil-alt"></i></button>
+    <div class="header-block profile flex0">
+      <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+      <h1>
+        {{#if actor.editSheet}}
+          <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+        {{else}}
+          {{actor.name}}
+        {{/if}}
+      </h1>
+    </div>
+    <div class="header-block character-infos flex1">
+      <div class="info">
+        <label for="pseudo">{{localize 'ZCORPS.attributes.nickname'}} :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="text"/>
+        {{else}}
+          <span>{{attributes.pseudo}}</span>
+        {{/if}}
+      </div>
+      <div class="info">
+        <label for="age">{{localize 'ZCORPS.attributes.age'}} :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="number"/>
+        {{else}}
+          <span>{{attributes.physical.age}}</span>
+        {{/if}}
+      </div>
+      <div class="info">
+        <label for="height">{{localize 'ZCORPS.attributes.height'}} :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="number"/>
+        {{else}}
+          <span>{{attributes.physical.height}}</span>
+        {{/if}}
+      </div>
+      <div class="info">
+        <label for="weight">{{localize 'ZCORPS.attributes.weight'}} :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="number"/>
+        {{else}}
+          <span>{{attributes.physical.weight}}</span>
+        {{/if}}
+      </div>
+      <div class="info">
+        <label for="gender">{{localize 'ZCORPS.attributes.gender'}} :</label>
+        {{#if actor.editSheet}}
+          <select name="data.attributes.physical.gender" id="data.attributes.physical.gender">
+            {{#select attributes.physical.gender}}
+            {{selectOptions genderType selected=value nameAttr=key}}
+            {{/select}}
+          </select>
+        {{else}}
+          <span>{{attributes.physical.gender}}</span>
+        {{/if}}
+      </div>
+      <div class="info">
+        <label for="mouvement">Mouvement</label>
+        
+        <span>{{attributes.movement}} m</span>
+      </div>
+      <div class="info">
+        <label class="info-title-sm" for="dammageBonus">Bonus aux dégâts</label>
+        <span>{{attributes.dammageBonus}}D &nbsp;&nbsp;<a class="rollable" data-roll="{{attributes.dammageBonus}}D+0" data-label="Bonus aux dégâts"> <i class="fas fa-dice-d6"></i></a></span>
+      </div>
+    </div>
+    <div class="header-block levels">
+      <div class="level">
+        <span class="level-title">{{localize 'ZCORPS.attributes.injuriesLevel'}}</span>
+        <select name="data.attributes.health" class="healthAndStressLevel">
+          {{#select data.attributes.health}}
+           {{selectOptions healthLevel selected=value attr=key}}
+          {{/select}}
+        </select>
+      </div>
+      <div class="level">
+        <span class="level-title">{{localize 'ZCORPS.attributes.stressLevel'}}</span>
+        <select name="data.attributes.stress" class="healthAndStressLevel">
+          {{#select data.attributes.stress}}
+           {{selectOptions stressLevel selected=value attr=key}}
+          {{/select}}
+        </select>
+      </div>
+      <div class="level">
+        <span class="level-title">Points de Personnage</span>
+        <div class="resource-content flexrow flex-center flex-between">
+          <span><em>Restants : </em> {{data.attributes.xp.value}}</span>
+          <span><em>Totaux : </em> {{data.attributes.xp.total}}</span>
+          <span class="use-bonus flex0"><i id="bonus_xp" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
+        </div>
+      </div>
+      <div class="level">
+        <span class="level-title">Points de Cojones</span>
+        <div class="resource-content flexrow flex-center flex-between">
+          <span><em>Restants : </em> {{data.attributes.cojones.value}}</span>
+          <span><em>Totaux : </em> {{data.attributes.cojones.total}}</span>
+          <span class="use-bonus flex0"><i id="bonus_cojones" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    {{!-- Default tab is specified in actor-sheet.mjs --}}
+    <a class="item" data-tab="features">Fiche de Perso</a>
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="assets">Equipements</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    {{!-- Owned Features Tab --}}
+    <div class="tab features caracteristics" data-group="primary" data-tab="features">
+      <section class="grid grid-1col" style="margin-top:0;">
+
+        {{!-- For the main features list, span the right two columns --}}
+        <section class="main grid-span-2">
+          
+          <ul class="caracteristics-block">
+            {{#each caracs as |carac caracId|}}
+              <li class="caracteristic" data-item-id="{{caracs.name}}">
+                <div class="caracteristic-info">
+                  <span class="caracteristic-title"><a class="rollable" data-roll="{{carac.formula}}" data-label="{{carac.name}}" data-carac="{{carac.name}}" title="appuyer sur MAJ pour utiliser des points de personnage/cojones"><i class="fas fa-dice-d6"></i></a> {{carac.name}}</span>
+                  
+                  <div class="level-block-right">
+                    
+                    {{#if ../actor.editSheet}}
+                    <input class="setDice" type="text" name="data.caracs.{{caracId}}.value" value="{{carac.value}}" data-dtype="number"/>
+                    {{else}}
+                    <div>{{carac.value}}D</div>
+                    {{/if}}
+                    <div class="level-block">
+                      <div class="tiers">
+                        <span class="tier {{#if carac.tiers.carac_1}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="1" data-carac="{{caracId}}"></span>
+                        <span class="tier {{#if carac.tiers.carac_2}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <ul class="skills-block {{#if ../../actor.editSheet}}list-style-none{{/if}}">
+                  {{#each carac.skills as |skill skillId|}}
+                    <li class="skill item {{#if skill.owned}}owned{{/if}} {{#if ../../actor.editSheet}}list-style-none{{/if}}" data-skill="{{skillId}}" data-item_id="{{skill.id}}">
+                      <div class="skill-info ">
+                        {{#if ../../actor.editSheet}}
+                          <span class="checkbox {{#if skill.owned}}checked{{/if}}" data-carac="{{caracId}}" data-skill="{{skillId}}"></span><!--<input type="checkbox" name="data.caracs.{{caracId}}.skills.{{skillId}}.owned" {{#if skill.owned}}checked{{/if}}/>-->
+                        {{/if}}
+                        <span class="skill-title"> <a class="rollable" data-roll="{{skill.formula}}" data-label="{{skill.name}}" data-carac="{{carac.name}}" title="appuyer sur MAJ pour utiliser des points de personnage/cojones"><i class="fas fa-dice-d6"></i></a> {{skill.name}}</span>
+                        
+                        <div class="level-block-right">
+                          {{#if ../../actor.editSheet}}
+                          {{#if skill.owned}}
+                            <input class="setDice" type="text" name="data.caracs.{{caracId}}.skills.{{skillId}}.value" value="{{skill.value}}" data-dtype="number"/>
+                            {{else}}
+                            <span>{{showTotalForSkill skill.total}}</span>
+                          {{/if}}
+                          {{else}}
+                          <span>{{showTotalForSkill skill.value_augmented}}</span>
+                          {{/if}}
+                          {{#if ../../actor.editSheet}}
+                            <div class="level-block">
+                              <div class="tiers">
+                                <span class="tier {{#if skill.tiers.skill_1}}checked{{/if}} {{#if skill.owned}}tiers-editable{{/if}}" data-tier="1" data-carac="{{caracId}}" data-skill="{{skillId}}" {{#if skill.added}}data-id="{{skill.id}}"{{/if}}></span>
+                                <span class="tier {{#if skill.tiers.skill_2}}checked{{/if}} {{#if skill.owned}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}" data-skill="{{skillId}}" {{#if skill.added}}data-id="{{skill.id}}"{{/if}}></span>
+                              </div>
+                            </div>
+                              {{#if skill.added}}
+                              <div>
+                                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                              </div>
+                              {{/if}}
+                            {{else}}
+                            <div class="level-block">
+                              <div class="tiers">
+                                <span class="tier {{#if skill.tiers.skill_1_augmented}}checked{{/if}}"></span>
+                                <span class="tier {{#if skill.tiers.skill_2_augmented}}checked{{/if}}"></span>
+                              </div>
+                            </div>
+                            {{/if}}
+                        </div>
+                        
+                      </div>
+                      <ul class="specialisations">
+                        {{#each ../../specialisation as |spec specId|}}
+                          {{#if (checkSpecialisation spec skillId)}}
+                            <li class="specialisation item" data-item-id="{{spec._id}}">
+                              <div>- {{spec.name}}</div><div>{{spec.data.value}} <a class="item-control item-delete" title="Delete Item">
+                                {{#if ../../../actor.editSheet}}
+                                  <i class="fas fa-trash"></i></a></div>
+                                {{/if}}
+                            </li>
+                          {{/if}}
+                        {{/each}}
+                      </ul>
+                    </li>
+                  {{/each}}
+                </ul>
+              </li>
+            {{/each}}
+          </ul>
+        </section>
+
+      </section>
+    </div>
+
+    {{!-- Biography Tab --}}
+    <div class="tab biography" data-group="primary" data-tab="description">
+      {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to the rollData property. --}}
+      {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner editable=editable}}
+    </div>
+
+    {{!-- Owned Items Tab --}}
+    <div class="tab assets" data-group="primary" data-tab="assets">
+       {{> "systems/zcorps/templates/actor/parts/actor-items.html"}}
+    </div>
+
+    
+
+  </section>
+</form>
+
