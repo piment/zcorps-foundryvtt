@@ -4,7 +4,7 @@
     <ol>
         {{#each actors as |actor keyActor|}}
             
-            <div class="form-group">
+            <li class="form-group">
                 <p>{{actor.name}}</p>
                 <div>
                     <h5>point de personnage</h5>
@@ -16,8 +16,33 @@
                     <input type="text" name="cojones" value="0" data-actor_id="{{actor._id}}" data-value="cojones"/>
                     <button class="gm_validate_value">{{localize 'ZCORPS.Add'}}</button>
                 </div>
-            </div>
+            </li>
             
         {{/each}}
     </ol>
+    <hr>
+    <div>
+        <h3>Ajouter une nouvelle compétence</h3>
+        <div class="form-group">
+            <div>
+                <span>Personnage</span>
+                <select name="actor" id="selectedActor">
+                    {{#each actors as |actor key|}}
+                    <option value="{{actor._id}}">{{actor.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div>
+                <span>Caractéristique</span>
+                <select name="caracteristic" id="caracteristic">
+                    {{#each caracteristics as |caracteristic key|}}
+                    <option value="{{key}}">{{caracteristic}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            
+            <input type="text" name="skill" id="skill" />
+            <button class="gm_add_skill">Valider</button>
+        </div>
+    </div>
 </form>

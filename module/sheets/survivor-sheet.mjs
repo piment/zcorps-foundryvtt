@@ -6,7 +6,6 @@ import { ZCORPS } from "../helpers/config.mjs";
  * @extends {ActorSheet}
  */
 export class zcorpsSurvivorSheet extends ActorSheet {
-    
     /** @override */
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -42,14 +41,15 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         const actorData = this.actor.data.toObject(false);
         // Add the actor's data to context.data for easier access, as well as flags.
         context.data = actorData.data;
-        context.flags = actorData.flags;
+        context.flags = actorData.flags.zcorps || {};
+        //console.log("FLAG AT START => ", context.flags);
         // Prepare character data and items.
         if (actorData.type == "survivor") {
             //this.totalSkill = 0;
+
             this._prepareItems(context);
             this._prepareCharacterData(context);
         }
-        
 
         // Add roll data for TinyMCE editors.
         context.rollData = context.actor.getRollData();
@@ -88,12 +88,18 @@ export class zcorpsSurvivorSheet extends ActorSheet {
     _prepareCharacterData(context) {
         context.caracs = context.data.caracs;
         context.skillsOwned = 0;
-
-        if (context.skillsAdded.length) {
-            for (let skill of context.skillsAdded) {
-                context.caracs[skill.carac].skills[skill.name] = skill;
+        if (context.flags.addedSkill) {
+            for (let [caracteristic, skills] of Object.entries(context.flags.addedSkill)) {
+                console.log("Add new skill from flag", Object.keys(context.flags.addedSkill[caracteristic]).length);
+                if (Object.keys(context.flags.addedSkill[caracteristic]).length > 0) {
+                    
+                    for (let [skill, data] of Object.entries(skills)) {
+                        context.caracs[caracteristic].skills[skill] = data;
+                    }
+                }
             }
         }
+        console.log(context.flags);
 
         //For each Caracteristic :
         for (const caracteristic of Object.values(context.caracs)) {
@@ -101,11 +107,14 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             skillHelper.calculateSkillValues(caracteristic, context);
             caracteristic.formula = caracHelper.getFormula(caracteristic);
         }
-        
+
         //Calculate devired data
         context.attributes = context.data.attributes;
-        context.attributes.movement = +context.caracs.strength.value + +context.caracs.agility.value;
-        context.attributes.dammageBonus = parseInt(Math.ceil(context.caracs.strength.value / 2));
+        context.attributes.movement =
+            +context.caracs.strength.value + +context.caracs.agility.value;
+        context.attributes.dammageBonus = parseInt(
+            Math.ceil(context.caracs.strength.value / 2)
+        );
 
         //Localize the caracteristic name
         for (let [key, carac] of Object.entries(context.caracs)) {
@@ -165,7 +174,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             } else if (i.type === "specialisation") {
                 specialisations.push(i);
             } else if (i.type === "skill") {
-                console.log(i);
+                //console.log(i);
                 skills.push({
                     name: i.name,
                     carac: i.data.caracteristic,
@@ -253,7 +262,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             const tier = ev.target;
             const tierClicked = tier.dataset.tier;
             let tierValue = 0;
-            
+
             if (tierClicked == 1) {
                 if (tier.classList.contains("checked")) {
                     if (tier.nextElementSibling.classList.contains("checked")) {
@@ -272,7 +281,11 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                     tier.classList.toggle("checked");
                     tierValue = 1;
                 } else {
-                    if (tier.previousElementSibling.classList.contains("checked")) {
+                    if (
+                        tier.previousElementSibling.classList.contains(
+                            "checked"
+                        )
+                    ) {
                         tier.classList.toggle("checked");
                         tierValue = 2;
                     } else {
@@ -283,54 +296,66 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             }
 
             //If skill modified is an added skill (item), we update the item directly
-            if (tier.dataset.id) {
-                const item = this.actor.items.get(tier.dataset.id);
-                const itemSkillValues = item.data.data.tiers;
-                if (tierValue == 0) {
-                    itemSkillValues.skill_1 = 0;
-                    itemSkillValues.skill_2 = 0;
-                } else if (tierValue == 1) {
-                    itemSkillValues.skill_1 = 1;
-                    itemSkillValues.skill_2 = 0;
-                } else {
-                    itemSkillValues.skill_1 = 1;
-                    itemSkillValues.skill_2 = 1;
-                }
-                item.update();
-            }
+            // if (tier.dataset.id) {
+            //     const item = this.actor.items.get(tier.dataset.id);
+            //     const itemSkillValues = item.data.data.tiers;
+            //     if (tierValue == 0) {
+            //         itemSkillValues.skill_1 = 0;
+            //         itemSkillValues.skill_2 = 0;
+            //     } else if (tierValue == 1) {
+            //         itemSkillValues.skill_1 = 1;
+            //         itemSkillValues.skill_2 = 0;
+            //     } else {
+            //         itemSkillValues.skill_1 = 1;
+            //         itemSkillValues.skill_2 = 1;
+            //     }
+            //     item.update();
+            // }
+            
             //Else we uptdate the actor data
+           
+            
+            if(tier.dataset.id){
+                
+                console.log("tier value : ", tierValue);
+                if(tierValue == 1){
+                    this.actor.setFlag("zcorps", `addedSkill.${tier.dataset.carac}.${tier.dataset.skill}.tiers`, {"skill_1": 1, "skill_2": 0});
+                }
+                else if(tierValue == 2) {
+                    this.actor.setFlag("zcorps", `addedSkill.${tier.dataset.carac}.${tier.dataset.skill}.tiers`, {"skill_1": 1, "skill_2": 1});
+                }
+                else {
+                    this.actor.setFlag("zcorps", `addedSkill.${tier.dataset.carac}.${tier.dataset.skill}.tiers`, {"skill_1": 0, "skill_2": 0});
+                }
+                console.log(this.actor.getFlag("zcorps", `addedSkill.${tier.dataset.carac}.${tier.dataset.skill}`));
+            }
             else {
-              console.log(this.actor.data.data.caracs);
                 const tiersData = {
                     value: tierValue,
                     carac: {
                         name: tier.dataset.carac,
-                        array: this.actor.data.data.caracs[tier.dataset.carac]
-                            .tiers,
-                    },
-                    skill: tier.dataset.skill
-                        ? {
-                              name: tier.dataset.skill,
-                              array: this.actor.data.data.caracs[
-                                  tier.dataset.carac
-                              ].skills[tier.dataset.skill].tiers,
-                          }
-                        : null,
+                        array: this.actor.data.data.caracs[tier.dataset.carac].tiers
+                        },
+                        skill: tier.dataset.skill
+                            ? {
+                                name: tier.dataset.skill,
+                                array: this.actor.data.data.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers,
+                            }
+                            : null,
                 };
+    
                 const dataFormatted = this.actor._getFormattedTiersData(tiersData);
-
                 dataFormatted.skill
                     ? (this.actor.data.data.caracs[tier.dataset.carac].skills[
                           tier.dataset.skill
                       ].tiers = dataFormatted.skill.array)
                     : (this.actor.data.data.caracs[tier.dataset.carac].tiers =
                           dataFormatted.carac.array);
-                
             }
             this.actor.update({ data: this.actor.data.data });
             this.actor.sheet.render(true);
         });
-        
+
         // Add Inventory Item
         html.find(".item-create").click(this._onItemCreate.bind(this));
 
@@ -438,6 +463,18 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             }
         });
 
+        html.find(".delete_skill").click(async (ev) => {
+            await this.actor.deleteSkillFromActor({
+                caracteristic: ev.currentTarget.dataset.caracteristic,
+                skill: ev.currentTarget.dataset.skill,
+            });
+            this.actor.sheet.render(true);
+        });
+        html.find(".addedSkill").change(ev => {
+            console.log(ev.currentTarget.value);
+            this.actor.setFlag("zcorps", `addedSkill.${ev.currentTarget.dataset.carac}.${ev.currentTarget.dataset.skill}.value`, ev.currentTarget.value);
+        })
+
         // Drag events for macros.
         if (this.actor.owner) {
             let handler = (ev) => this._onDragStart(ev);
@@ -516,7 +553,8 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                     ui.notifications.error("Pas assez de munitions");
                     return;
                 }
-                item.data.data["ammo-actual"] = item.data.data["ammo-actual"] - 1;
+                item.data.data["ammo-actual"] =
+                    item.data.data["ammo-actual"] - 1;
                 let label = dataset.label ? `[Arme] ${dataset.label}` : "";
                 const [dice, tier] = dataset.roll.split("+");
                 let formula = dice.toLowerCase() + "6 + " + tier;
@@ -533,7 +571,8 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             }
         }
         // Handle rolls that supply the formula directly.
-        if (dataset.roll) { this.actor.roll(dataset); }
+        if (dataset.roll) {
+            this.actor.roll(dataset);
+        }
     }
-    
 }

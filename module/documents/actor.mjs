@@ -18,6 +18,11 @@ export class zcorpsActor extends Actor {
     prepareBaseData() {
         // Data modifications in this step occur before processing embedded
         // documents or derived data.
+        //console.log("OPEN SHEET");
+        const actorData = this.data;
+        const data = actorData.data;
+        const flags = actorData.flags.zcorps || {};
+        //console.log(flags);
     }
 
     /**
@@ -33,7 +38,7 @@ export class zcorpsActor extends Actor {
         const actorData = this.data;
         const data = actorData.data;
         const flags = actorData.flags.zcorps || {};
-
+        
         // Make separate methods for each Actor type (character, npc, etc.) to keep
         // things organized.
         this._prepareCharacterData(actorData);
@@ -75,9 +80,7 @@ export class zcorpsActor extends Actor {
         }
     }
     _getFormattedTiersData(data) {
-        const caracObject = { carac_1: 0, carac_2: 0 };
-        const skillObject = { skill_1: 0, skill_2: 0 };
-
+        
         if (data.value == 1) {
             data.skill
                 ? (data.skill.array.skill_1 = 1)
@@ -123,18 +126,13 @@ export class zcorpsActor extends Actor {
         const bonus = this.useBonus;
         const malus = this._getMalus(dataset.carac);
         console.log(malus);
-        if(malus.health == -1 || malus.stress == -1){
+        if(malus.health == -1 || malus.stressValue == -1){
           ui.notifications.warn("Le personnage n'est pas en capacité d'agir");
           return;
         }
 
         if (bonus == "xp") {
             var [bonusRollFormula, used_xp] = await this._bonusRollFormula(true, 0);
-            console.log("Just after ", used_xp);
-            document.querySelectorAll(".bonus-icon").forEach((el) => {
-                el.classList.remove("fa-check-square", "fa-minus-square");
-                el.classList.add("fa-square");
-            });
         }
 
         let standartRollFormula = await this._standardRollFormula(
@@ -155,12 +153,22 @@ export class zcorpsActor extends Actor {
         else {
           var finalFormula = standartRollFormula
         }
-        console.log("final formula", finalFormula);
+        if(bonus == "cojones") {
+          this.data.data.attributes.cojones.value -= 1;
+          this.update({ data: this.data.data });
+        }
+        if(bonus){
+          document.querySelectorAll(".bonus-icon").forEach((el) => {
+            el.classList.remove("fa-check-square", "fa-minus-square");
+            el.classList.add("fa-square");
+        });
+        }
         let roll = await new Roll(finalFormula, {}).roll();
 
         const results = this._parseRollResult(roll);
-        const template = "systems/zcorps/templates/chat/actions.hbs";
-        const templateRendered = await renderTemplate(template, {
+        
+          const template = "systems/zcorps/templates/chat/actions.hbs";
+          var templateRendered = await renderTemplate(template, {
           black: results.black,
           joker: results.bloodmoon,
           xp: results.white,
@@ -175,8 +183,11 @@ export class zcorpsActor extends Actor {
           label: dataset.label,
           malus: malus,
           xp_used: used_xp ? used_xp : 0,
-          cojones: bonus == "cojones"? true : false
-        });
+          cojones: bonus == "cojones"? true : false,
+          stress : dataset.stress ? true : false,
+          stressDifficulty : malus.stressDifficulty
+          });
+        
         
         const myMessage = await ChatMessage.create({
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
@@ -216,14 +227,14 @@ export class zcorpsActor extends Actor {
     
     //######## ALWAYS USED? #######
     _getMalus(caracteristic) {
-      console.log(this.data.data.attributes.health);
         const health = this._calculateHealthMalus(
             this.data.data.attributes.health
         );
-        const stress = this._checkStressMalus(caracteristic, this.data.data.attributes.stress)
+        const stressTest = this._checkStressMalus(caracteristic, this.data.data.attributes.stress)
         return {
             health: health,
-            stress: stress,
+            stressValue: stressTest.value,
+            stressDifficulty: stressTest.difficulty
         };
     }
 
@@ -252,13 +263,14 @@ export class zcorpsActor extends Actor {
     }
     
     _checkStressMalus(caracteristic, level) {
+      console.log("carac : ", caracteristic, " level : ", level);
       const knowledge = game.i18n.localize(ZCORPS.caracteristics["knowledge"]);
       const agility = game.i18n.localize(ZCORPS.caracteristics["agility"]);
       const deftness = game.i18n.localize(ZCORPS.caracteristics["deftness"]);
       const presence = game.i18n.localize(ZCORPS.caracteristics["presence"]);
       const perception = game.i18n.localize(ZCORPS.caracteristics["perception"]);
 
-      if(level == 5) { return -1 };
+      if(level == 5) { return {value: -1, difficulty: false }};
       const malus = [
         {difficulty: 8, malus: false},
         {difficulty: 10, malus: {[knowledge]: 1}},
@@ -269,14 +281,14 @@ export class zcorpsActor extends Actor {
       
       if(malus[level].malus){
         if(malus[level].malus[caracteristic]){
-          return malus[level].malus[caracteristic]
+          return {value: malus[level].malus[caracteristic], difficulty: malus[level].difficulty}
         }
         else {
-          return 0;
+          return {value: 0, difficulty: malus[level].difficulty};
         }
       }
       else {
-        return 0;
+        return {value: 0, difficulty: malus[level].difficulty};
       }
     }
     //######## ############ #######
@@ -347,15 +359,12 @@ export class zcorpsActor extends Actor {
         if (cojones) {
             dice *= 2;
             tier *= 2;
-            this.data.data.attributes.cojones.value -= 1;
-            this.update({ data: this.data.data });
         }
-        dice = dice - malus.health - malus.stress;
+        dice = dice - malus.health - malus.stressValue;
         if(dice <= 0) {
           return false;
         }
         const finalFormula = `${dice - 1}D6[black] + 1D6x[bloodmoon] + ${tier}`;
-        
         return finalFormula;
     }
 
@@ -410,4 +419,37 @@ export class zcorpsActor extends Actor {
       
         return [finalFormula, bonusValue];
     }
+
+    async addSkillToActor(skill) {
+      
+      
+        const data = {
+          "name": skill.name,
+          "owned": true,
+          "value": 0,
+          "tiers": {
+            "carac_1": 0,
+            "carac_2": 0,
+            "skill_1": 0,
+            "skill_2": 0
+          }, 
+          "added": true
+        }
+        this.setFlag("zcorps", "addedSkill", {[skill.caracteristic] : {[skill.id]: data} });
+    }
+    
+    async deleteSkillFromActor(info) {
+      this.unsetFlag("zcorps", `addedSkill.${info.caracteristic}.${info.skill}`);
+    }
+
+    addSpecToSkill(specialisation, skill){
+      const data = {
+        "name": specialisation,
+        "value": 0,
+        "tiers": {
+
+        }
+      }
+    }
+    
 }

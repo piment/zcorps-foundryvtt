@@ -1,10 +1,16 @@
+0.0.9
+- Ajout de la gestion de nouvelles compétences
+- Ajout du test de résistance au stress
+---
+
 0.0.8
-- Correction d'un bug lors de la suppression d'une compétence ajoutée (impossible de ré-afficher la fiche de perso)
+- Refactoring de actor.mjs
+- Ajout de la gestion des points de perso avant et/ou après un jet de dés
+- Prise en compte des malus de santé/stress lors d'un jet de dés
 ---
 
 0.0.7
 - Correction du bug de non prise en compte des tiers lors des jets de dés
-- Ajout de la gestion de nouvelles compétences
 - Mise en forme du résultat des jets de dés dans le tchat
 ---
 
@@ -14,8 +20,8 @@
 
 0.0.5
 - Ajout d'une boite à outils pour le MJ :
-    - Edition du nombre de points de personnages / cojones.
-- Correction d'un bug d'affichage sur la FICHE PERSO (Commune) lorsque de la valeur des points de perso/cojones est composée de 2 chiffres (ex. 18).
+- Edition du nombre de points de personnages / cojones.
+- Correction d'un bug d'affichage sur la FICHE PERSO (Commune) lorsque de la valeur des points de perso/cojones est composée de 2 chiffres (ex. 18)
 ---
 
 0.0.4

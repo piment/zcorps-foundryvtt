@@ -9,6 +9,12 @@
    <ul class="dice">
         {{#if malus.health}}<li>Malus de santé : -{{malus.health}}D</li>{{/if}}
         {{#if malus.stress}}<li>Malus de stress : -{{malus.stress}}D</li>{{/if}}
+        {{#if stress}}
+            <span>Difficulté du test : {{stressDifficulty}}</span>
+            {{#if fail}}<li class="die"><span class="fail">Echec, le personnage monte de 2 niveaux de stress</span></li>{{/if}}
+            {{#if (eq joker.[0] 6)}}<li class="die"><span class="fail">Réussite critique, le personnage descend de 2 niveaux de stress</span></li>{{/if}}
+        {{/if}}
+        {{#if joker }}
         <li class="die">
             <span>({{total_base}})</span>
             {{#each black as |dice key|}}
@@ -19,6 +25,7 @@
             {{/each}}
             {{#if tier}}<span> + {{tier}} </span>{{/if}}
         </li>
+        {{/if}}
         {{#if fail}}<li class="die"><span class="fail">{{ localize 'ZCORPS.rollFail'}}</span></li>{{/if}}
         <li class="die">
             {{#if xp_joker}}<span>({{total_xp}})</span>{{/if}}
@@ -30,7 +37,7 @@
             {{/each}}
             
         </li>
-        <li class="total">TOTAL : {{total}}</li>
+        <li class="total">TOTAL : {{total}} {{#if stress}}({{#if (lte stressDifficulty total)}}Test réussi!{{else}}Test raté!{{/if}}){{/if}}</li>
         {{#if fail}}<li class="total_fail">SI ECHEC : {{total_fail}}</li>{{/if}}
         {{#unless cojones}}<li class="rerollXP"><button class="rerollXP_btn" {{#if xp_joker}}data-joker-used="true"{{/if}} data-xp-used="{{xp_used}}" data-label="{{label}}">utiliser des points de personnage</button></li>{{/unless}}
     </ul>

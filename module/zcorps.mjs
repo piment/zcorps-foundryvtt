@@ -199,7 +199,6 @@ Hooks.on("renderDialog", (dialog, id, context) => {
         const input_value = ev.target.parentNode.children[1].value;
         const actor_id = ev.target.parentNode.children[1].dataset.actor_id;
         const value = ev.target.parentNode.children[1].dataset.value;
-        console.log(input_value, actor_id, value);
         const actor = game.actors.get(actor_id);
         actor.data.data.attributes[value].value = parseInt(actor.data.data.attributes[value].value) + parseInt(input_value);;
         actor.data.data.attributes[value].total = parseInt(actor.data.data.attributes[value].total) + parseInt(input_value);
@@ -207,7 +206,17 @@ Hooks.on("renderDialog", (dialog, id, context) => {
         ev.target.parentNode.children[1].value = 0;
       })
     });
-    console.log(dialog);
+    document.querySelector(".gm_add_skill").addEventListener("click", async ev => {
+      ev.preventDefault();
+      const actorId = ev.target.parentNode.querySelector("#selectedActor").value;
+      const caracteristic = ev.target.parentNode.querySelector("#caracteristic").value;
+      const skill = ev.target.parentNode.querySelector("#skill").value;
+      const actor = game.actors.get(actorId);
+      console.log(skill);
+      ev.target.parentNode.querySelector("#skill").value = "";
+      await actor.addSkillToActor({caracteristic: caracteristic, id: skill.toLowerCase().replace(" ", "_"), name: skill})
+      
+    })
   }
 
   if(document.querySelector(".formula_bonus")) {
@@ -317,8 +326,12 @@ function rollItemMacro(itemName) {
 async function openGamemasterToolsDialog() {
   const template = "systems/zcorps/templates/gamemaster/tools-dialog.hbs";
   const actors = getActorsList();
-  console.log(actors);
-  const renderedTemplate = await renderTemplate(template, {actors: actors});
+  const caracteristics = {};
+  for(let [key, value] of Object.entries(ZCORPS.caracteristics)) {
+    caracteristics[key] = game.i18n.localize(value);
+  }
+  
+  const renderedTemplate = await renderTemplate(template, {actors: actors, caracteristics: caracteristics});
   const data = {
     title: game.i18n.localize('ZCORPS.gamemaster.title'),
     content: renderedTemplate,
