@@ -136,6 +136,7 @@
                     {{/if}}
                     <div class="level-block">
                       <div class="tiers">
+                        
                         <span class="tier {{#if carac.tiers.carac_1}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="1" data-carac="{{caracId}}"></span>
                         <span class="tier {{#if carac.tiers.carac_2}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}"></span>
                       </div>
@@ -190,15 +191,18 @@
                         
                       </div>
                       <ul class="specialisations">
-                        {{#each ../../specialisation as |spec specId|}}
-                          {{#if (checkSpecialisation spec skillId)}}
+                        {{#each skill.specialisations as |spec specId|}}
                             <li class="specialisation item" data-item-id="{{spec._id}}">
-                              <div>- {{spec.name}}</div><div>{{spec.data.value}} <a class="item-control item-delete" title="Delete Item">
+                              <div><a class="rollable" data-roll="{{skill.formula}}" data-label="{{skill.name}}" data-carac="{{carac.name}}"><i class="fas fa-dice-d6"></i></a> {{spec.name}}</div>
+                              <div>
+                                {{spec.value}}
                                 {{#if ../../../actor.editSheet}}
-                                  <i class="fas fa-trash"></i></a></div>
+                                <a class="item-control item-delete" title="Delete Item">
+                                
+                                  <i class="fas fa-trash"></i></a>
                                 {{/if}}
+                              </div>
                             </li>
-                          {{/if}}
                         {{/each}}
                       </ul>
                     </li>

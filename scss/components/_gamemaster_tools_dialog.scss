@@ -1,0 +1,53 @@
+section {
+    text-align: center;
+    padding: 8px 0 !important;
+    margin: 0;
+}
+table {
+    border: none;
+    box-sizing: border-box;
+    tbody {
+        tr {
+            td {
+                padding: 5px;
+                text-align: center;
+                div {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    input {
+                        width: 100%;
+                        display: inline;
+                        text-align: center;
+                    }
+                    button {
+                        width: 30px;
+                        height: 27px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        i {
+                            margin: 0;
+                            padding: 0;
+                            color: #333;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+#addSkillToActor {
+    button {
+        margin: 0 5px;
+        width: 95%;
+    }
+    .info {
+        font-size: 0.8em;
+        font-style: italic;
+    }
+}
+h3 {
+    text-transform: uppercase;
+    font-size: 1em;
+}

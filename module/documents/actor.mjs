@@ -18,11 +18,9 @@ export class zcorpsActor extends Actor {
     prepareBaseData() {
         // Data modifications in this step occur before processing embedded
         // documents or derived data.
-        //console.log("OPEN SHEET");
         const actorData = this.data;
         const data = actorData.data;
         const flags = actorData.flags.zcorps || {};
-        //console.log(flags);
     }
 
     /**
@@ -113,9 +111,7 @@ export class zcorpsActor extends Actor {
     }
 
     _parseRollFormulaWithMalus(formula, malus) {
-        console.log("##parse with malus");
         const [die, tier] = this._parseRollFormula(formula);
-        console.log(die);
         if (die - malus <= 0) {
             return 0;
         }
@@ -125,7 +121,6 @@ export class zcorpsActor extends Actor {
     async roll(dataset) {
         const bonus = this.useBonus;
         const malus = this._getMalus(dataset.carac);
-        console.log(malus);
         if(malus.health == -1 || malus.stressValue == -1){
           ui.notifications.warn("Le personnage n'est pas en capacité d'agir");
           return;
@@ -201,7 +196,6 @@ export class zcorpsActor extends Actor {
 
     async reRoll(joker, used_xp, label) {
       var [bonusRollFormula, used_xp] = await this._bonusRollFormula(joker, used_xp);
-      console.log(bonusRollFormula);
       if(!bonusRollFormula){ return false};
       let roll = await new Roll(bonusRollFormula, {}).roll();
       const results = this._parseRollResult(roll);
@@ -263,7 +257,6 @@ export class zcorpsActor extends Actor {
     }
     
     _checkStressMalus(caracteristic, level) {
-      console.log("carac : ", caracteristic, " level : ", level);
       const knowledge = game.i18n.localize(ZCORPS.caracteristics["knowledge"]);
       const agility = game.i18n.localize(ZCORPS.caracteristics["agility"]);
       const deftness = game.i18n.localize(ZCORPS.caracteristics["deftness"]);
@@ -319,7 +312,7 @@ export class zcorpsActor extends Actor {
             case "white":
               result.white.push(...term.values);
               break;
-            case "acid":
+            case "bronze":
               result.acid.push(...term.values);
               break;
             default:
@@ -349,7 +342,6 @@ export class zcorpsActor extends Actor {
       
         result.white.length ? result.total_white = result.white.reduce((init, cur) => init + cur) : result.total_white = 0;
         result.total_xp =  result.acid.length ? result.total_white + result.acid.reduce((init, cur) => init + cur) : result.total_white;
-      console.log(result.total_xp);
       
       return result;
     }
@@ -372,7 +364,6 @@ export class zcorpsActor extends Actor {
         
         const template = `systems/zcorps/templates/actor/parts/bonusSelection.hbs`;
         const available = this.data.data.attributes.xp.value;
-        console.log(used);
         const html = await renderTemplate(template, {
             available: available,
             limit: game.settings.get("zcorps", "XPPointPerRollMax") - used,
@@ -412,7 +403,7 @@ export class zcorpsActor extends Actor {
         this.update({ data: this.data.data });
 
         if (joker) {
-            var finalFormula = `${bonusValue - 1}D6[white] + 1D6x[acid]`;
+            var finalFormula = `${bonusValue - 1}D6[white] + 1D6x[bronze]`;
         } else {
             var finalFormula = `${bonusValue}D6[white]`;
         }
@@ -421,8 +412,6 @@ export class zcorpsActor extends Actor {
     }
 
     async addSkillToActor(skill) {
-      
-      
         const data = {
           "name": skill.name,
           "owned": true,
@@ -442,14 +431,36 @@ export class zcorpsActor extends Actor {
       this.unsetFlag("zcorps", `addedSkill.${info.caracteristic}.${info.skill}`);
     }
 
-    addSpecToSkill(specialisation, skill){
+    async addSpecToSkill(specialisation, skill, caracteristic){
       const data = {
         "name": specialisation,
+        "skill": skill,
+        "carac": caracteristic,
         "value": 0,
         "tiers": {
-
+          "spec_1": 0,
+          "spec_2": 0
         }
       }
+      this.setFlag("zcorps", "addedSpec", {[skill]: { [specialisation.toLowerCase().replace(" ", "_")] : data}});
     }
-    
+    async deleteSpecFromSkill(specialisation, skill){
+      this.unsetFlag("zcorps", `addedSpec.${skill}.${specialisation}`);
+    }
+    _getSkillsList(){
+      let skills = {};
+      for(let [key, carac] of Object.entries(this.data.data.caracs)){
+        for(let [key, skill] of Object.entries(carac.skills)){
+          skills[key] = {name: skill.name, added: false, caracteristic: key};
+        }
+      }
+      if(this.data.flags.zcorps && this.data.flags.zcorps.addedSkill){
+        for(let [key, carac] of Object.entries(this.data.flags.zcorps.addedSkill)){
+          for(let [skillKey, skill] of Object.entries(carac)){
+            skills[skillKey] = {name: skill.name, added: true, caracteristic: key};
+          }
+        }  
+      }
+      return skills;
+    }
 }

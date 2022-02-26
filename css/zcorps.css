@@ -617,7 +617,7 @@
 }
 
 .system-zcorps .chat-message.actions-message .chat-actions-card .dice .die .xp-joker-die {
-  background-color: #689213;
+  background-color: #d3862e;
 }
 
 .system-zcorps .chat-message.actions-message .chat-actions-card .dice .total {
@@ -1002,6 +1002,7 @@
 .actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill {
   list-style-type: disc;
   padding-right: 5px;
+  width: 100%;
 }
 
 .actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill .skill-info {
@@ -1032,6 +1033,25 @@
 
 .actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill .skill-info .skill-title {
   margin-right: auto;
+  text-align: left;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill ul.specialisations {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  width: auto;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill ul.specialisations li.specialisation {
+  margin: 0;
+  padding: 0 0 0 15px;
+  color: #888;
+  font-style: italic;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill ul.specialisations li.specialisation i {
+  color: #BBB;
 }
 
 .actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block li.skill.list-style-none {
@@ -1132,6 +1152,77 @@
   box-shadow: none;
 }
 
+.gamemaster_tools_dialog section {
+  text-align: center;
+  padding: 8px 0 !important;
+  margin: 0;
+}
+
+.gamemaster_tools_dialog table {
+  border: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.gamemaster_tools_dialog table tbody tr td {
+  padding: 5px;
+  text-align: center;
+}
+
+.gamemaster_tools_dialog table tbody tr td div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.gamemaster_tools_dialog table tbody tr td div input {
+  width: 100%;
+  display: inline;
+  text-align: center;
+}
+
+.gamemaster_tools_dialog table tbody tr td div button {
+  width: 30px;
+  height: 27px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.gamemaster_tools_dialog table tbody tr td div button i {
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.gamemaster_tools_dialog #addSkillToActor button {
+  margin: 0 5px;
+  width: 95%;
+}
+
+.gamemaster_tools_dialog #addSkillToActor .info {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.gamemaster_tools_dialog h3 {
+  text-transform: uppercase;
+  font-size: 1em;
+}
+
 #chat {
   background-color: #111;
 }
@@ -1213,12 +1304,13 @@
 }
 
 body {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(192, 18, 18, 0.822)), to(#2225)), url(../ui/background.jpg);
-  background-image: -o-linear-gradient(rgba(192, 18, 18, 0.822), #2225), url(../ui/background.jpg);
-  background-image: linear-gradient(rgba(192, 18, 18, 0.822), #2225), url(../ui/background.jpg);
+  background-image: url("../ui/background_2.jpg");
   background-position: bottom right;
-  -webkit-box-shadow: 20px 0 50vw 10vw #381b1b inset;
-  box-shadow: 20px 0 50vw 10vw #381b1b inset;
+  background-size: cover !important;
+}
+
+body:not(.background) {
+  position: relative;
 }
 
 .app.bonus .window-header {

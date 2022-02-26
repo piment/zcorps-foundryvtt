@@ -1,48 +1,91 @@
 <form>
-    <h1>GAME MASTER TOOLS V0.0.1</h1>
     <h3>Edition des points de personnage / cojones</h3>
-    <ol>
-        {{#each actors as |actor keyActor|}}
-            
-            <li class="form-group">
-                <p>{{actor.name}}</p>
-                <div>
-                    <h5>point de personnage</h5>
-                    <input type="text" name="xp" value="0" data-actor_id="{{actor._id}}" data-value="xp"/>
-                    <button class="gm_validate_value">{{localize 'ZCORPS.Add'}}</button>
-                </div>
-                <div>
-                    <h5>point de cojones</h5>
-                    <input type="text" name="cojones" value="0" data-actor_id="{{actor._id}}" data-value="cojones"/>
-                    <button class="gm_validate_value">{{localize 'ZCORPS.Add'}}</button>
-                </div>
-            </li>
-            
-        {{/each}}
-    </ol>
+    <table>
+        <thead>
+            <tr>
+                <th>Personnage</th>
+                <th>Points de personnage</th>
+                <th>Points de Cojones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each actors as |actor key|}}
+            <tr>
+                <td>{{actor.data.name}}</td>
+                <td>
+                    <div>
+                        <input type="text" name="xp" value="0" data-actor_id="{{actor.data._id}}" data-value="xp"/>
+                        <button class="gm_validate_value">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <input type="text" name="cojones" value="0" data-actor_id="{{actor.data._id}}" data-value="cojones"/>
+                        <button class="gm_validate_value">+</button>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <hr>
+    <h3>Ajouter une nouvelle compétence</h3>
+    <table id="addSkillToActor">
+            <thead>
+                <tr>
+                    <th>Personnage</th>
+                    <th>Caractéristique</th>
+                    <th>Compétence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <select name="actorCarac" id="selectedActorForCarac">
+                        {{#each actors as |actor key|}}
+                            <option value="{{actor.data._id}}">{{actor.data.name}}</option>
+                        {{/each}}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="caracteristic" id="caracteristic">
+                        {{#each caracteristics as |caracteristic key|}}
+                            <option value="{{key}}">{{caracteristic}}</option>
+                        {{/each}}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" name="skillToAdd" id="skillToAdd" />
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <button class="gm_add_skill">Valider</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="info">
+                        Attention, vérifier que le personnage ne possède pas déjà les 12 compétences maximum sélectionnées
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
     <hr>
     <div>
-        <h3>Ajouter une nouvelle compétence</h3>
+        <h3>Ajouter une spécialisation</h3>
+        {{#each actors as | actor key|}}
         <div class="form-group">
-            <div>
-                <span>Personnage</span>
-                <select name="actor" id="selectedActor">
-                    {{#each actors as |actor key|}}
-                    <option value="{{actor._id}}">{{actor.name}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            <div>
-                <span>Caractéristique</span>
-                <select name="caracteristic" id="caracteristic">
-                    {{#each caracteristics as |caracteristic key|}}
-                    <option value="{{key}}">{{caracteristic}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            
-            <input type="text" name="skill" id="skill" />
-            <button class="gm_add_skill">Valider</button>
+            <span class="actor_name" data-actor_id="{{actor.data._id}}">{{actor.data.name}}</span>
+            <select name="skill" id="skill">
+                {{#each actor.skills as |skill key|}}
+                <option value="{{key}}" data-added="{{skill.added}}" data-caracteristic="{{skill.caracteristic}}">{{skill.name}}</option>
+                {{/each}}
+            </select>
+            <input type="text" name="specToAdd" id="specToAdd" />
+            <button class="gm_add_spec">Valider</button>
         </div>
+        {{/each}}
     </div>
 </form>

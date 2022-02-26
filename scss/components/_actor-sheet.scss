@@ -232,6 +232,7 @@
                         li.skill {
                             list-style-type: disc;
                             padding-right: 5px;
+                            width: 100%;
                             .skill-info {
                                 display: flex;
                                 flex-direction: row;
@@ -249,8 +250,25 @@
                                 }
                                 .skill-title {
                                     margin-right: auto;
+                                    text-align: left;
                                 }
                             }
+                            ul.specialisations {
+                                margin: 0;
+                                padding: 0;
+                                list-style-type: none;
+                                width: auto;
+                                li.specialisation {
+                                    margin: 0;
+                                    padding: 0 0 0 15px;
+                                    color: #888;
+                                    font-style: italic;
+                                    i {
+                                        color: #BBB;
+                                    }
+                                }
+                            }
+                            
                             &.list-style-none {
                                 list-style-type: none;
                                 padding: -15px;

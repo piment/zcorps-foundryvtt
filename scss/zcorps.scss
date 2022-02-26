@@ -28,6 +28,9 @@
 .actor {
   @import 'components/actor-sheet';
 }
+.gamemaster_tools_dialog {
+  @import 'components/gamemaster_tools_dialog';
+}
 #chat {
   background-color: #111;
   #chat-log {
@@ -88,9 +91,12 @@
 }
 
 body {
-  background-image: linear-gradient(rgba(192, 18, 18, 0.822), #2225), url(../ui/background.jpg);
+  background-image: url("../ui/background_2.jpg");
   background-position: bottom right;
-  box-shadow: 20px 0 50vw 10vw $zcorps-red-darker inset;
+  background-size: cover !important;
+  &:not(.background) {
+    position: relative;
+  }
 }
 .app.bonus {
   

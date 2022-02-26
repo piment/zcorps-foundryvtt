@@ -89,15 +89,6 @@ Handlebars.registerHelper('showTotalForSkill', function(str) {
   }
 });
 
-Handlebars.registerHelper("checkSpecialisation", function(spec, skill) {
-  
-  if(spec.data.skill === skill) {
-    return true;
-  } else {
-    return false;
-  }
-});
-
 Handlebars.registerHelper("getSkillValuefromActor", (caracs, carac, skill) => {
   //console.log("get skill value");
   //console.log(caracs[carac].skills[skill].total);
@@ -196,25 +187,38 @@ Hooks.on("renderDialog", (dialog, id, context) => {
   if(document.querySelector(".gamemaster_tools_dialog")) {
     document.querySelectorAll('.gm_validate_value').forEach(el =>{
       el.addEventListener("click", ev => {
-        const input_value = ev.target.parentNode.children[1].value;
-        const actor_id = ev.target.parentNode.children[1].dataset.actor_id;
-        const value = ev.target.parentNode.children[1].dataset.value;
+        const input_value = ev.target.parentNode.querySelector('input').value;
+        const actor_id = ev.target.parentNode.children[0].dataset.actor_id;
+        const value = ev.target.parentNode.children[0].dataset.value;
         const actor = game.actors.get(actor_id);
+        console.log(input_value, actor_id, value, actor);
         actor.data.data.attributes[value].value = parseInt(actor.data.data.attributes[value].value) + parseInt(input_value);;
         actor.data.data.attributes[value].total = parseInt(actor.data.data.attributes[value].total) + parseInt(input_value);
         actor.update({data: actor.data.data});
-        ev.target.parentNode.children[1].value = 0;
+        ev.target.parentNode.children[0].value = 0;
       })
     });
     document.querySelector(".gm_add_skill").addEventListener("click", async ev => {
       ev.preventDefault();
-      const actorId = ev.target.parentNode.querySelector("#selectedActor").value;
-      const caracteristic = ev.target.parentNode.querySelector("#caracteristic").value;
-      const skill = ev.target.parentNode.querySelector("#skill").value;
+      const table = document.querySelector("#addSkillToActor");
+      const actorId = table.querySelector("#selectedActorForCarac").value;
+      const caracteristic = table.querySelector("#caracteristic").value;
+      const skill = table.querySelector("#skillToAdd").value;
       const actor = game.actors.get(actorId);
-      console.log(skill);
-      ev.target.parentNode.querySelector("#skill").value = "";
+      console.log(actorId, caracteristic, skill, actor);
+      table.querySelector("#skillToAdd").value = "";
       await actor.addSkillToActor({caracteristic: caracteristic, id: skill.toLowerCase().replace(" ", "_"), name: skill})
+      
+    });
+    document.querySelector(".gm_add_spec").addEventListener("click", async ev => {
+      ev.preventDefault();
+      const actorId = ev.target.parentNode.querySelector(".actor_name").dataset.actor_id;
+      const skill = ev.target.parentNode.querySelector("#skill").value;
+      const caracteristic = ev.target.parentNode.querySelector("#skill").options[ev.target.parentNode.querySelector("#skill").selectedIndex].dataset.caracteristic;
+      const spec = ev.target.parentNode.querySelector("#specToAdd").value;
+      const actor = game.actors.get(actorId);
+      ev.target.parentNode.querySelector("#specToAdd").value = "";
+      await actor.addSpecToSkill(spec, skill, caracteristic);
       
     })
   }
@@ -331,7 +335,7 @@ async function openGamemasterToolsDialog() {
     caracteristics[key] = game.i18n.localize(value);
   }
   
-  const renderedTemplate = await renderTemplate(template, {actors: actors, caracteristics: caracteristics});
+  const renderedTemplate = await renderTemplate(template, {actors: actors, caracteristics: caracteristics });
   const data = {
     title: game.i18n.localize('ZCORPS.gamemaster.title'),
     content: renderedTemplate,
@@ -348,7 +352,7 @@ function getActorsList() {
   const actors = [];
   game.actors.forEach(actor => {
     if(actor.data.type == "survivor" || actor.data.type == "controler"){
-      actors.push(actor.data);
+      actors.push({data: actor.data, skills: actor._getSkillsList()});
     }
   });
   return actors;

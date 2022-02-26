@@ -42,7 +42,6 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         // Add the actor's data to context.data for easier access, as well as flags.
         context.data = actorData.data;
         context.flags = actorData.flags.zcorps || {};
-        //console.log("FLAG AT START => ", context.flags);
         // Prepare character data and items.
         if (actorData.type == "survivor") {
             //this.totalSkill = 0;
@@ -90,17 +89,34 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         context.skillsOwned = 0;
         if (context.flags.addedSkill) {
             for (let [caracteristic, skills] of Object.entries(context.flags.addedSkill)) {
-                console.log("Add new skill from flag", Object.keys(context.flags.addedSkill[caracteristic]).length);
                 if (Object.keys(context.flags.addedSkill[caracteristic]).length > 0) {
-                    
                     for (let [skill, data] of Object.entries(skills)) {
                         context.caracs[caracteristic].skills[skill] = data;
                     }
                 }
             }
         }
-        console.log(context.flags);
-
+        if(context.flags.addedSpec){
+            for(let [carac_name, carac_info] of Object.entries(context.caracs)){
+                for(let [skill_name, skill_info] of Object.entries(carac_info.skills)){
+                    if(context.flags.addedSpec[skill_name] && Object.keys(context.flags.addedSpec[skill_name].length > 0)){
+                        context.caracs[carac_name].skills[skill_name].specialisations = {};
+                        for(let [spec_name, spec_info] of Object.entries(context.flags.addedSpec[skill_name])){
+                            context.caracs[carac_name].skills[skill_name].specialisations[spec_name] = spec_info;
+                        }
+                        
+                    }
+                }
+            }
+            // for(let [skill, specialisations] of Object.entries(context.flags.addedSpec)){
+            //     if(Object.keys(context.flags.addedSpec[skill].length > 0)){
+                   
+            //         for(let specialisation of Object.values(specialisations)){
+            //             context.caracs[specialisation.carac].skills[specialisation.skill].specialisations[specialisation.name.toLowerCase().replace(" ", "_")] = specialisation; 
+            //         }
+            //     }
+            // }
+        }
         //For each Caracteristic :
         for (const caracteristic of Object.values(context.caracs)) {
             //We calculate the skills values
@@ -153,7 +169,6 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 ammo.push(i);
                 let ammoFinal = {};
                 ammo.forEach((item) => {
-                    //console.log(item);
                     if (ammoFinal[item.data.type] === undefined) {
                         ammoFinal[item.data.type] = {
                             quantity: +item.data.quantity,
@@ -168,13 +183,13 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 // for (const [key, item] of Object.entries(ammoFinal)) {
                 //   Item.create({name: item.name, type: "ammo", data: { type: key, quantity: item.quantity}}, { parent: this.actor })
 
-                //   console.log(item);
+                
                 //  };
-                //console.log(ammoFinal);
+               
             } else if (i.type === "specialisation") {
                 specialisations.push(i);
             } else if (i.type === "skill") {
-                //console.log(i);
+               
                 skills.push({
                     name: i.name,
                     carac: i.data.caracteristic,
@@ -214,10 +229,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             if (tempAmmo.length > 0) {
                 tempAmmo.forEach((item) => {
                     if (item.data.data.type == droppedItemData.data.type) {
-                        console.log(
-                            parseInt(item.data.data.quantity) +
-                                parseInt(droppedItemData.data.quantity)
-                        );
+                        
                         return item.update({
                             "data.quantity":
                                 parseInt(item.data.data.quantity) +
@@ -227,7 +239,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 });
                 this.ActorSheet.render(true);
             } else {
-                console.log(this.actor.items);
+               
                 return this._onDropItemCreate(droppedItemData);
             }
         } else {
@@ -254,7 +266,6 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         html.find(".item-edit").click((ev) => {
             const li = $(ev.currentTarget).parents(".item");
             const item = this.actor.items.get(li.data("itemId"));
-            //console.log(item);
             item.sheet.render(true);
         });
 
@@ -317,7 +328,6 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             
             if(tier.dataset.id){
                 
-                console.log("tier value : ", tierValue);
                 if(tierValue == 1){
                     this.actor.setFlag("zcorps", `addedSkill.${tier.dataset.carac}.${tier.dataset.skill}.tiers`, {"skill_1": 1, "skill_2": 0});
                 }
@@ -327,7 +337,6 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 else {
                     this.actor.setFlag("zcorps", `addedSkill.${tier.dataset.carac}.${tier.dataset.skill}.tiers`, {"skill_1": 0, "skill_2": 0});
                 }
-                console.log(this.actor.getFlag("zcorps", `addedSkill.${tier.dataset.carac}.${tier.dataset.skill}`));
             }
             else {
                 const tiersData = {
@@ -363,7 +372,6 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         html.find(".item-delete").click((ev) => {
             const li = $(ev.currentTarget).parents(".item")[0];
             const item = this.actor.items.get(li.dataset["item_id"]);
-            console.log("item to delete => ", item);
             item.delete();
             this.actor.sheet.render(true);
         });
@@ -471,7 +479,6 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             this.actor.sheet.render(true);
         });
         html.find(".addedSkill").change(ev => {
-            console.log(ev.currentTarget.value);
             this.actor.setFlag("zcorps", `addedSkill.${ev.currentTarget.dataset.carac}.${ev.currentTarget.dataset.skill}.value`, ev.currentTarget.value);
         })
 
@@ -499,7 +506,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         const header = event.currentTarget;
         // Get the type of item to create.
         const type = header.dataset.type;
-        //console.log(type);
+       
         // Grab any data associated with this control.
         const data = duplicate(header.dataset);
         // Initialize a default name.
@@ -533,7 +540,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 //const item = this.actor.items.get(itemId);
                 const item = this.actor.getOwnedItem(itemId);
                 item.data.data.formula = "2d6";
-                //console.log(item);
+                
                 if (item) return item.roll();
             } else if (dataset.rollType == "dammage") {
                 let label = dataset.label ? `[Dommage] ${dataset.label}` : "";
