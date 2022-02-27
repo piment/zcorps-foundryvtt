@@ -987,6 +987,20 @@
   font-weight: 600;
 }
 
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic .level-block .manage_value {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic .level-block .manage_value .fas {
+  font-size: 0.8em;
+}
+
 .actor .window-content .sheet-body .caracteristics ul.caracteristics-block li.caracteristic ul.skills-block {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -136,7 +136,11 @@
                     {{/if}}
                     <div class="level-block">
                       <div class="tiers">
-                        
+                        <!-- <span>+{{carac.tier}}</span>
+                        <span class="manage_value">
+                          <a class="set" data-set-level="plus" data-set="{{caracId}}"><i class="fas fa-plus-square"></i></a>
+                          <a class="set" data-set-level="minus" data-set="{{caracId}}""><i class="fas fa-minus-square"></i></a>
+                        </span> -->
                         <span class="tier {{#if carac.tiers.carac_1}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="1" data-carac="{{caracId}}"></span>
                         <span class="tier {{#if carac.tiers.carac_2}}checked{{/if}} {{#if ../actor.editSheet}}tiers-editable{{/if}}" data-tier="2" data-carac="{{caracId}}"></span>
                       </div>

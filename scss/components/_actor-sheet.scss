@@ -224,6 +224,15 @@
                         
                         
                     }
+                    .level-block {
+                        .manage_value {
+                            display: flex;
+                            flex-direction: column;
+                            .fas {
+                                font-size: 0.8em;
+                            }
+                        }
+                    }
                     ul.skills-block {
                         display: flex;
                         flex-direction: column;
@@ -339,9 +348,6 @@
                     
                 }
             }
-            
-            
-        }
-        
+        } 
     }
 }

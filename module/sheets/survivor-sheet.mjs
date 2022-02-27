@@ -481,7 +481,17 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         html.find(".addedSkill").change(ev => {
             this.actor.setFlag("zcorps", `addedSkill.${ev.currentTarget.dataset.carac}.${ev.currentTarget.dataset.skill}.value`, ev.currentTarget.value);
         })
-
+        html.find(".set").click(async ev => {
+            const dataset = ev.currentTarget.dataset;
+            console.log(this.actor.data.data.caracs[dataset.set].tier);
+            if(dataset.setLevel == "plus") {
+                this.actor.data.data.caracs[dataset.set].tier += 1;
+            }
+            else {
+                this.actor.data.data.caracs[dataset.set].tier -= 1;
+            }
+            this.actor.render(true);
+        })
         // Drag events for macros.
         if (this.actor.owner) {
             let handler = (ev) => this._onDragStart(ev);
