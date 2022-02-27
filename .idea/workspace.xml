@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="62c9ce1d-e00a-4324-bf68-077fd59d3a0a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/CHANGELOG" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/zcorps.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/zcorps.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/documents/actor.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/module/documents/actor.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/sheets/survivor-sheet.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/module/sheets/survivor-sheet.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/zcorps.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/module/zcorps.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/actor/actor-survivor-sheet.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/actor/actor-survivor-sheet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/chat/actions.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/templates/chat/actions.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/gamemaster/tools-dialog.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/templates/gamemaster/tools-dialog.hbs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="25HZH2Z6HVZOMs9SiuH9fwuIpbL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="NewWatcherDialog.advanced.open" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="14.18.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.18.0" />
+    <property name="js.buildTools.gulp.gulp_package_dir" value="$PROJECT_DIR$/node_modules/gulp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.stylelint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.stylelint" value="" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="Settings.JavaScript.Linters.JSHint" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.gulp">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="watch" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.watch" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="62c9ce1d-e00a-4324-bf68-077fd59d3a0a" name="Changes" comment="" />
+      <created>1645185883079</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1645185883079</updated>
+      <workItem from="1645185885269" duration="835000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
