@@ -72,6 +72,7 @@
   
   "ZCORPS.attributes" : {
       "nickname": "Pseudo",
+      "carriere": "Carrière",
       "age": "Age",
       "height": "Taille",
       "weight": "Poids",

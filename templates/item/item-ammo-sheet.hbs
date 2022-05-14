@@ -13,9 +13,9 @@
       <div class="category-body">
         <div class="category-element">
           <label for="data.type">Type d'arme</label>
-          <select name="data.type" id="data.type" class="arme-type">
+          <select name="data.type" id="data.type" class="">
             {{#select data.type}}
-            {{selectOptions ammoType selected=value nameAttr=key}}
+            {{selectOptions munType selected=value nameAttr=key}}
             {{/select}}
           </select>
         </div>

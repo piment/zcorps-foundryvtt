@@ -23,6 +23,10 @@ export class zcorpsActor extends Actor {
         const flags = actorData.flags.zcorps || {};
     }
 
+	prepareFormuleInit(){
+		console.info(this.data)
+	}
+
     /**
      * @override
      * Augment the basic actor data with additional dynamic data. Typically,
@@ -119,6 +123,7 @@ export class zcorpsActor extends Actor {
     }
 
     async roll(dataset) {
+		console.info(dataset)
         const bonus = this.useBonus;
         const malus = this._getMalus(dataset.carac);
         if(malus.health == -1 || malus.stressValue == -1){
@@ -159,7 +164,6 @@ export class zcorpsActor extends Actor {
         });
         }
         let roll = await new Roll(finalFormula, {}).roll();
-
         const results = this._parseRollResult(roll);
         
           const template = "systems/zcorps/templates/chat/actions.hbs";
@@ -182,7 +186,6 @@ export class zcorpsActor extends Actor {
           stress : dataset.stress ? true : false,
           stressDifficulty : malus.stressDifficulty
           });
-        
         
         const myMessage = await ChatMessage.create({
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,

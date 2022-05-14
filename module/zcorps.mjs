@@ -42,7 +42,7 @@ Hooks.once('init', async function() {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: "1d20",
+    formula: "1d20 + "+"@caracs.agility.value",
     decimals: 2
   };
 
@@ -92,7 +92,8 @@ Handlebars.registerHelper('showTotalForSkill', function(str) {
 Handlebars.registerHelper("getSkillValuefromActor", (caracs, carac, skill) => {
   //console.log("get skill value");
   //console.log(caracs[carac].skills[skill].total);
-  const value = `${caracs[carac].skills[skill].total}D+${caracs[carac].skills[skill].tier}`;
+//  const value = `${caracs[carac].skills[skill].total}D+${caracs[carac].skills[skill].tier}`;
+  const value = `${caracs[carac].skills[skill].formula}`;
   return value;
 });
 
@@ -357,3 +358,7 @@ function getActorsList() {
   });
   return actors;
 }
+
+var img = document.getElementById('logo')
+img.style.display="none";
+//img.parentElement.removeChild(img)

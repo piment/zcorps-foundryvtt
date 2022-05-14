@@ -57,6 +57,21 @@ export class zcorpsItemSheet extends ItemSheet {
     context.data = itemData.data;
     context.flags = itemData.flags;
     context.armeType = {"armedepoing": "arme de poing", "armedejet": "arme de jet", "armedepaule" : "arme d'épaule", "armecontandante": "arme contandante"};
+    context.munType = {
+			"Arme de jet": "",
+	        "9mm": "9mm",
+			".357":".357",
+			".38":".38",
+			".45":".45",
+			".50":".50",
+			".270":".270",
+			".30-30":".30-30",
+			".30-06":".30-06",
+			"Cal .12":"Cal .12",
+			"Cal .50":"Cal .50",
+			"7.62":"7.62",
+			"X-26":"X-26"
+	};
     //console.log(Object.keys(context))
     //console.log(context.item.data);
     return context;

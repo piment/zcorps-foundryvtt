@@ -618,8 +618,11 @@
           "age": 0,
           "height": 0,
           "weight": 0,
-          "gender": ""
+          "gender": "",
+          "carriere": ""
         },
+        "inventaire":"",
+        "description":"",
         "skillOwned": 0
       }
     },
@@ -653,7 +656,7 @@
     }
   },
   "Item": {
-    "types": ["item", "skill", "specialisation", "arme", "ammo"],
+    "types": ["item", "skill", "specialisation", "arme", "arme_explo", "arme_melee","ammo"],
     "templates": {
       "base": {
         "description": ""
@@ -691,13 +694,35 @@
         "middle": 0,
         "long": 0
       },
-      "damage": "",
+      "damage": "0D+0",
+      "ammo-type": "",
       "ammo-max": 0,
       "ammo-actual": 0
     },
+    "arme_explo":{
+      "damage": "0D+0",
+      "quantity":0,
+      "range":{
+        "short":0,
+        "middle":0,
+        "long":0
+      },
+      "range-explo":{
+        "short":0,
+        "middle":0,
+        "long":0
+      }
+    },
+    "arme_melee":{
+      "type": "",
+      "skill": "",
+      "carac": "",
+      "damage": {"D":0,"T":0,"DP":0}
+    },
     "ammo": {
       "type": "",
-      "quantity": 0
+      "quantity": 0,
+      "damage": {"D":0,"T":0}
     }
   }
 }

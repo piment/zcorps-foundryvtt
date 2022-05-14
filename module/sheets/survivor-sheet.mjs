@@ -74,6 +74,8 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 
         this.actor.context = context;
         this.actor.useBonus = false;
+        
+        console.info(context);
         return context;
     }
 
@@ -150,6 +152,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         const gear = [];
         const arme = [];
         const ammo = [];
+        const arme_explo = [];
         const skills = [];
         const specialisations = [];
 
@@ -179,17 +182,27 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                             ammoFinal[item.data.type].quantity +
                             +item.data.quantity;
                     }
-                });
-                // for (const [key, item] of Object.entries(ammoFinal)) {
-                //   Item.create({name: item.name, type: "ammo", data: { type: key, quantity: item.quantity}}, { parent: this.actor })
-
-                
-                //  };
-               
+                });               
+            }
+            // Append to Ammo.
+            else if (i.type === "arme-explo") {
+                arme_explo.push(i);
+                let arme_exploFinal = {};
+                arme_explo.forEach((item) => {
+                    if (arme_exploFinal[item.data.type] === undefined) {
+                        arme_exploFinal[item.data.type] = {
+                            quantity: +item.data.quantity,
+                            name: item.name,
+                        };
+                    } else {
+                        arme_exploFinal[item.data.type].quantity =
+                            arme_exploFinal[item.data.type].quantity +
+                            +item.data.quantity;
+                    }
+                });               
             } else if (i.type === "specialisation") {
                 specialisations.push(i);
             } else if (i.type === "skill") {
-               
                 skills.push({
                     name: i.name,
                     carac: i.data.caracteristic,
@@ -206,6 +219,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         context.gear = gear;
         context.arme = arme;
         context.ammo = ammo;
+        context.armeExplo = arme_explo;
         context.specialisations = specialisations;
         context.skillsAdded = skills;
     }
@@ -265,7 +279,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         // Render the item sheet for viewing/editing prior to the editable check.
         html.find(".item-edit").click((ev) => {
             const li = $(ev.currentTarget).parents(".item");
-            const item = this.actor.items.get(li.data("itemId"));
+            const item = this.actor.items.get(li.data("item_id"));
             item.sheet.render(true);
         });
 
@@ -372,7 +386,14 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         html.find(".item-delete").click((ev) => {
             const li = $(ev.currentTarget).parents(".item")[0];
             const item = this.actor.items.get(li.dataset["item_id"]);
-            item.delete();
+//            console.info(item)
+	        let dialog = Dialog.confirm({
+	            title: "Suppression d'élément",
+	            content: "<p>Confirmer la suppression de '" + item.name + "'.</p>",
+	            yes: () => item.delete(),
+	            no: () => { },
+	            defaultYes: false
+	        });
             this.actor.sheet.render(true);
         });
 
@@ -501,6 +522,49 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 li.addEventListener("dragstart", handler, false);
             });
         }
+        
+        html.find('.reloadArme').click( ev=>{
+            const li = $(ev.currentTarget).parents(".item")[0];
+            const item = this.actor.items.get(li.dataset["item_id"]);
+
+			console.info(item)
+			console.info(li)
+//			console.info(this.actor.data.items.filter(item => item.name == ammoType))
+
+			var ammoType = item.data.data['ammo-type']
+			
+			var Mun = this.actor.data.items.filter(item => item.name == ammoType)
+
+			var munManq = item.data.data['ammo-max'] - item.data.data['ammo-actual']
+
+			for(var i = 0 ; Mun.length > i ; i++){
+				munManq = item.data.data['ammo-max'] - item.data.data['ammo-actual']
+				console.info(Mun[i])
+				if(Mun[i].data.data.quantity > 0 && item.data.data['ammo-actual'] < item.data.data['ammo-max']){
+					if(Mun[i].data.data.quantity >= munManq){
+						item.data.data["ammo-actual"] = item.data.data['ammo-max'];
+						Mun[i].data.data.quantity = Mun[i].data.data.quantity - munManq
+//						if (item.update({"data.ammo-actual": item.data.data["ammo-actual"]})){
+//							Mun[i].update({"data.quantity": Mun[i].data.data.quantity})
+//						};
+						console.info(item.data.data)
+						item.update({"data.ammo-actual": item.data.data["ammo-actual"]})
+						Mun[i].sheet.render(true);
+						this.actor.sheet.render(true);
+					}else if (Mun[i].data.data.quantity < munManq){
+						item.data.data["ammo-actual"] = Number(item.data.data['ammo-actual']) + Number(Mun[i].data.data.quantity);
+						Mun[i].data.data.quantity = 0
+						item.update({"data.ammo-actual": item.data.data["ammo-actual"]})
+						Mun[i].sheet.render(true);
+					}
+				}
+//				if (munManq == item.data.data['ammo-max']){
+//					return true;
+//				}
+			}
+			this.actor.sheet.render(true);
+		});
+        
         // -------------------------------------------------------------
         // Everything below here is only needed if the sheet is editable
         if (!this.isEditable) return;
@@ -556,15 +620,15 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 let label = dataset.label ? `[Dommage] ${dataset.label}` : "";
                 const [dice, tier] = dataset.roll.split("+");
                 let formula = dice.toLowerCase() + "6 + " + tier;
-                let roll = new Roll(formula, this.actor.getRollData());
-                roll.toMessage({
-                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                    flavor: label,
-                    rollMode: game.settings.get("core", "rollMode"),
-                });
-                return roll;
+//                let roll = new Roll(formula, this.actor.getRollData());
+//                roll.toMessage({
+//                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+//                    flavor: label,
+//                    rollMode: game.settings.get("core", "rollMode"),
+//                });
+//                return roll;
             } else if (dataset.rollType == "arme") {
-                const itemId = element.closest(".item").dataset.itemId;
+                const itemId = element.closest(".item").dataset['item_id'];
                 const item = this.actor.items.get(itemId);
                 if (item.data.data["ammo-actual"] == 0) {
                     ui.notifications.error("Pas assez de munitions");
@@ -575,14 +639,17 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 let label = dataset.label ? `[Arme] ${dataset.label}` : "";
                 const [dice, tier] = dataset.roll.split("+");
                 let formula = dice.toLowerCase() + "6 + " + tier;
-                let roll = new Roll(formula, this.actor.getRollData());
-                roll.toMessage({
-                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                    flavor: label,
-                    rollMode: game.settings.get("core", "rollMode"),
-                });
-                this.actor.sheet.render(true);
-                return item.update({
+//                console.info(this.actor.getRollData())
+//                console.info(formula)
+//                let roll = new Roll(formula, this.actor.getRollData());
+//                roll.toMessage({
+//                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+//                    flavor: label,
+//                    rollMode: game.settings.get("core", "rollMode"),
+//                });
+//                this.actor.sheet.render(true);
+//                return item.update({
+                item.update({
                     "data.ammo-actual": item.data.data["ammo-actual"],
                 });
             }
