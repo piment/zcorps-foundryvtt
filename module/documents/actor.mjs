@@ -123,7 +123,6 @@ export class zcorpsActor extends Actor {
     }
 
     async roll(dataset) {
-		console.info(dataset)
         const bonus = this.useBonus;
         const malus = this._getMalus(dataset.carac);
         if(malus.health == -1 || malus.stressValue == -1){

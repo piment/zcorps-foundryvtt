@@ -631,6 +631,14 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             } else if (dataset.rollType == "dammage") {
                 let label = dataset.label ? `[Dommage] ${dataset.label}` : "";
                 const [dice, tier] = dataset.roll.split("+");
+
+                console.info(dataset.roll)
+	            if(dataset.roll.substring(0,1) == "+"){
+					var [d,t] = dataset.roll.split("D+");
+					d = Number(this.actor.context.attributes.dammageBonus) + Number(d)
+					dataset.roll = d+"D+"+t
+				}
+
                 let formula = dice.toLowerCase() + "6 + " + tier;
 //                let roll = new Roll(formula, this.actor.getRollData());
 //                roll.toMessage({

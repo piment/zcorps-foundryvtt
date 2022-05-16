@@ -44,6 +44,8 @@
       (Attribut : {{data.carac}} / Compétence : {{data.skill}})
       
     </div>
+    
+    {{#if data.type}}
     <div class="category">
       <div class="category-title">Portée</div>
       <div class="category-body">
@@ -61,8 +63,7 @@
         </div>
       </div>
     </div>
-    
-
+	{{/if}}
     
     <div class="hidden">
       <input type="hidden" name="data.skill" value="{{data.skill}}" class="data-skill"  />
