@@ -56,7 +56,7 @@ export class zcorpsItemSheet extends ItemSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = itemData.data;
     context.flags = itemData.flags;
-    context.armeType = {"armedepoing": "arme de poing", "armedejet": "arme de jet", "armedepaule" : "arme d'épaule", "armecontandante": "arme contandante"};
+    context.armeType = {"arme_a_feu": "armes à feu", "arme_de_jet": "arme de jet", "arme_explosive" : "Explosif", "arme_melee": "arme de mêlée"};
     context.munType = {
 			"Arme de jet": "",
 	        "9mm": "9mm",
@@ -90,11 +90,11 @@ export class zcorpsItemSheet extends ItemSheet {
     html.find(".arme-type").change(ev => { 
       let item = this.object.data.data;
       let skill = ev.currentTarget.value;
-      if(skill ==="armedepoing" || skill === "armedepaule") {
+      if(skill == "arme_a_feu") {
         item.carac = "deftness";
         item.skill = "armeafeu";
       }
-      else if(skill === "armedejet") {
+      else if(skill == "arme_de_jet" || skill == "arme_explosive") {
         item.carac = "deftness";
         item.skill = "armedejet";
       } else {

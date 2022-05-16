@@ -656,7 +656,7 @@
     }
   },
   "Item": {
-    "types": ["item", "skill", "specialisation", "arme", "arme_explo", "arme_melee","ammo"],
+    "types": ["item", "skill", "specialisation", "arme", "arme_explo", "arme_cac","ammo"],
     "templates": {
       "base": {
         "description": ""
@@ -686,7 +686,7 @@
       "value": 0
     },
     "arme": {
-      "type": "",
+      "type": "arme_a_feu",
       "skill": "",
       "carac": "",
       "range": {
@@ -713,8 +713,8 @@
         "long":0
       }
     },
-    "arme_melee":{
-      "type": "",
+    "arme_cac":{
+      "type": "armecontandante",
       "skill": "",
       "carac": "",
       "damage": {"D":0,"T":0,"DP":0}

@@ -152,9 +152,18 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         const gear = [];
         const arme = [];
         const ammo = [];
-        const arme_explo = [];
+        arme.range = [];
+        arme.cac   = [];
+        arme.jet   = [];
+        arme.explo = [];
+//        arme.range = context.items.filter(item => item.data.type === "arme_a_feu")
+//        arme.cac   = context.items.filter(item => item.data.type === "arme_melee")
+//        arme.jet   = context.items.filter(item => item.data.type === "arme_de_jet")
+//        arme.explo = context.items.filter(item => item.data.type === "arme_explosive")
+        
         const skills = [];
         const specialisations = [];
+        const otherItems = [];
 
         // Iterate through items, allocating to containers
         for (let i of context.items) {
@@ -165,7 +174,24 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             }
             // Append to features.
             else if (i.type === "arme") {
-                arme.push(i);
+				switch (i.data.type) {
+					case "arme_a_feu":
+					  arme.range.push(i);
+					break;
+					case "arme_melee":
+					  arme.cac.push(i);
+					break;
+					case "arme_de_jet":
+					  arme.jet.push(i);
+					break;
+					case "arme_explosive":
+					  arme.explo.push(i);
+					break;
+					default:
+					  otherItems.push(i);
+					break;
+				}
+//                arme.push(i);
             }
             // Append to Ammo.
             else if (i.type === "ammo") {
@@ -183,23 +209,6 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                             +item.data.quantity;
                     }
                 });               
-            }
-            // Append to Ammo.
-            else if (i.type === "arme-explo") {
-                arme_explo.push(i);
-                let arme_exploFinal = {};
-                arme_explo.forEach((item) => {
-                    if (arme_exploFinal[item.data.type] === undefined) {
-                        arme_exploFinal[item.data.type] = {
-                            quantity: +item.data.quantity,
-                            name: item.name,
-                        };
-                    } else {
-                        arme_exploFinal[item.data.type].quantity =
-                            arme_exploFinal[item.data.type].quantity +
-                            +item.data.quantity;
-                    }
-                });               
             } else if (i.type === "specialisation") {
                 specialisations.push(i);
             } else if (i.type === "skill") {
@@ -212,16 +221,19 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                     added: true,
                     id: i._id,
                 });
-            }
+            } else{
+				otherItems.push(i);
+			}
+            
         }
 
         // Assign and return
         context.gear = gear;
         context.arme = arme;
         context.ammo = ammo;
-        context.armeExplo = arme_explo;
         context.specialisations = specialisations;
         context.skillsAdded = skills;
+        context.otherItem = otherItems;
     }
 
     async _onDropItem(event, data) {
@@ -630,7 +642,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             } else if (dataset.rollType == "arme") {
                 const itemId = element.closest(".item").dataset['item_id'];
                 const item = this.actor.items.get(itemId);
-                if (item.data.data["ammo-actual"] == 0) {
+                if (item.data.data["ammo-actual"] == 0 && item.data.data.type !== "arme_melee") {
                     ui.notifications.error("Pas assez de munitions");
                     return;
                 }
