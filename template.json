@@ -7,6 +7,7 @@
           "agility": {
             "name": "Agilité",
             "value": 2,
+            "roll": "",
             "tier": 0,
             "tiers": {
               "carac_1": 0,
@@ -652,11 +653,12 @@
       "templates": ["base_pc"]
     },
     "zombie": {
+      "templates": ["base_pc"],
       "xp": 0
     }
   },
   "Item": {
-    "types": ["item", "skill", "specialisation", "arme", "arme_explo", "arme_cac","ammo"],
+    "types": ["item", "skill", "specialisation", "arme", "arme_explo","ammo"],
     "templates": {
       "base": {
         "description": ""
@@ -712,12 +714,6 @@
         "middle":0,
         "long":0
       }
-    },
-    "arme_cac":{
-      "type": "armecontandante",
-      "skill": "",
-      "carac": "",
-      "damage": {"D":0,"T":0,"DP":0}
     },
     "ammo": {
       "type": "",

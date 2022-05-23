@@ -43,12 +43,16 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         context.data = actorData.data;
         context.flags = actorData.flags.zcorps || {};
         // Prepare character data and items.
-        if (actorData.type == "survivor") {
+        if (actorData.type == "survivor" || actorData.type == "controler") {
             //this.totalSkill = 0;
 
             this._prepareItems(context);
             this._prepareCharacterData(context);
         }
+        if(actorData.type =="zombie"){
+		    this._prepareItems(context);
+            this._prepareCharacterData(context);
+		}
 
         // Add roll data for TinyMCE editors.
         context.rollData = context.actor.getRollData();
@@ -74,6 +78,22 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 
         this.actor.context = context;
         this.actor.useBonus = false;
+//        context.data.init = context.caracs.agility.value
+//        this.actor.data.data.caracs.agility.roll = this.actor.data.data.caracs.agility.value+"d6"
+		var Dr = "";
+		var tr="";
+		if(this.actor.data.data.caracs.agility.roll){		
+			[Dr, tr] = this.actor.data.data.caracs.agility.roll.split('d6')
+		}
+//		console.info(Dr)
+		if(Dr !== this.actor.data.data.caracs.agility.value){
+			this.actor.data.data.caracs.agility.roll = this.actor.data.data.caracs.agility.value+"d6"
+			this.actor.update({"data.caracs.agility.roll": this.actor.data.data.caracs.agility.roll})
+//			item.update({"data.ammo-actual": item.data.data["ammo-actual"]})
+//        	console.info(this.actor)
+		}
+//        console.info(this.actor)
+//        this.actor.data
         
         console.info(context);
         return context;
@@ -535,12 +555,12 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             });
         }
         
-        html.find('.reloadArme').click( ev=>{
+        html.find('.reloadArme').click(async ev=>{
             const li = $(ev.currentTarget).parents(".item")[0];
             const item = this.actor.items.get(li.dataset["item_id"]);
 
-			console.info(item)
-			console.info(li)
+//			console.info(item)
+//			console.info(li)
 //			console.info(this.actor.data.items.filter(item => item.name == ammoType))
 
 			var ammoType = item.data.data['ammo-type']
@@ -551,7 +571,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 
 			for(var i = 0 ; Mun.length > i ; i++){
 				munManq = item.data.data['ammo-max'] - item.data.data['ammo-actual']
-				console.info(Mun[i])
+//				console.info(Mun[i])
 				if(Mun[i].data.data.quantity > 0 && item.data.data['ammo-actual'] < item.data.data['ammo-max']){
 					if(Mun[i].data.data.quantity >= munManq){
 						item.data.data["ammo-actual"] = item.data.data['ammo-max'];
@@ -559,14 +579,15 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 //						if (item.update({"data.ammo-actual": item.data.data["ammo-actual"]})){
 //							Mun[i].update({"data.quantity": Mun[i].data.data.quantity})
 //						};
-						console.info(item.data.data)
+//						console.info(item.data.data)
 						item.update({"data.ammo-actual": item.data.data["ammo-actual"]})
+//						Mun[i].update({"data.ammo-quantity": item.data.data["quantity"]});
 						Mun[i].sheet.render(true);
 						this.actor.sheet.render(true);
 					}else if (Mun[i].data.data.quantity < munManq){
 						item.data.data["ammo-actual"] = Number(item.data.data['ammo-actual']) + Number(Mun[i].data.data.quantity);
 						Mun[i].data.data.quantity = 0
-						item.update({"data.ammo-actual": item.data.data["ammo-actual"]})
+						aitem.update({"data.ammo-actual": item.data.data["ammo-actual"]})
 						Mun[i].sheet.render(true);
 					}
 				}
@@ -632,7 +653,6 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 let label = dataset.label ? `[Dommage] ${dataset.label}` : "";
                 const [dice, tier] = dataset.roll.split("+");
 
-                console.info(dataset.roll)
 	            if(dataset.roll.substring(0,1) == "+"){
 					var [d,t] = dataset.roll.split("D+");
 					d = Number(this.actor.context.attributes.dammageBonus) + Number(d)

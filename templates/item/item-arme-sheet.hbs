@@ -23,6 +23,7 @@
           <label for="data.dammage">Dégats</label>
           <input type="text" name="data.dammage" value="{{data.dammage}}" />
         </div>
+    	{{#if affichageArme }}
         <div class="category-element">
           <label for="ammo-actual">Munitions actuelles</label>
           <input type="number" name="data.ammo-actual" value="{{data.ammo-actual}}" />
@@ -31,7 +32,9 @@
           <label for="ammo-max">Munitions Max</label>
           <input type="number" name="data.ammo-max" value="{{data.ammo-max}}" />
         </div>
+		{{/if}}
       </div>
+	{{#if affichageArme }}
       <div>
           <label for="ammo-type">Type Munitions</label>
           <select name="data.ammo-type" id="data.ammo-type" class="arme-type">
@@ -40,12 +43,12 @@
             {{/select}}
           </select>
       </div>
+	{{/if}}
       
       (Attribut : {{data.carac}} / Compétence : {{data.skill}})
       
     </div>
-    
-    {{#if data.type}}
+    {{#if affichageArme }}
     <div class="category">
       <div class="category-title">Portée</div>
       <div class="category-body">

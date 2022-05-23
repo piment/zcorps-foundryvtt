@@ -50,10 +50,7 @@ export class zcorpsActor extends Actor {
      * Prepare Character type specific data
      */
     _prepareCharacterData(actorData) {
-        if (actorData.type == "survivor") {
-            const data = actorData.data;
-        }
-        if (actorData.type == "controler") {
+        if (actorData.type == "survivor" || actorData.type == "controler") {
             const data = actorData.data;
         }
     }

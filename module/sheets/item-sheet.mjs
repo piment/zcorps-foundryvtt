@@ -72,6 +72,14 @@ export class zcorpsItemSheet extends ItemSheet {
 			"7.62":"7.62",
 			"X-26":"X-26"
 	};
+	
+	//Diff dans l'affichage des items de type arme
+	console.info(context)
+	context.affichageArme = true;
+	if (context.data.type == "arme_melee"){
+		context.affichageArme = false;
+	}
+	
     //console.log(Object.keys(context))
     //console.log(context.item.data);
     return context;

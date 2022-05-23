@@ -42,9 +42,10 @@ Hooks.once('init', async function() {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: "1d20 + "+"@caracs.agility.value",
+    formula: "@caracs.agility.roll",
     decimals: 2
   };
+  console.info(CONFIG.Combat.initiative)
 
   // Define custom Document classes
   CONFIG.Actor.documentClass = zcorpsActor;
@@ -360,5 +361,5 @@ function getActorsList() {
 }
 
 var img = document.getElementById('logo')
-img.style.display="none";
-//img.parentElement.removeChild(img)
+//img.style.display="none";
+img.parentElement.removeChild(img)
