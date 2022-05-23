@@ -174,11 +174,16 @@ Hooks.on("renderPlayerList", async function(playerList, html) {
   if(game.user.data.role == 4){
     const loggedInUser = html.find(`[data-user-id="${game.userId}"]`);
     const tooltip = game.i18n.localize('ZCORPS.gamemaster.title');
-    loggedInUser.append(`<button type="button" class="gamemaster_button flex0" title="${tooltip}"><i class="fas fa-dungeon"></i></button>`);
+    loggedInUser.append(`<button type="button" class="gamemaster_button flex0 gm_tool" title="${tooltip}"><i class="fas fa-dungeon"></i></button>`);
+    loggedInUser.append(`<button type="button" class="gamemaster_button flex0 gm_infect" title="${tooltip}"><i class="fas fa-radiation"></i></button>`);
 
-    html.on('click', '.gamemaster_button', event => {
-      openGamemasterToolsDialog();
+    html.on('click', '.gm_tool', event => {
+      openGamemasterToolsDialog("tools");
     });
+    html.on('click', '.gm_infect', event => {
+      openGamemasterToolsDialog("infect");
+    });
+
   }
   
   
@@ -200,30 +205,60 @@ Hooks.on("renderDialog", (dialog, id, context) => {
         ev.target.parentNode.children[0].value = 0;
       })
     });
-    document.querySelector(".gm_add_skill").addEventListener("click", async ev => {
-      ev.preventDefault();
-      const table = document.querySelector("#addSkillToActor");
-      const actorId = table.querySelector("#selectedActorForCarac").value;
-      const caracteristic = table.querySelector("#caracteristic").value;
-      const skill = table.querySelector("#skillToAdd").value;
-      const actor = game.actors.get(actorId);
-      console.log(actorId, caracteristic, skill, actor);
-      table.querySelector("#skillToAdd").value = "";
-      await actor.addSkillToActor({caracteristic: caracteristic, id: skill.toLowerCase().replace(" ", "_"), name: skill})
-      
-    });
-    document.querySelector(".gm_add_spec").addEventListener("click", async ev => {
-      ev.preventDefault();
-      const actorId = ev.target.parentNode.querySelector(".actor_name").dataset.actor_id;
-      const skill = ev.target.parentNode.querySelector("#skill").value;
-      const caracteristic = ev.target.parentNode.querySelector("#skill").options[ev.target.parentNode.querySelector("#skill").selectedIndex].dataset.caracteristic;
-      const spec = ev.target.parentNode.querySelector("#specToAdd").value;
-      const actor = game.actors.get(actorId);
-      ev.target.parentNode.querySelector("#specToAdd").value = "";
-      await actor.addSpecToSkill(spec, skill, caracteristic);
-      
-    })
-  }
+    if (document.querySelector(".gm_tools")){
+	    document.querySelector(".gm_add_skill").addEventListener("click", async ev => {
+	      ev.preventDefault();
+	      const table = document.querySelector("#addSkillToActor");
+	      const actorId = table.querySelector("#selectedActorForCarac").value;
+	      const caracteristic = table.querySelector("#caracteristic").value;
+	      const skill = table.querySelector("#skillToAdd").value;
+	      const actor = game.actors.get(actorId);
+	      console.log(actorId, caracteristic, skill, actor);
+	      table.querySelector("#skillToAdd").value = "";
+	      await actor.addSkillToActor({caracteristic: caracteristic, id: skill.toLowerCase().replace(" ", "_"), name: skill})
+	      
+	    });
+	    document.querySelector(".gm_add_spec").addEventListener("click", async ev => {
+	      ev.preventDefault();
+	      const actorId = ev.target.parentNode.querySelector(".actor_name").dataset.actor_id;
+	      const skill = ev.target.parentNode.querySelector("#skill").value;
+	      const caracteristic = ev.target.parentNode.querySelector("#skill").options[ev.target.parentNode.querySelector("#skill").selectedIndex].dataset.caracteristic;
+	      const spec = ev.target.parentNode.querySelector("#specToAdd").value;
+	      const actor = game.actors.get(actorId);
+	      ev.target.parentNode.querySelector("#specToAdd").value = "";
+	      await actor.addSpecToSkill(spec, skill, caracteristic);
+	    });
+	}else if (document.querySelector(".gm_infect")){
+	    document.querySelectorAll(".gm_add_infect").forEach(el =>{el.addEventListener("click", async ev => {
+	      ev.preventDefault();
+//	      console.info(ev.target.parentNode.parentNode.parentNode)
+		  const cont = ev.target.parentNode.parentNode.parentNode
+	      const actorId  = cont.querySelector(".actor_name").dataset.actor_id;
+	      const pourcent = cont.querySelector("#infectPourcentToAdd_"+actorId).value;
+	      const time     = cont.querySelector("#infectTimeToAdd_"+actorId).value;
+	      const infect = {pourcent: pourcent, time:time}
+	      const actor = game.actors.get(actorId);
+	      cont.querySelector("#infectPourcentToAdd_"+actorId).value = 0;
+	      cont.querySelector("#infectTimeToAdd_"+actorId).value = 0;
+	      await actor.addInfect(infect);
+	      openGamemasterToolsDialog("infect");
+		  const dialog = cont.parentNode.parentNode.parentNode.parentNode.parentNode.parentElement
+	      dialog.parentNode.removeChild(dialog)
+	    });
+	   })
+	    document.querySelectorAll(".gm_supp_infect").forEach(el =>{el.addEventListener("click", async ev => {
+	      ev.preventDefault();
+		  const cont = ev.target.parentNode.parentNode.parentNode.parentNode
+	      const actorId  = cont.querySelector(".actor_name").dataset.actor_id;
+	      const infect = ev.target.parentNode.dataset.key ;
+	      const actor = game.actors.get(actorId);
+	      await actor.deleteInfect(infect);
+	      openGamemasterToolsDialog("infect");
+		  const dialog = cont.parentNode.parentNode.parentNode.parentNode.parentNode.parentElement
+	      dialog.parentNode.removeChild(dialog)
+	    });
+	   })
+  }}
 
   if(document.querySelector(".formula_bonus")) {
     const formula_bonus_input = document.querySelector(".formula_bonus")
@@ -329,8 +364,8 @@ function rollItemMacro(itemName) {
   return item.roll();
 }
 
-async function openGamemasterToolsDialog() {
-  const template = "systems/zcorps/templates/gamemaster/tools-dialog.hbs";
+async function openGamemasterToolsDialog(env) {
+  const template = "systems/zcorps/templates/gamemaster/"+env+"-dialog.hbs";
   const actors = getActorsList();
   const caracteristics = {};
   for(let [key, value] of Object.entries(ZCORPS.caracteristics)) {
@@ -342,12 +377,12 @@ async function openGamemasterToolsDialog() {
     title: game.i18n.localize('ZCORPS.gamemaster.title'),
     content: renderedTemplate,
     buttons: {}
-}
+  }
 
-new Dialog(data, {
-    with: 500,
-    classes: ["gamemaster_tools_dialog"],
-}).render(true);
+  new Dialog(data, {
+	with: 500,
+	classes: ["gamemaster_tools_dialog gm_"+env],
+    }).render(true);
 }
 
 function getActorsList() {

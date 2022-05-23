@@ -13,5 +13,6 @@
     "systems/zcorps/templates/actor/parts/bonusSelection.hbs",
     "systems/zcorps/templates/chat/actions.hbs",
     "systems/zcorps/templates/gamemaster/tools-dialog.hbs",
+    "systems/zcorps/templates/gamemaster/infect-dialog.hbs",
   ]);
 };

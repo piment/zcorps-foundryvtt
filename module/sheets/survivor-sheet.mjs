@@ -78,22 +78,43 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 
         this.actor.context = context;
         this.actor.useBonus = false;
-//        context.data.init = context.caracs.agility.value
-//        this.actor.data.data.caracs.agility.roll = this.actor.data.data.caracs.agility.value+"d6"
+
+		/* Gestion de l'initiative */
 		var Dr = "";
-		var tr="";
-		if(this.actor.data.data.caracs.agility.roll){		
+		var tr = "";
+		if(this.actor.data.data.caracs.agility.roll){
 			[Dr, tr] = this.actor.data.data.caracs.agility.roll.split('d6')
 		}
-//		console.info(Dr)
 		if(Dr !== this.actor.data.data.caracs.agility.value){
 			this.actor.data.data.caracs.agility.roll = this.actor.data.data.caracs.agility.value+"d6"
 			this.actor.update({"data.caracs.agility.roll": this.actor.data.data.caracs.agility.roll})
-//			item.update({"data.ammo-actual": item.data.data["ammo-actual"]})
-//        	console.info(this.actor)
 		}
-//        console.info(this.actor)
-//        this.actor.data
+        
+        /* Gestion de l'infectation */
+        const infest = context.flags.addedInfect
+        console.info(infest)
+        var TotalInfest = 0;
+        infest.forEach((item) => {
+			TotalInfest = Number(item.pourcent) + Number(TotalInfest)
+        });
+        var color = "black";
+        if (TotalInfest <= 10){
+			color = "lightgreen"
+		}else if(TotalInfest <= 20){
+			color = "yellow"
+		}else if(TotalInfest <= 30){
+			color = "orange"
+		}else if(TotalInfest <= 40){
+			color = "darkorange"
+		}else if(TotalInfest < 49){
+			color = "lightcoral"
+		}else if(TotalInfest >= 49){
+			color = "red"
+		}else{
+			color = "black"
+		}
+        
+        context.totalInfest = {color: color, infest: TotalInfest};
         
         console.info(context);
         return context;
