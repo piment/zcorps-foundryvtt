@@ -923,13 +923,23 @@
 }
 
 .actor .window-content .sheet-body .tab {
-  background-color: #111;
+  background-color: #403a34;
 }
 
 .actor .window-content .sheet-body .caracteristics {
   margin: 0;
   padding: 0;
-  background-color: #111;
+  background-color: #403a34;
+}
+caption{
+	background-color:black;
+	font-weight:bold;
+}
+table{
+	margin:0;
+}
+.item td{
+	text-align:center;
 }
 
 .actor .window-content .sheet-body .caracteristics ul.caracteristics-block {
@@ -1486,4 +1496,9 @@ button.gamemaster_button:hover {
 .item-skill .window-content form .form-group select:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+
+li.skill{
+	border-bottom: 1px solid white
 }
