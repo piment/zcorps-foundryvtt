@@ -428,10 +428,34 @@ function getActorsList() {
 	actors["npc"] = [];
     game.actors.forEach(actor => {
     if(actor.data.type == "survivor" || actor.data.type == "controler"){
-      actors[actor.data.type].push({data: actor.data, skills: actor._getSkillsList()});
+	  console.info(actor.data.flags)
+	  var Tinfect = 0
+	  if("zcorps" in actor.data.flags && "addedInfect" in actor.data.flags.zcorps){
+		actor.data.flags.zcorps.addedInfect.forEach(infect =>{
+			Tinfect += Number(infect.pourcent)
+        	}
+		)
+	  }
+	    var color = "black";
+	    if (Tinfect <= 10){
+			color = "lightgreen"
+		}else if(Tinfect <= 20){
+			color = "yellow"
+		}else if(Tinfect <= 30){
+			color = "orange"
+		}else if(Tinfect <= 40){
+			color = "darkorange"
+		}else if(Tinfect < 49){
+			color = "lightcoral"
+		}else if(Tinfect >= 49){
+			color = "red"
+		}else{
+			color = "black";
+		}
+      actors[actor.data.type].push({data: actor.data, skills: actor._getSkillsList(), infect: Tinfect, color: color});
     }
   });
-//  console.info(actors)
+  console.info(actors)
   return actors;
 }
 

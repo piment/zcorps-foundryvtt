@@ -4,7 +4,7 @@
         <thead>
             <tr>
                 <th>Personnage</th>
-                <th>Infection</th>
+                <th>Total %</th>
                 <th>%</th>
                 <th>Temps</th>
                 <th></th>
@@ -16,10 +16,8 @@
 		        <tbody>
 		            <tr>
 		                <td class="actor_name" data-actor_id="{{actor.data._id}}">{{actor.data.name}}</td>
-		                <td>
-			                <div class="level">
-		      				<span style="text-align:center;color:black ;background-color:{{totalInfest.color}}">{{totalInfest.infest}}</span>
-					        </div>
+		                <td style="text-align:center;color:black ;background-color:{{actor.color}}">
+		      				<span >{{actor.infect}}</span>
 		                </td>
 		                <td>
 		                    <div>
