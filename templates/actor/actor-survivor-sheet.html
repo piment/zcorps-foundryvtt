@@ -111,11 +111,14 @@
         <span class="level-title">Points de Cojones</span>
         <div class="resource-content flexrow flex-center flex-between">
         {{#if actor.editSheet}}
-        {{/if}}
-        {{#if 0 }}
-          <span><em>Restants : </em> <input name="data.attributes.cojones.value" type="number" value="{{attributes.cojones.value}}" class="number"/></span>
-          <span><em>Totaux : </em> <input name="data.attributes.cojones.total" type="number" value="{{attributes.cojones.total}}" placeholder="Poids" class="number"/></span>
-        {{else}}
+        	{{#if gm }}
+    	      <span><em>Restants : </em> <input name="data.attributes.cojones.value" type="number" value="{{attributes.cojones.value}}" class="number"/></span>
+	          <span><em>Totaux : </em> <input name="data.attributes.cojones.total" type="number" value="{{attributes.cojones.total}}" placeholder="Poids" class="number"/></span>
+	        {{else}}
+          <span><em>Restants : </em> {{data.attributes.cojones.value}}</span>
+          <span><em>Totaux : </em> {{data.attributes.cojones.total}}</span>
+	        {{/if}}
+	        {{else}}
           <span><em>Restants : </em> {{data.attributes.cojones.value}}</span>
           <span><em>Totaux : </em> {{data.attributes.cojones.total}}</span>
         {{/if}}

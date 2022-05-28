@@ -198,7 +198,7 @@ Hooks.on("renderDialog", (dialog, id, context) => {
         const actor_id = ev.target.parentNode.children[0].dataset.actor_id;
         const value = ev.target.parentNode.children[0].dataset.value;
         const actor = game.actors.get(actor_id);
-        console.log(input_value, actor_id, value, actor);
+//        console.log(input_value, actor_id, value, actor);
         actor.data.data.attributes[value].value = parseInt(actor.data.data.attributes[value].value) + parseInt(input_value);;
         actor.data.data.attributes[value].total = parseInt(actor.data.data.attributes[value].total) + parseInt(input_value);
         actor.update({data: actor.data.data});
@@ -213,7 +213,7 @@ Hooks.on("renderDialog", (dialog, id, context) => {
 	      const caracteristic = table.querySelector("#caracteristic").value;
 	      const skill = table.querySelector("#skillToAdd").value;
 	      const actor = game.actors.get(actorId);
-	      console.log(actorId, caracteristic, skill, actor);
+//	      console.log(actorId, caracteristic, skill, actor);
 	      table.querySelector("#skillToAdd").value = "";
 	      await actor.addSkillToActor({caracteristic: caracteristic, id: skill.toLowerCase().replace(" ", "_"), name: skill})
 	      
@@ -300,7 +300,7 @@ Hooks.on("renderChatMessage", (msg, html, data) => {
 })
 
 Hooks.on("createItem", (item, info, tempData, actorId) => {
-  console.log("preCreateItem : ", item);
+//  console.log("preCreateItem : ", item);
   if(item.data.type === "skill"){
     item.data.img = "systems/zcorps/ui/icons/vial-solid.svg";
   }
@@ -373,49 +373,18 @@ async function openGamemasterToolsDialog(env) {
   }
   
   if(env == "infect"){
-//	actors.forEach((PJ)=>{
-//		
-//	})
-//	        const infest = context.flags.addedInfect
-//        var TotalInfest = 0;
-//        if(infest){
-//	        infest.forEach((item) => {
-//				TotalInfest = Number(item.pourcent) + Number(TotalInfest)
-//	        });
-//	        var color = "black";
-//	        if (TotalInfest <= 10){
-//				color = "lightgreen"
-//			}else if(TotalInfest <= 20){
-//				color = "yellow"
-//			}else if(TotalInfest <= 30){
-//				color = "orange"
-//			}else if(TotalInfest <= 40){
-//				color = "darkorange"
-//			}else if(TotalInfest < 49){
-//				color = "lightcoral"
-//			}else if(TotalInfest >= 49){
-//				color = "red"
-//			}else{
-//				color = "black";
-//			}
-//        	context.totalInfest = {color: color, infest: TotalInfest};
-//		}else{
-//        	context.totalInfest = {color: "lightgreen", infest: 0};
-//		}
-	
   }else{
-	
   }
   
   const renderedTemplate = await renderTemplate(template, {actors: actors, caracteristics: caracteristics });
   const data = {
     title: game.i18n.localize('ZCORPS.gamemaster.title'),
-    content: renderedTemplate,
+    content: "<style>.gamemaster_tools_dialog{width:600px}</style>"+renderedTemplate,
     buttons: {}
   }
 
   new Dialog(data, {
-	with: "500px",
+	width: "100px",
 	classes: ["gamemaster_tools_dialog gm_"+env],
     }).render(true);
 }

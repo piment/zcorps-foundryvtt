@@ -135,7 +135,14 @@
 
     {{!-- Owned Items Tab --}}
     <div class="tab assets" data-group="primary" data-tab="assets">
-       {{> "systems/zcorps/templates/actor/parts/actor-items.html"}}
+    	<div style="display:grid; grid-template-columns: 1fr 3fr;">
+    	<div>
+    		<textarea style="height: 550px;resize: none; color: white;border:solid white 1px" name="data.attributes.inventaire">{{data.attributes.inventaire}}</textarea>
+    	</div>
+    	<div>
+	       {{> "systems/zcorps/templates/actor/parts/actor-items.html"}}
+    	</div>
+    	</div>
     </div>
 
     

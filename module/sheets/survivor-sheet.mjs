@@ -119,7 +119,12 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         	context.totalInfest = {color: "lightgreen", infest: 0};
 		}
         
-        console.info(context);
+        if(game.user.data.roll == 4){
+			context.gm = true
+		}else{
+			context.gm = false
+		}
+//        console.info(context);
         return context;
     }
 
@@ -172,6 +177,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 
         //Calculate devired data
         context.attributes = context.data.attributes;
+        console.info(context)
         context.attributes.movement =
             +context.caracs.strength.value + +context.caracs.agility.value;
         context.attributes.dammageBonus = parseInt(

@@ -635,8 +635,8 @@
           "total": 5
         },
         "cojones": {
-          "value": 5,
-          "total": 5
+          "value": 1,
+          "total": 1
         },
         "health": 0,
         "stress": 0,
@@ -650,11 +650,16 @@
       }
     },
     "npc": {
-      "templates": ["base_pc"]
+      "templates": ["base_pc"],
+      "attributes": {
+        "health": 0
+      }
     },
     "zombie": {
       "templates": ["base_pc"],
-      "xp": 0
+      "attributes": {
+        "health": 0
+      }
     }
   },
   "Item": {

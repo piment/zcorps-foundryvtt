@@ -9,7 +9,9 @@
             </tr>
         </thead>
         <tbody>
-            {{#each actors as |actor key|}}
+            {{#each actors as |tp Ckey|}}
+        	<tr><th colspan=5>{{Ckey}}</th></tr>
+	        {{#each tp as |actor key|}}
             <tr>
                 <td>{{actor.data.name}}</td>
                 <td>
@@ -25,6 +27,7 @@
                     </div>
                 </td>
             </tr>
+            {{/each}}
             {{/each}}
         </tbody>
     </table>
@@ -42,8 +45,11 @@
                 <tr>
                     <td>
                         <select name="actorCarac" id="selectedActorForCarac">
-                        {{#each actors as |actor key|}}
+                        {{#each actors as |tp Ckey|}}
+        				<optgroup label="{{Ckey}}">
+	        			{{#each tp as |actor key|}}
                             <option value="{{actor.data._id}}">{{actor.data.name}}</option>
+                        {{/each}}
                         {{/each}}
                         </select>
                     </td>
@@ -75,7 +81,9 @@
     <hr>
     <div>
         <h3>Ajouter une spécialisation</h3>
-        {{#each actors as | actor key|}}
+        {{#each actors as |tp Ckey|}}
+	    	<h4>{{Ckey}}</h4>
+        {{#each tp as |actor key|}}
         <div class="form-group">
             <span class="actor_name" data-actor_id="{{actor.data._id}}">{{actor.data.name}}</span>
             <select name="skill" id="skill">
@@ -86,6 +94,7 @@
             <input type="text" name="specToAdd" id="specToAdd" />
             <button class="gm_add_spec">Valider</button>
         </div>
+        {{/each}}
         {{/each}}
     </div>
 </form>
