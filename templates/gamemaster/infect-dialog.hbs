@@ -1,43 +1,53 @@
-<form>
+<form id="InfectFormGm">
     <h3>Ajouter une Infection (morsure)</h3>
     <table>
         <thead>
             <tr>
                 <th>Personnage</th>
+                <th>Infection</th>
                 <th>%</th>
                 <th>Temps</th>
                 <th></th>
             </tr>
         </thead>
-        <tbody>
-            {{#each actors as |actor key|}}
-            <tr>
-                <td class="actor_name" data-actor_id="{{actor.data._id}}">{{actor.data.name}}</td>
-                <td>
-                    <div>
-                        <input type="text" name="infectPourcentToAdd" id="infectPourcentToAdd_{{actor.data._id}}" value="0" data-actor_id="{{actor.data._id}}" data-value="infectPourcentToAdd"/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <input type="text" name="infectTimeToAdd" id="infectTimeToAdd_{{actor.data._id}}" value="0" data-actor_id="{{actor.data._id}}" data-value="infectTimeToAdd"/>
-                    </div>
-                </td>
-                <td>
-                	<div>
-                        <button class="gm_add_infect">+</button>
-                	</div>
-                </td>
-            </tr>
-        	{{#each actor.data.flags.zcorps.addedInfect as |infect key|}}
-            <tr>
-	              <td class="actor_name" data-actor_id="{{actor.data._id}}"></td>
-            	  <td>{{infect.pourcent}}</td>
-            	  <td>{{infect.time}}</td>
-            	  <td><div><a class="gm_supp_infect" data-key="{{key}}"><i class="fas fa-trash"></i></button></a></td>
-            </tr>
-            {{/each}}
-            {{/each}}
-        </tbody>
+        {{#each actors as |tp Ckey|}}
+        	<tr><th colspan=5>{{Ckey}}</th></tr>
+	        {{#each tp as |actor key|}}
+		        <tbody>
+		            <tr>
+		                <td class="actor_name" data-actor_id="{{actor.data._id}}">{{actor.data.name}}</td>
+		                <td>
+			                <div class="level">
+		      				<span style="text-align:center;color:black ;background-color:{{totalInfest.color}}">{{totalInfest.infest}}</span>
+					        </div>
+		                </td>
+		                <td>
+		                    <div>
+		                        <input type="text" name="infectPourcentToAdd" id="infectPourcentToAdd_{{actor.data._id}}" value="0" data-actor_id="{{actor.data._id}}" data-value="infectPourcentToAdd"/>
+		                    </div>
+		                </td>
+		                <td>
+		                    <div>
+		                        <input type="text" name="infectTimeToAdd" id="infectTimeToAdd_{{actor.data._id}}" value="0" data-actor_id="{{actor.data._id}}" data-value="infectTimeToAdd"/>
+		                    </div>
+		                </td>
+		                <td>
+		                	<div>
+		                        <button class="gm_add_infect">+</button>
+		                	</div>
+		                </td>
+		            </tr>
+		        	{{#each actor.data.flags.zcorps.addedInfect as |infect key|}}
+		            <tr>
+			              <td class="actor_name" data-actor_id="{{actor.data._id}}"></td>
+			              <td></td>
+		            	  <td>{{infect.pourcent}}</td>
+		            	  <td>{{infect.time}}</td>
+		            	  <td><div><a class="gm_supp_infect" data-key="{{key}}"><i class="fas fa-trash"></i></button></a></td>
+		            </tr>
+	    	        {{/each}}
+		        </tbody>
+	        {{/each}}
+        {{/each}}
     </table>
 </form>

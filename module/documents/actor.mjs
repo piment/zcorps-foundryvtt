@@ -464,31 +464,31 @@ export class zcorpsActor extends Actor {
     }
     
     async addInfect(infect){
-	const isEmpty = Object.keys(this.data.flags).length === 0;
-	if(isEmpty){
-		var fl = [];
-		this.setFlag("zcorps", "addedInfect", fl);
-	}
-	  if(this.data.flags.zcorps.addedInfect){
+//	const isEmpty = Object.keys(this.data.flags).length;
+//	if(isEmpty === 0){
+//		var fl = [];
+//		this.setFlag("zcorps", "addedInfect", fl);
+//	}
+	if("zcorps" in this.data.flags && "addedInfect" in this.data.flags.zcorps){
 		  var flag = this.data.flags.zcorps.addedInfect
-	  }else{
+	}else{
 		flag = [];
-	  }
+    }
       const data = {
         "pourcent": infect.pourcent,
         "time": infect.time,
       }
+      
       flag.push(data)
       this.setFlag("zcorps", "addedInfect", flag);
     }
+    
     async deleteInfect(infect){
 //	  console.info(this.data.flags.zcorps.addedInfect[infect])
       var tabs = this.data.flags.zcorps.addedInfect
-	  console.info(tabs)
-	  console.info(infect)
-	  let pos = tabs[infect];
-	  console.info(pos)
-	  tabs.splice(infect,1)
-//      this.unsetFlag("zcorps", `addedInfect.${infect}`);
+	  tabs.splice(infect,1);
+	  
+      this.unsetFlag("zcorps", `addedInfect.${tabs}`);
+      this.setFlag("zcorps", "addedInfect", tabs)
     }
 }

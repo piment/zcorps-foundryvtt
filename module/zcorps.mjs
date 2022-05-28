@@ -242,7 +242,7 @@ Hooks.on("renderDialog", (dialog, id, context) => {
 	      cont.querySelector("#infectTimeToAdd_"+actorId).value = 0;
 	      await actor.addInfect(infect);
 	      openGamemasterToolsDialog("infect");
-		  const dialog = cont.parentNode.parentNode.parentNode.parentNode.parentNode.parentElement
+		  const dialog = document.getElementById("InfectFormGm").parentNode.parentNode.parentNode;
 	      dialog.parentNode.removeChild(dialog)
 	    });
 	   })
@@ -254,7 +254,7 @@ Hooks.on("renderDialog", (dialog, id, context) => {
 	      const actor = game.actors.get(actorId);
 	      await actor.deleteInfect(infect);
 	      openGamemasterToolsDialog("infect");
-		  const dialog = cont.parentNode.parentNode.parentNode.parentNode.parentNode.parentElement
+	      const dialog = document.getElementById("InfectFormGm").parentNode.parentNode.parentNode;
 	      dialog.parentNode.removeChild(dialog)
 	    });
 	   })
@@ -372,6 +372,41 @@ async function openGamemasterToolsDialog(env) {
     caracteristics[key] = game.i18n.localize(value);
   }
   
+  if(env == "infect"){
+//	actors.forEach((PJ)=>{
+//		
+//	})
+//	        const infest = context.flags.addedInfect
+//        var TotalInfest = 0;
+//        if(infest){
+//	        infest.forEach((item) => {
+//				TotalInfest = Number(item.pourcent) + Number(TotalInfest)
+//	        });
+//	        var color = "black";
+//	        if (TotalInfest <= 10){
+//				color = "lightgreen"
+//			}else if(TotalInfest <= 20){
+//				color = "yellow"
+//			}else if(TotalInfest <= 30){
+//				color = "orange"
+//			}else if(TotalInfest <= 40){
+//				color = "darkorange"
+//			}else if(TotalInfest < 49){
+//				color = "lightcoral"
+//			}else if(TotalInfest >= 49){
+//				color = "red"
+//			}else{
+//				color = "black";
+//			}
+//        	context.totalInfest = {color: color, infest: TotalInfest};
+//		}else{
+//        	context.totalInfest = {color: "lightgreen", infest: 0};
+//		}
+	
+  }else{
+	
+  }
+  
   const renderedTemplate = await renderTemplate(template, {actors: actors, caracteristics: caracteristics });
   const data = {
     title: game.i18n.localize('ZCORPS.gamemaster.title'),
@@ -380,18 +415,23 @@ async function openGamemasterToolsDialog(env) {
   }
 
   new Dialog(data, {
-	with: 500,
+	with: "500px",
 	classes: ["gamemaster_tools_dialog gm_"+env],
     }).render(true);
 }
 
 function getActorsList() {
-  const actors = [];
-  game.actors.forEach(actor => {
+	var actors = {};
+	actors["survivor"] = [];
+	actors["controler"] = [];
+	actors["zombie"] = [];
+	actors["npc"] = [];
+    game.actors.forEach(actor => {
     if(actor.data.type == "survivor" || actor.data.type == "controler"){
-      actors.push({data: actor.data, skills: actor._getSkillsList()});
+      actors[actor.data.type].push({data: actor.data, skills: actor._getSkillsList()});
     }
   });
+//  console.info(actors)
   return actors;
 }
 
