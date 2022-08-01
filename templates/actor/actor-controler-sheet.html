@@ -92,16 +92,33 @@
       <div class="level">
         <span class="level-title">Points de Personnage</span>
         <div class="resource-content flexrow flex-center flex-between">
+        {{#if actor.editSheet}}
+        {{/if}}
+        {{#if 0 }}
+          <span><em>Restants : </em> <input name="data.attributes.xp.value" type="number" value="{{attributes.xp.value}}" class="number"/></span>
+          <span><em>Totaux : </em> <input name="data.attributes.xp.total" type="number" value="{{attributes.xp.total}}" placeholder="Poids" class="number"/></span>
+        {{else}}
           <span><em>Restants : </em> {{data.attributes.xp.value}}</span>
           <span><em>Totaux : </em> {{data.attributes.xp.total}}</span>
+        {{/if}}
           <span class="use-bonus flex0"><i id="bonus_xp" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
         </div>
       </div>
       <div class="level">
         <span class="level-title">Points de Cojones</span>
         <div class="resource-content flexrow flex-center flex-between">
+        {{#if actor.editSheet}}
+        	{{#if 0 }}
+    	      <span><em>Restants : </em> <input name="data.attributes.cojones.value" type="number" value="{{attributes.cojones.value}}" class="number"/></span>
+	          <span><em>Totaux : </em> <input name="data.attributes.cojones.total" type="number" value="{{attributes.cojones.total}}" placeholder="Poids" class="number"/></span>
+	        {{else}}
           <span><em>Restants : </em> {{data.attributes.cojones.value}}</span>
           <span><em>Totaux : </em> {{data.attributes.cojones.total}}</span>
+	        {{/if}}
+	        {{else}}
+          <span><em>Restants : </em> {{data.attributes.cojones.value}}</span>
+          <span><em>Totaux : </em> {{data.attributes.cojones.total}}</span>
+        {{/if}}
           <span class="use-bonus flex0"><i id="bonus_cojones" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
         </div>
       </div>

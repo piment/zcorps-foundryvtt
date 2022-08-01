@@ -663,17 +663,28 @@
     }
   },
   "Item": {
-    "types": ["item", "skill", "specialisation", "arme", "arme_explo","ammo"],
+    "types": ["item", "skill", "specialisation", "arme", "arme_cac", "arme_range", "arme_explo", "ammo", "armor"],
     "templates": {
       "base": {
         "description": ""
-      }
-    },
-    "item": {
-      "templates": ["base"],
-      "quantity": 1,
-      "weight": 0,
-      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+      },
+	  "arme":{
+	    "damage": {"More":0,"CodeD":0,"Tier":0},
+		"use": {"skill":"", "carac":""},
+		"equipe":0
+	  },
+	  "range":{
+	    "range":{
+          "short": 0,
+          "middle": 0,
+          "long": 0
+        },
+        "ammo":{
+          "type":"",
+          "actual":0,
+          "max":0
+        }
+	  }
     },
     "skill": {
       "name": "",
@@ -692,6 +703,12 @@
       "skill": "",
       "value": 0
     },
+    "item": {
+      "templates": ["base"],
+      "quantity": 1,
+      "weight": 0,
+      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
     "arme": {
       "type": "arme_a_feu",
       "skill": "",
@@ -706,24 +723,33 @@
       "ammo-max": 0,
       "ammo-actual": 0
     },
+    "arme_cac":{
+      "templates": ["base","arme"]
+    },
+    "arme_range":{
+      "templates": ["base","arme","range"]
+    },
     "arme_explo":{
-      "damage": "0D+0",
-      "quantity":0,
-      "range":{
-        "short":0,
-        "middle":0,
-        "long":0
-      },
+      "templates": ["base","arme","range"],
       "range-explo":{
-        "short":0,
-        "middle":0,
-        "long":0
+        "short":"0-1",
+        "middle":"1-2",
+        "long":"2-3"
       }
     },
     "ammo": {
+      "templates": ["base"],
       "type": "",
       "quantity": 0,
-      "damage": {"D":0,"T":0}
+      "damage": {"CodeD":0,"Tier":0}
+    },
+    "armor":{
+      "templates": ["base"],
+      "protection": {"PUI":0,"CodeD":0,"Tier":0},
+      "malus": {"AGI":0,"CodeD":0,"Tier":0},
+      "emplacement": "",
+      "equipe":0,
+      "poids": ""
     }
   }
 }

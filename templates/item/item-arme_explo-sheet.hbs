@@ -1,0 +1,104 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" width="100" heigh="100"/>
+    <div class="header-fields">
+      <h1 class="arme-name"><input type="text" name="name" value="{{item.name}}"></h1>   
+    </div>
+  </header>
+  
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    <div class="category">
+      <div class="category-title">Degats</div>
+      <div class="category-body">
+        <div class="category-element">
+          <table>
+          	<tr>
+          		<th>Utilisation bonus dégâts</th>
+          		<th>Nb D6</th>
+          		<th>Nb tier</th>
+          	</tr>
+          	<tr>
+          		<td><input type="checkbox" name="data.damage.More" {{#if data.damage.More}}checked{{/if}}></td>
+          		<td><input type="number" name="data.damage.CodeD" value="{{data.damage.CodeD}}"></td>
+          		<td><input type="number" name="data.damage.Tier" value="{{data.damage.Tier}}"></td>
+          	</tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="category-title">Portée</div>
+      <div class="category-body">
+        <div class="category-element">
+          <table>
+          	<tr>
+          		<th>Courte</th>
+          		<th>Moyenne</th>
+          		<th>Longue</th>
+          	</tr>
+          	<tr>
+          		<td><input type="number" name="data.range.short" value="{{data.range.short}}"></td>
+          		<td><input type="number" name="data.range.middle" value="{{data.range.middle}}"></td>
+          		<td><input type="number" name="data.range.long" value="{{data.range.long}}"></td>
+          	</tr>
+          	<tr>
+          		<th colspan=3>EXPLOSION</th>
+      		</tr><tr>
+				<th>portée full dégats</th>
+				<th>portée 1/2 dégats</th>
+				<th>portée 1/4 dégats</th>
+      		</tr><tr>
+          		<td><input type="text" name="data.range-explo.short" value="{{data.range-explo.short}}"></td>
+          		<td><input type="text" name="data.range-explo.middle" value="{{data.range-explo.middle}}"></td>
+          		<td><input type="text" name="data.range-explo.long" value="{{data.range-explo.long}}"></td>
+          	</tr>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="category-title">Munition</div>
+      <div class="category-body">
+        <div class="category-element">
+          <table>
+          	<tr>
+          		<th>Type</th>
+          		<th>Actuel</th>
+          		<th>Max</th>
+          	</tr>
+          	<tr>
+          		<td><input type="text" name="data.ammo.type" value="{{data.ammo.type}}"></td>
+          		<td><input type="number" name="data.ammo.actual" value="{{data.ammo.actual}}"></td>
+          		<td><input type="number" name="data.ammo.max" value="{{data.ammo.max}}"></td>
+          	</tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="category-title">Skill utilisé</div>
+      <div class="category-body">
+        <div class="category-element">
+          <table>
+          	<tr>
+          		<th>Caractéristique</th>
+          		<th>Compétence</th>
+          	</tr>
+          	<tr>
+          		<td><input type="text" name="data.use.carac" value="{{data.use.carac}}"></td>
+          		<td><input type="text" name="data.use.skill" value="{{data.use.skill}}"></td>
+          	</tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <div class="category">
+      <div class="category-title">Description</div>
+    </div>
+    <div class="tab">
+	      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
+    </div>
+      
+  </section>
+
+</form>

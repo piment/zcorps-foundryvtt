@@ -190,7 +190,6 @@ Hooks.on("renderPlayerList", async function(playerList, html) {
 });
 
 Hooks.on("renderDialog", (dialog, id, context) => {
-  
   if(document.querySelector(".gamemaster_tools_dialog")) {
     document.querySelectorAll('.gm_validate_value').forEach(el =>{
       el.addEventListener("click", ev => {

@@ -1,0 +1,58 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" width="100" heigh="100"/>
+    <div class="header-fields">
+      <h1 class="arme-name"><input type="text" name="name" value="{{item.name}}"></h1>   
+    </div>
+  </header>
+  
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    <div class="category">
+      <div class="category-body">
+        <div class="category-element">
+          <table>
+          	<tr>
+          		<th>Emplacement</th>
+          		<th colspan=2><input type="text" name="data.emplacement" value="{{data.emplacement}}"></th>
+          	</tr>
+          	<tr>
+          		<th colspan=3>BONUS DE PROTECTION</th>
+          	</tr>
+          	<tr>
+          		<th>Utilisation PUI</th>
+          		<th>Nb D6</th>
+          		<th>Nb tier</th>
+          	</tr>
+          	<tr>
+          		<td><input type="checkbox" name="data.protection.PUI" {{#if data.protection.PUI}}checked{{/if}}></td>
+          		<td><input type="number" name="data.protection.CodeD" value="{{data.protection.CodeD}}"></td>
+          		<td><input type="number" name="data.protection.Tier" value="{{data.protection.Tier}}"></td>
+          	</tr>
+          	<tr>
+          		<th colspan=3>MALUS D'AGILITE</th>
+          	</tr>
+          	<tr>
+          		<th>Malus</th>
+          		<th>Nb D6</th>
+          		<th>Nb tier</th>
+          	</tr>
+          	<tr>
+          		<td><input type="checkbox" name="data.malus.AGI" {{#if data.malus.AGI}}checked{{/if}}></td>
+          		<td><input type="number" name="data.malus.CodeD" value="{{data.malus.CodeD}}"></td>
+          		<td><input type="number" name="data.malus.Tier" value="{{data.malus.Tier}}"></td>
+          	</tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-title">Description</div>
+    </div>
+    <div class="tab">
+	      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
+    </div>
+      
+  </section>
+
+</form>

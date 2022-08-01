@@ -9,40 +9,23 @@
   {{!-- Sheet Body --}}
   <section class="sheet-body">
     <div class="category">
-      <div class="category-title">Attributs</div>
-      <div class="category-body">
-        <div class="category-element">
-          <label for="data.type">Type d'arme</label>
-          <select name="data.type" id="data.type" class="">
-            {{#select data.type}}
-            {{selectOptions munType selected=value nameAttr=key}}
-            {{/select}}
-          </select>
-        </div>
-        <div class="category-element">
-          <label for="data.dammage">Quantité</label>
-          <input type="text" name="data.quantity" value="{{data.quantity}}" />
-        </div>
-      </div>
+      <div class="category-title">Degats</div>
       <div class="category-body">
         <div class="category-element">
           <table>
           	<tr>
-          		<th colspan=2>Dégâts supplémentaire</th>
-          	</tr>
-          	<tr>
+          		<th>Utilisation bonus dégâts</th>
           		<th>Nb D6</th>
           		<th>Nb tier</th>
           	</tr>
           	<tr>
+          		<td><input type="checkbox" name="data.damage.More" {{#if data.damage.More}}checked{{/if}}></td>
           		<td><input type="number" name="data.damage.CodeD" value="{{data.damage.CodeD}}"></td>
           		<td><input type="number" name="data.damage.Tier" value="{{data.damage.Tier}}"></td>
           	</tr>
           </table>
-	      </div>
+        </div>
       </div>
-    </div>
-
     </div>
     <div class="category">
       <div class="category-title">Description</div>
@@ -50,7 +33,7 @@
     <div class="tab">
 	      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
     </div>
-    
+      
   </section>
 
 </form>
