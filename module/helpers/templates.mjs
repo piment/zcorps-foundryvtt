@@ -8,6 +8,8 @@
 
     // Actor partials.
     "systems/zcorps/templates/actor/parts/actor-caracs.html",
+    "systems/zcorps/templates/actor/parts/actor-combat.html",
+    "systems/zcorps/templates/actor/parts/actor-description.html",
     "systems/zcorps/templates/actor/parts/actor-items.html",
     "systems/zcorps/templates/actor/parts/actor-effects.html",
     "systems/zcorps/templates/actor/parts/bonusSelection.hbs",
