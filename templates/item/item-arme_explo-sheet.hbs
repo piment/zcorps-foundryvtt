@@ -91,7 +91,7 @@
 
       <div class="category-title">Skill utilisé</div>
       <div class="category-body">
-        <div class="category-element">
+<!--        <div class="category-element">
           <table>
           	<tr>
           		<th>Caractéristique</th>
@@ -102,9 +102,22 @@
           		<td><input type="text" name="data.use.skill" value="{{data.use.skill}}"></td>
           	</tr>
           </table>
+        </div> -->
+        <div class="category-element">
+          <label for="data.type">Type d'arme</label>
+          <select name="data.type" id="data.type" class="arme-type">
+            {{#select data.type}}
+            {{selectOptions armeType selected=value nameAttr=key}}
+            {{/select}}
+          </select>
         </div>
       </div>
-
+      
+    </div>
     </div>
   </section>
+      <div class="hidden">
+      <input type="hidden" name="data.use.skill" value="{{data.use.skill}}" class="data-skill"  />
+      <input type="hidden" name="data.use.carac" value="{{data.use.carac}}" class="data-carac"  />
+    </div>
 </form>

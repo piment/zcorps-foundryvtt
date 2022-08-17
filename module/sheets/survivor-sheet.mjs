@@ -204,7 +204,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         const ammo = [];
         arme["range"] = [];
         arme["cac"]   = [];
-        arme.jet   = ["0","1"];
+        arme.jet   = [];
         arme.explo = [];
 //        arme.range = context.items.filter(item => item.data.type === "arme_a_feu")
 //        arme.cac   = context.items.filter(item => item.data.type === "arme_melee")
@@ -221,9 +221,9 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             if (i.type === "armor") {
                 gear.push(i);
             }else if(i.type === "arme_cac"){
-				arme["cac"].push(i);
+				arme.cac.push(i);
             }else if(i.type === "arme_range"){
-				arme["range"].push(i);
+				arme.range.push(i);
             }else if(i.type === "arme_explo"){
 				arme.explo.push(i);
 			}
