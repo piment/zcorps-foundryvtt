@@ -4,9 +4,43 @@
 		<tr>
 			<th colspan=3>PROTECTION</th>
 		</tr>
+		<thead>
+			<th></th>
+			<th>Type</th>
+			<th>Emplacement</th>
+		</thead>
+		<tbody>
+		{{# each gear as |item id|}}
+	      	{{# if item.data.equipe}}
+	      	<tr>
+		        <td><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" 
+		        data-roll="{{getSkillValuefromActor ../caracs item.data.use.carac item.data.use.skill}}"><i class="fas fa-dice-d6"></i></a></td>
+	      		<td>{{item.name}}</td>
+	      		<td>{{#if item.data.protection.PUI}}+{{/if}}{{item.data.protection.CodeD}}D+{{item.data.protection.Tier}}</td>
+	      	</tr>
+	      	{{/if}}
+		{{/each}}
+		</tbody>
 	</table>
 	</div>
-	<div><table>
+	<div>
+	<table>
+		<tr>
+            <td><label>Mode de tir</label><br>
+	        	<select style="color:white;">
+	        		<option style="background: black">Tir unique</option>
+	        		<option style="background: black">Rafale courte (cible unique)</option>
+	        		<option style="background: black">Rafale totale (cible unique)</option>
+	        		<option style="background: black">Rafale totale (cibles multiples)</option>
+	        		<option style="background: black">Tir de barage</option>
+	        	</select>
+	        </td>
+	        <td>
+	        	<label>Modif (code D): </label><br><input type="number" style="width:70px; color:white">
+	        </td>
+		</tr>
+	</table>
+	<table>
 		<caption>ARMES CAC</caption>
 		<thead>
 	        <th></th>
@@ -15,28 +49,33 @@
 		</thead>
 	    <tbody>
 	      {{#each arme.cac as |item id|}}
+	      	{{# if item.data.equipe}}
 	      <tr class="item" data-item_id="{{item._id}}">
-	        <td><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></td>
-	<!--         <td><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></td> -->
+	        <td><a class="rollable weapon-shoot" data-roll-type="arme" 
+	        data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.use.carac item.data.use.skill}}"
+	        ><i class="fas fa-dice-d6"></i></a></td>
+	        
 	        <td>{{item.name}}</td>
-	        <td>{{item.data.dammage}} <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fa-solid fa-sword"></i></a></td>
+	        <td>{{#if item.data.damage.More}}+{{/if}}{{item.data.damage.CodeD}}D+{{item.data.damage.Tier}}
+	         <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" 
+	         data-roll="{{#if item.data.damage.More}}+{{/if}}{{item.data.damage.CodeD}}D+{{item.data.damage.Tier}}"
+	         ><i class="fas fa-dice-d6"></i></a></td>
 	      </tr>
+	      	{{/if}}
 	      {{/each}}
 	    </tbody>
+	    </table>
 	<table>
 	  <caption>ARMES A DISTANCE</caption>
 	    <thead>
 	      <tr>
-	        <th colspan=3>Mode de tir</th>
+	        <th rowspan=2></th>
 	        <th rowspan=2>Arme</th>
 	        <th rowspan=2>Munitions</th>
 	        <th colspan=3>Portée</th>
 	        <th rowspan=2>Dégats</th>
 	      </tr>
 	      <tr>
-	      	<th>C/C</th>
-	      	<th>3C</th>
-	      	<th>ALL</th>
 	      	<th>S</th>
 	      	<th>M</th>
 	      	<th>L</th>
@@ -45,18 +84,21 @@
 	    </thead>
 	    <tbody>
 	      {{#each arme.range as |item id|}}
+	      	{{# if item.data.equipe}}
 	      <tr class="item" data-item_id="{{item._id}}">
-	<!--         <td><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></td> -->
-	        <td><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></td>
-	        <td><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></td>
-	        <td><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></td>
+	        <td>
+	        	<a class="rollable weapon-shoot" data-roll-type="arme" data-tir-type="" data-label="{{item.name}}" 
+	        	data-roll="{{getSkillValuefromActor ../caracs item.data.use.carac item.data.use.skill}}"><i class="fas fa-dice-d6"></i></a>
+	        </td>
 	        <td>{{item.name}}</td>
-	        <td>{{item.data.ammo-actual}} / {{item.data.ammo-max}} 
-	<!--        		<a class="reloadArme"><i class="fas fa-redo-alt"></i></a> -->
+	        <td>{{item.data.ammo.actual}} / {{item.data.ammo.max}} 
+	       		<a class="reloadArme"><i class="fas fa-redo-alt"></i></a>
 	        </td>
 	        <th>{{item.data.range.short}}</th><th>{{item.data.range.middle}}</th><th>{{item.data.range.long}}</th>
-	        <td>{{item.data.dammage}} <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a></td>
+	        <td>{{#if item.data.damage.More}}+{{/if}}{{item.data.damage.CodeD}}D+{{item.data.damage.Tier}} 
+	        <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a></td>
 	      </tr>
+			{{/if}}
 	      {{/each}}
 	    </tbody>
 	    <thead>
@@ -64,16 +106,20 @@
 	    </thead>
 	    <tbody>
 	      {{#each arme.jet as |item id|}}
+	      	{{# if item.data.equipe}}
+	      
 	      <tr class="item" data-item_id="{{item._id}}">
-	<!--         <td><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></td> -->
-	        <td colspan=3><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></td>
+
+	        <td colspan=3><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.use.carac item.data.use.skill}}"><i class="fas fa-dice-d6"></i></a></td>
 	        <td>{{item.name}}</td>
 	        <td>{{item.data.ammo-actual}} / {{item.data.ammo-max}} 
 	<!--         	<a class="reloadArme"><i class="fas fa-redo-alt"></i></a> -->
 	        </td>
 	        <th>{{item.data.range.short}}</th><th>{{item.data.range.middle}}</th><th>{{item.data.range.long}}</th>
-	        <td>{{item.data.dammage}} <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a></td>
+	        <td>{{#if item.data.damage.More}}+{{/if}}{{item.data.damage.CodeD}}D+{{item.data.damage.Tier}} 
+	        <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a></td>
 	      </tr>
+	      {{/if}}
 	      {{/each}}
 	    </tbody>
 	  </table>

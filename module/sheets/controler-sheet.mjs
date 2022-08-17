@@ -124,6 +124,8 @@ export class zcorpsControlerSheet extends ActorSheet {
         const ammo = [];
         const skills = [];
         const specialisations = [];
+        
+        console.info('test')
 
         // Iterate through items, allocating to containers
         for (let i of context.items) {

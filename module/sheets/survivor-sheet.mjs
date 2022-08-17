@@ -202,9 +202,9 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         const gear = [];
         const arme = [];
         const ammo = [];
-        arme.range = [];
-        arme.cac   = [];
-        arme.jet   = [];
+        arme["range"] = [];
+        arme["cac"]   = [];
+        arme.jet   = ["0","1"];
         arme.explo = [];
 //        arme.range = context.items.filter(item => item.data.type === "arme_a_feu")
 //        arme.cac   = context.items.filter(item => item.data.type === "arme_melee")
@@ -214,29 +214,34 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         const skills = [];
         const specialisations = [];
         const otherItems = [];
-
         // Iterate through items, allocating to containers
         for (let i of context.items) {
             i.img = i.img || DEFAULT_TOKEN;
             // Append to gear.
-            if (i.type === "item") {
+            if (i.type === "armor") {
                 gear.push(i);
-            }
+            }else if(i.type === "arme_cac"){
+				arme["cac"].push(i);
+            }else if(i.type === "arme_range"){
+				arme["range"].push(i);
+            }else if(i.type === "arme_explo"){
+				arme.explo.push(i);
+			}
             // Append to features.
             else if (i.type === "arme") {
 				switch (i.data.type) {
-					case "arme_a_feu":
-					  arme.range.push(i);
-					break;
-					case "arme_melee":
-					  arme.cac.push(i);
-					break;
-					case "arme_de_jet":
-					  arme.jet.push(i);
-					break;
-					case "arme_explosive":
-					  arme.explo.push(i);
-					break;
+//					case "arme_a_feu":
+//					  arme.range.push(i);
+//					break;
+//					case "arme_melee":
+//					  arme.cac.push(i);
+//					break;
+//					case "arme_de_jet":
+//					  arme.jet.push(i);
+//					break;
+//					case "arme_explosive":
+//					  arme.explo.push(i);
+//					break;
 					default:
 					  otherItems.push(i);
 					break;
@@ -272,6 +277,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                     id: i._id,
                 });
             } else{
+				
 				otherItems.push(i);
 			}
             
@@ -593,31 +599,31 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 //			console.info(li)
 //			console.info(this.actor.data.items.filter(item => item.name == ammoType))
 
-			var ammoType = item.data.data['ammo-type']
+			var ammoType = item.data.data['ammo']['type']
 			
 			var Mun = this.actor.data.items.filter(item => item.name == ammoType)
 
-			var munManq = item.data.data['ammo-max'] - item.data.data['ammo-actual']
+			var munManq = item.data.data['ammo']['max'] - item.data.data['ammo']['actual']
 
 			for(var i = 0 ; Mun.length > i ; i++){
-				munManq = item.data.data['ammo-max'] - item.data.data['ammo-actual']
+				munManq = item.data.data['ammo']['max'] - item.data.data['ammo']['actual']
 //				console.info(Mun[i])
-				if(Mun[i].data.data.quantity > 0 && item.data.data['ammo-actual'] < item.data.data['ammo-max']){
+				if(Mun[i].data.data.quantity > 0 && item.data.data['ammo']['actual'] < item.data.data['ammo']['max']){
 					if(Mun[i].data.data.quantity >= munManq){
-						item.data.data["ammo-actual"] = item.data.data['ammo-max'];
+						item.data.data['ammo']['actual'] = item.data.data['ammo']['max'];
 						Mun[i].data.data.quantity = Mun[i].data.data.quantity - munManq
 //						if (item.update({"data.ammo-actual": item.data.data["ammo-actual"]})){
 //							Mun[i].update({"data.quantity": Mun[i].data.data.quantity})
 //						};
 //						console.info(item.data.data)
-						item.update({"data.ammo-actual": item.data.data["ammo-actual"]})
+						item.update({"data.ammo.actual": item.data.data['ammo']['actual']})
 //						Mun[i].update({"data.ammo-quantity": item.data.data["quantity"]});
 						Mun[i].sheet.render(true);
 						this.actor.sheet.render(true);
 					}else if (Mun[i].data.data.quantity < munManq){
-						item.data.data["ammo-actual"] = Number(item.data.data['ammo-actual']) + Number(Mun[i].data.data.quantity);
+						item.data.data['ammo']['actual'] = Number(item.data.data['ammo']['actual']) + Number(Mun[i].data.data.quantity);
 						Mun[i].data.data.quantity = 0
-						aitem.update({"data.ammo-actual": item.data.data["ammo-actual"]})
+						aitem.update({"data.ammo.actual": item.data.data['ammo']['actual']})
 						Mun[i].sheet.render(true);
 					}
 				}
@@ -627,6 +633,20 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 			}
 			this.actor.sheet.render(true);
 		});
+        
+        html.find(".item-toggle").click(async ev=>{
+			const itemNode = ev.currentTarget.parentNode.parentNode;
+			var item = this.actor.data.items.filter(item => item.id == itemNode.dataset.item_id)[0]
+			console.info(itemNode, item)
+			if(item.data.data.equipe){
+				console.info(1)
+				item.update({"data.equipe": false})
+			}else{
+				console.info(0)
+				item.update({"data.equipe": true})
+			}
+			
+		})
         
         // -------------------------------------------------------------
         // Everything below here is only needed if the sheet is editable
@@ -682,46 +702,37 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             } else if (dataset.rollType == "dammage") {
                 let label = dataset.label ? `[Dommage] ${dataset.label}` : "";
                 const [dice, tier] = dataset.roll.split("+");
+//                console.info(dataset)
 
 	            if(dataset.roll.substring(0,1) == "+"){
 					var [d,t] = dataset.roll.split("D+");
 					d = Number(this.actor.context.attributes.dammageBonus) + Number(d)
 					dataset.roll = d+"D+"+t
 				}
+//                console.info(tier)
 
                 let formula = dice.toLowerCase() + "6 + " + tier;
-//                let roll = new Roll(formula, this.actor.getRollData());
-//                roll.toMessage({
-//                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-//                    flavor: label,
-//                    rollMode: game.settings.get("core", "rollMode"),
-//                });
-//                return roll;
+
             } else if (dataset.rollType == "arme") {
                 const itemId = element.closest(".item").dataset['item_id'];
                 const item = this.actor.items.get(itemId);
-                if (item.data.data["ammo-actual"] == 0 && item.data.data.type !== "arme_melee") {
-                    ui.notifications.error("Pas assez de munitions");
-                    return;
+                if(item.data.data.type !== "arme_melee"){
+	                if (item.data.data['ammo']['actual'] <= 0) {
+	                    ui.notifications.error("Pas assez de munitions");
+	                    return;
+	                }
+	                item.data.data['ammo']['actual'] = item.data.data['ammo']['actual'] - 1;
                 }
-                item.data.data["ammo-actual"] =
-                    item.data.data["ammo-actual"] - 1;
+
                 let label = dataset.label ? `[Arme] ${dataset.label}` : "";
                 const [dice, tier] = dataset.roll.split("+");
                 let formula = dice.toLowerCase() + "6 + " + tier;
-//                console.info(this.actor.getRollData())
-//                console.info(formula)
-//                let roll = new Roll(formula, this.actor.getRollData());
-//                roll.toMessage({
-//                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-//                    flavor: label,
-//                    rollMode: game.settings.get("core", "rollMode"),
-//                });
-//                this.actor.sheet.render(true);
-//                return item.update({
+				
+				if(item.data.data.type !== "arme_melee"){
                 item.update({
-                    "data.ammo-actual": item.data.data["ammo-actual"],
+                    "data.ammo.actual": item.data.data['ammo']['actual'],
                 });
+				}
             }
         }
         // Handle rolls that supply the formula directly.

@@ -727,7 +727,8 @@
       "templates": ["base","arme"]
     },
     "arme_range":{
-      "templates": ["base","arme","range"]
+      "templates": ["base","arme","range"],
+      "type": ""
     },
     "arme_explo":{
       "templates": ["base","arme","range"],

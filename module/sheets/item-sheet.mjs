@@ -99,18 +99,18 @@ export class zcorpsItemSheet extends ItemSheet {
       let item = this.object.data.data;
       let skill = ev.currentTarget.value;
       if(skill == "arme_a_feu") {
-        item.carac = "deftness";
-        item.skill = "armeafeu";
+        item.use.carac = "deftness";
+        item.use.skill = "armeafeu";
       }
       else if(skill == "arme_de_jet" || skill == "arme_explosive") {
-        item.carac = "deftness";
-        item.skill = "armedejet";
+        item.use.carac = "deftness";
+        item.use.skill = "armedejet";
       } else {
-        item.carac = "agility";
-        item.skill = "melee";
+        item.use.carac = "agility";
+        item.use.skill = "melee";
       }
-      html.find(".data-skill")[0].value = item.skill;
-      html.find(".data-carac")[0].value = item.carac;
+      html.find(".data-skill")[0].value = item.use.skill;
+      html.find(".data-carac")[0].value = item.use.carac;
     });
   }
 

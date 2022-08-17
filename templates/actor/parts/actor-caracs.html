@@ -34,7 +34,8 @@
                     <li class="skill item {{#if skill.owned}}owned{{/if}} {{#if ../../actor.editSheet}}list-style-none{{/if}}" data-skill="{{skillId}}" data-item_id="{{skill.id}}">
                       <div class="skill-info ">
                         {{#if ../../actor.editSheet}}
-                          <span class="checkbox {{#if skill.owned}}checked{{/if}}" data-carac="{{caracId}}" data-skill="{{skillId}}"></span><!--<input type="checkbox" name="data.caracs.{{caracId}}.skills.{{skillId}}.owned" {{#if skill.owned}}checked{{/if}}/>-->
+                          <span class="checkbox {{#if skill.owned}}checked{{/if}}" data-carac="{{caracId}}" data-skill="{{skillId}}"></span>
+                          <!--<input type="checkbox" name="data.caracs.{{caracId}}.skills.{{skillId}}.owned" {{#if skill.owned}}checked{{/if}}/>-->
                         {{/if}}
                         <span class="skill-title"> <a class="rollable" data-roll="{{skill.formula}}" data-label="{{skill.name}}" data-carac="{{carac.name}}"><i class="fas fa-dice-d6"></i></a> {{skill.name}}</span>
                         

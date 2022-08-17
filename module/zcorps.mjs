@@ -94,7 +94,9 @@ Handlebars.registerHelper("getSkillValuefromActor", (caracs, carac, skill) => {
   //console.log("get skill value");
   //console.log(caracs[carac].skills[skill].total);
 //  const value = `${caracs[carac].skills[skill].total}D+${caracs[carac].skills[skill].tier}`;
+//  console.info(caracs, carac, skill)
   const value = `${caracs[carac].skills[skill].formula}`;
+//    const value = ""
   return value;
 });
 
