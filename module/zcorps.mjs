@@ -45,7 +45,7 @@ Hooks.once('init', async function() {
     formula: "@caracs.agility.roll",
     decimals: 2
   };
-  console.info(CONFIG.Combat.initiative)
+//  console.info(CONFIG.Combat.initiative)
 
   // Define custom Document classes
   CONFIG.Actor.documentClass = zcorpsActor;
@@ -259,6 +259,7 @@ Hooks.on("renderDialog", (dialog, id, context) => {
 	      const actor = game.actors.get(actorId);
 	      await actor.deleteInfect(infect);
 	      openGamemasterToolsDialog("infect");
+//	      console.info(document.getElementById("InfectFormGm"))
 	      const dialog = document.getElementById("InfectFormGm").parentNode.parentNode.parentNode;
 	      dialog.parentNode.removeChild(dialog)
 	    });
@@ -390,6 +391,7 @@ async function openGamemasterToolsDialog(env) {
 
   new Dialog(data, {
 	width: "100px",
+	tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "" }],
 	classes: ["gamemaster_tools_dialog gm_"+env],
     }).render(true);
 }
@@ -398,11 +400,11 @@ function getActorsList() {
 	var actors = {};
 	actors["survivor"] = [];
 	actors["controler"] = [];
-	actors["zombie"] = [];
-	actors["npc"] = [];
+//	actors["zombie"] = [];
+//	actors["npc"] = [];
     game.actors.forEach(actor => {
     if(actor.data.type == "survivor" || actor.data.type == "controler"){
-	  console.info(actor.data.flags)
+	  console.info(actor.data.type)
 	  var Tinfect = 0
 	  if("zcorps" in actor.data.flags && "addedInfect" in actor.data.flags.zcorps){
 		actor.data.flags.zcorps.addedInfect.forEach(infect =>{
@@ -433,6 +435,6 @@ function getActorsList() {
   return actors;
 }
 
-var img = document.getElementById('logo')
+//var img = document.getElementById('logo')
 //img.style.display="none";
-img.parentElement.removeChild(img)
+//img.parentElement.removeChild(img)

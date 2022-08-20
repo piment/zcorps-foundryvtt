@@ -1,4 +1,16 @@
 <form>
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="perso_cojones">Gestion Points</a>
+    <a class="item" data-tab="competence">Gestion Compétence</a>
+    <a class="item" data-tab="specialisation">Gestion Spécialisation</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="perso_cojones">
     <h3>Edition des points de personnage / cojones</h3>
     <table>
         <thead>
@@ -10,27 +22,29 @@
         </thead>
         <tbody>
             {{#each actors as |tp Ckey|}}
-        	<tr><th colspan=5>{{Ckey}}</th></tr>
-	        {{#each tp as |actor key|}}
-            <tr>
-                <td>{{actor.data.name}}</td>
-                <td>
-                    <div>
-                        <input type="text" name="xp" value="0" data-actor_id="{{actor.data._id}}" data-value="xp"/>
-                        <button class="gm_validate_value">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <input type="text" name="cojones" value="0" data-actor_id="{{actor.data._id}}" data-value="cojones"/>
-                        <button class="gm_validate_value">+</button>
-                    </div>
-                </td>
-            </tr>
-            {{/each}}
+	        	<tr><th colspan=5>{{Ckey}}</th></tr>
+		        {{#each tp as |actor key|}}
+	            <tr>
+	                <td>{{actor.data.name}}</td>
+	                <td>
+	                    <div>
+	                        <input type="text" name="xp" value="0" data-actor_id="{{actor.data._id}}" data-value="xp"/>
+	                        <button class="gm_validate_value">+</button>
+	                    </div>
+	                </td>
+	                <td>
+	                    <div>
+	                        <input type="text" name="cojones" value="0" data-actor_id="{{actor.data._id}}" data-value="cojones"/>
+	                        <button class="gm_validate_value">+</button>
+	                    </div>
+	                </td>
+	            </tr>
+	            {{/each}}
             {{/each}}
         </tbody>
     </table>
+    </div>
+    <div class="tab" data-group="primary" data-tab="competence">
     <hr>
     <h3>Ajouter une nouvelle compétence</h3>
     <table id="addSkillToActor">
@@ -79,7 +93,8 @@
             </tfoot>
         </table>
     <hr>
-    <div>
+    </div>
+    <div class="tab" data-group="primary" data-tab="specialisation">
         <h3>Ajouter une spécialisation</h3>
         {{#each actors as |tp Ckey|}}
 	    	<h4>{{Ckey}}</h4>
@@ -97,4 +112,7 @@
         {{/each}}
         {{/each}}
     </div>
+    
+    </section>
+    
 </form>
