@@ -71,6 +71,7 @@
           		<th>Type</th>
           		<th>Actuel</th>
           		<th>Max</th>
+          		<th>Rechargeable</th>
           	</tr>
           	<tr>
           		<td>
@@ -82,6 +83,7 @@
 				</td>          		
           		<td><input type="number" name="data.ammo.actual" value="{{data.ammo.actual}}"></td>
           		<td><input type="number" name="data.ammo.max" value="{{data.ammo.max}}"></td>
+          		<td><input type="checkbox" name="data.ammo.reload" {{#if data.ammo.reload}}checked{{/if}}></td>
           	</tr>
           </table>
         </div>

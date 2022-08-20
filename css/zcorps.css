@@ -1502,3 +1502,6 @@ button.gamemaster_button:hover {
 li.skill{
 	border-bottom: 1px solid white
 }
+.slt-bgd option{
+	background:black
+}

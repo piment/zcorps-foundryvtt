@@ -599,7 +599,8 @@
               }
             }
           }
-        }
+        },
+		"roll":{"Modif":0,"Malus":"","ModeTir":0}
       }
     },
     "survivor": {

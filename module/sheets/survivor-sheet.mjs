@@ -75,6 +75,13 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             5: "Mortellement blessé",
             6: "Mort",
         };
+        context.modeTir = {
+			0: "Tir unique",
+			1: "Rafale courte (cible unique)",
+			2: "Rafale totale (cible unique)",
+			3: "Rafale totale (cibles multiples)",
+			4: "Tir de barage"
+		}
 
         this.actor.context = context;
         this.actor.useBonus = false;
@@ -699,6 +706,21 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 item.data.data.formula = "2d6";
                 
                 if (item) return item.roll();
+            } else if (dataset.rollType == "protection") {
+                let label = dataset.label ? `[Protection] ${dataset.label}` : "";
+                const [dice, tier] = dataset.roll.split("+");
+//                console.info(dataset)
+
+	            if(dataset.roll.substring(0,1) == "+"){
+					var [d,t] = dataset.roll.split("D+");
+//					console.info(this.actor.data.data.caracs)
+					d = Number(this.actor.data.data.caracs.strength.value) + Number(d)
+					dataset.roll = d+"D+"+t
+				}
+//                console.info(tier)
+
+                let formula = dice.toLowerCase() + "6 + " + tier;
+
             } else if (dataset.rollType == "dammage") {
                 let label = dataset.label ? `[Dommage] ${dataset.label}` : "";
                 const [dice, tier] = dataset.roll.split("+");

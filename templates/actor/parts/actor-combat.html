@@ -5,18 +5,16 @@
   </div>
   <table>
 	<tr>
-<!--       <td><label>Mode de tir</label><br> -->
-<!--        	<select style="color:white;"> -->
-<!--        		<option style="background: black">Tir unique</option> -->
-<!--        		<option style="background: black">Rafale courte (cible unique)</option> -->
-<!--        		<option style="background: black">Rafale totale (cible unique)</option> -->
-<!--        		<option style="background: black">Rafale totale (cibles multiples)</option> -->
-<!--        		<option style="background: black">Tir de barage</option> -->
-<!--        	</select> -->
-<!--        </td> -->
-<!--        <td> -->
-<!--        	<label>Modif (code D): </label><br><input type="number" style="width:70px; color:white"> -->
-<!--        </td> -->
+      <td><label>Mode de tir</label><br>
+       	<select class="slt-bgd" name="data.roll.ModeTir" style="color:white;">
+	       	{{#select data.roll.ModeTir}}
+            {{selectOptions modeTir selected=value nameAttr=key }}
+            {{/select}}
+       	</select>
+       </td>
+       <td>
+       	<label>Modif (code D): </label><br><input name="data.roll.Modif" value="{{data.roll.Modif}}" type="number" style="width:70px; color:white">
+       </td>
 	</tr>
   </table>
 
@@ -34,8 +32,8 @@
 		{{# each gear as |item id|}}
 	      	{{# if item.data.equipe}}
 	      	<tr>
-		        <td><a class="rollable weapon-shoot" data-roll-type="arme" data-label="{{item.name}}" 
-		        data-roll="{{getSkillValuefromActor ../caracs item.data.use.carac item.data.use.skill}}"><i class="fas fa-dice-d6"></i></a></td>
+		        <td><a class="rollable weapon-shoot" data-roll-type="protection" data-label="{{item.name}}" 
+		        data-roll="{{#if item.data.protection.PUI}}+{{/if}}{{item.data.protection.CodeD}}D+{{item.data.protection.Tier}}"><i class="fas fa-dice-d6"></i></a></td>
 	      		<td>{{item.name}} -- {{item.data.emplacement}}</td>
 	      		<td>{{#if item.data.protection.PUI}}+{{/if}}{{item.data.protection.CodeD}}D+{{item.data.protection.Tier}}</td>
 	      	</tr>
@@ -96,8 +94,8 @@
 	        	data-roll="{{getSkillValuefromActor ../caracs item.data.use.carac item.data.use.skill}}"><i class="fas fa-dice-d6"></i></a>
 	        </td>
 	        <td>{{item.name}}</td>
-	        <td>{{item.data.ammo.actual}} / {{item.data.ammo.max}} 
-	       		<a class="reloadArme"><i class="fas fa-redo-alt"></i></a>
+	        <td>{{item.data.ammo.actual}} / {{item.data.ammo.max}} {{#if item.data.ammo.reload }}
+	       		<a class="reloadArme"><i class="fas fa-redo-alt"></i></a>{{/if}}
 	        </td>
 	        <th>{{item.data.range.short}}</th><th>{{item.data.range.middle}}</th><th>{{item.data.range.long}}</th>
 	        <td>{{#if item.data.damage.More}}+{{/if}}{{item.data.damage.CodeD}}D+{{item.data.damage.Tier}} 
