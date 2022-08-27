@@ -10,8 +10,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["zcorps", "sheet", "actor", "survivor"],
-            width: 600,
-            height: 850,
+            width: 600, height: 850,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -206,88 +205,49 @@ export class zcorpsSurvivorSheet extends ActorSheet {
      */
     _prepareItems(context) {
         // Initialize containers.
-        const gear = [];
-        const arme = [];
-        const ammo = [];
-        arme["range"] = [];
-        arme["cac"]   = [];
-        arme.jet   = [];
-        arme.explo = [];
-//        arme.range = context.items.filter(item => item.data.type === "arme_a_feu")
-//        arme.cac   = context.items.filter(item => item.data.type === "arme_melee")
-//        arme.jet   = context.items.filter(item => item.data.type === "arme_de_jet")
-//        arme.explo = context.items.filter(item => item.data.type === "arme_explosive")
+        const arme = [], ammo = [], gear = [], skills = [], specialisations = [], otherItems = [];
+        arme.range = []; arme.cac   = []; arme.jet   = []; arme.explo = [];
         
-        const skills = [];
-        const specialisations = [];
-        const otherItems = [];
         // Iterate through items, allocating to containers
         for (let i of context.items) {
             i.img = i.img || DEFAULT_TOKEN;
-            // Append to gear.
-            if (i.type === "armor") {
-                gear.push(i);
-            }else if(i.type === "arme_cac"){
-				arme.cac.push(i);
-            }else if(i.type === "arme_range"){
-				arme.range.push(i);
-            }else if(i.type === "arme_explo"){
-				arme.explo.push(i);
+            switch (i.type) {
+				case "arme_range":
+				  arme.range.push(i);
+				break;
+				case "arme_cac":
+				  arme.cac.push(i);
+				break;
+				case "arme_explo":
+				  arme.explo.push(i);
+				break;
+
+				case "armor":
+				  gear.push(i);
+				break;
+				case "ammo":
+				  ammo.push(i);
+				break;
+
+				case "specialisation":
+				  specialisations.push(i);
+				break;
+				case "skill":
+	                skills.push({
+	                    name: i.name,
+	                    carac: i.data.caracteristic,
+	                    value: 0,
+	                    owned: true,
+	                    tiers: i.data.tiers,
+	                    added: true,
+	                    id: i._id,
+	                });
+				break;
+
+				default:
+				  otherItems.push(i);
+				break;
 			}
-            // Append to features.
-            else if (i.type === "arme") {
-				switch (i.data.type) {
-//					case "arme_a_feu":
-//					  arme.range.push(i);
-//					break;
-//					case "arme_melee":
-//					  arme.cac.push(i);
-//					break;
-//					case "arme_de_jet":
-//					  arme.jet.push(i);
-//					break;
-//					case "arme_explosive":
-//					  arme.explo.push(i);
-//					break;
-					default:
-					  otherItems.push(i);
-					break;
-				}
-//                arme.push(i);
-            }
-            // Append to Ammo.
-            else if (i.type === "ammo") {
-                ammo.push(i);
-                let ammoFinal = {};
-                ammo.forEach((item) => {
-                    if (ammoFinal[item.data.type] === undefined) {
-                        ammoFinal[item.data.type] = {
-                            quantity: +item.data.quantity,
-                            name: item.name,
-                        };
-                    } else {
-                        ammoFinal[item.data.type].quantity =
-                            ammoFinal[item.data.type].quantity +
-                            +item.data.quantity;
-                    }
-                });               
-            } else if (i.type === "specialisation") {
-                specialisations.push(i);
-            } else if (i.type === "skill") {
-                skills.push({
-                    name: i.name,
-                    carac: i.data.caracteristic,
-                    value: 0,
-                    owned: true,
-                    tiers: i.data.tiers,
-                    added: true,
-                    id: i._id,
-                });
-            } else{
-				
-				otherItems.push(i);
-			}
-            
         }
 
         // Assign and return
@@ -326,7 +286,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                         });
                     }
                 });
-                this.ActorSheet.render(true);
+//                this.actor.render(true);
             } else {
                
                 return this._onDropItemCreate(droppedItemData);
@@ -601,11 +561,10 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         html.find('.reloadArme').click(async ev=>{
             const li = $(ev.currentTarget).parents(".item")[0];
             const item = this.actor.items.get(li.dataset["item_id"]);
+			const actor = this.actor;
 
-//			console.info(item)
-//			console.info(li)
-//			console.info(this.actor.data.items.filter(item => item.name == ammoType))
-
+			const updates = [];
+			
 			var ammoType = item.data.data['ammo']['type']
 			
 			var Mun = this.actor.data.items.filter(item => item.name == ammoType)
@@ -614,30 +573,22 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 
 			for(var i = 0 ; Mun.length > i ; i++){
 				munManq = item.data.data['ammo']['max'] - item.data.data['ammo']['actual']
-//				console.info(Mun[i])
+
+				var newMun = Mun[i];
+				
 				if(Mun[i].data.data.quantity > 0 && item.data.data['ammo']['actual'] < item.data.data['ammo']['max']){
 					if(Mun[i].data.data.quantity >= munManq){
 						item.data.data['ammo']['actual'] = item.data.data['ammo']['max'];
-						Mun[i].data.data.quantity = Mun[i].data.data.quantity - munManq
-//						if (item.update({"data.ammo-actual": item.data.data["ammo-actual"]})){
-//							Mun[i].update({"data.quantity": Mun[i].data.data.quantity})
-//						};
-//						console.info(item.data.data)
-						item.update({"data.ammo.actual": item.data.data['ammo']['actual']})
-//						Mun[i].update({"data.ammo-quantity": item.data.data["quantity"]});
-						Mun[i].sheet.render(true);
-						this.actor.sheet.render(true);
+						newMun.data.data.quantity = Mun[i].data.data.quantity - munManq
 					}else if (Mun[i].data.data.quantity < munManq){
 						item.data.data['ammo']['actual'] = Number(item.data.data['ammo']['actual']) + Number(Mun[i].data.data.quantity);
-						Mun[i].data.data.quantity = 0
-						aitem.update({"data.ammo.actual": item.data.data['ammo']['actual']})
-						Mun[i].sheet.render(true);
+						newMun.data.data.quantity = 0
 					}
+					updates.push({_id: Mun[i].id , data: newMun.data.data});
 				}
-//				if (munManq == item.data.data['ammo-max']){
-//					return true;
-//				}
 			}
+			updates.push({_id: item.id, data: item.data.data});
+			await Item.updateDocuments(updates, {parent: actor});
 			this.actor.sheet.render(true);
 		});
         
@@ -744,17 +695,18 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 	                    return;
 	                }
 	                item.data.data['ammo']['actual'] = item.data.data['ammo']['actual'] - 1;
+	                item.update({"data.ammo.actual": item.data.data.ammo.actual })
                 }
 
                 let label = dataset.label ? `[Arme] ${dataset.label}` : "";
                 const [dice, tier] = dataset.roll.split("+");
                 let formula = dice.toLowerCase() + "6 + " + tier;
 				
-				if(item.data.data.type !== "arme_melee"){
-                item.update({
-                    "data.ammo.actual": item.data.data['ammo']['actual'],
-                });
-				}
+//				if(item.data.data.type !== "arme_melee"){
+//                item.update({
+//                    "data.ammo.actual": item.data.data['ammo']['actual'],
+//                });
+//				}
             }
         }
         // Handle rolls that supply the formula directly.

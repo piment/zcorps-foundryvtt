@@ -280,7 +280,6 @@ Hooks.on("renderDialog", (dialog, id, context) => {
     })
   })
   }
-  
 });
 
 Hooks.on("renderChatMessage", (msg, html, data) => {
@@ -300,7 +299,6 @@ Hooks.on("renderChatMessage", (msg, html, data) => {
         const btn = msgCard.querySelector(".rerollXP_btn");
         msgCard.querySelector(".rerollXP").removeChild(btn);
       }
-      
     });
   }
 })
