@@ -1,4 +1,18 @@
 {
+  "ACTOR.TypeSurvivor": "Survivant",
+  "ACTOR.TypeControler": "Contrôleur",
+  "ACTOR.TypeNpc": "PNJ",
+  "ACTOR.TypeZombie": "Zombie",
+
+  "ITEM.TypeItem": "Item",
+  "ITEM.TypeSkill": "Capacité",
+  "ITEM.TypeSpecialisation": "Spécialisation",
+  "ITEM.TypeArme_cac": "Arme de corps à corps",
+  "ITEM.TypeArme_range": "Arme à distance",
+  "ITEM.TypeArme_explo": "Explosif",
+  "ITEM.TypeAmmo": "Munition",
+  "ITEM.TypeArmor": "Armure",
+  "ITEM.TypeArme": "Arme (bientôt supprimer)",
 
   "ZCORPS.EffectCreate": "Create Effect",
   "ZCORPS.EffectToggle": "Toggle Effect",
