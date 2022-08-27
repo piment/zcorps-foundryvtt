@@ -567,11 +567,13 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 			
 			var ammoType = item.data.data['ammo']['type']
 			
-			var Mun = this.actor.data.items.filter(item => item.name == ammoType)
+			var Mun = this.actor.data.items.filter(item => item.data.data.type == ammoType)
 
 			var munManq = item.data.data['ammo']['max'] - item.data.data['ammo']['actual']
+			console.info(ammoType)
 
 			for(var i = 0 ; Mun.length > i ; i++){
+				
 				munManq = item.data.data['ammo']['max'] - item.data.data['ammo']['actual']
 
 				var newMun = Mun[i];
