@@ -18,13 +18,14 @@ export class zcorpsActor extends Actor {
     prepareBaseData() {
         // Data modifications in this step occur before processing embedded
         // documents or derived data.
-        const actorData = this.data;
-        const data = actorData.data;
-        const flags = actorData.flags.zcorps || {};
+        const actorData = this.system;
+        console.info(actorData);
+//        const data = actorData.data;
+//        const flags = actorData.flags.zcorps || {};
     }
 
 	prepareFormuleInit(){
-		console.info(this.data)
+//		console.info(this.data)
 	}
 
     /**
@@ -37,9 +38,9 @@ export class zcorpsActor extends Actor {
      * is queried and has a roll executed directly from it).
      */
     prepareDerivedData() {
-        const actorData = this.data;
-        const data = actorData.data;
-        const flags = actorData.flags.zcorps || {};
+        const actorData = this.system;
+//        const data = actorData.data;
+//        const flags = actorData.flags.zcorps || {};
         
         // Make separate methods for each Actor type (character, npc, etc.) to keep
         // things organized.
@@ -51,7 +52,7 @@ export class zcorpsActor extends Actor {
      */
     _prepareCharacterData(actorData) {
         if (actorData.type == "survivor" || actorData.type == "controler") {
-            const data = actorData.data;
+            const data = actorData.system;
         }
     }
 
@@ -71,7 +72,7 @@ export class zcorpsActor extends Actor {
      * Prepare character roll data.
      */
     _getCharacterRollData(data) {
-        if (this.data.type !== "character") return;
+        if (this.type !== "character") return;
 
         // Add level for easier access, or fall back to 0.
         if (data.attributes.level) {
@@ -150,7 +151,7 @@ export class zcorpsActor extends Actor {
           var finalFormula = standartRollFormula
         }
         if(bonus == "cojones") {
-          this.data.data.attributes.cojones.value -= 1;
+          this.system.attributes.cojones.value -= 1;
           this.update({ data: this.data.data });
         }
         if(bonus){
@@ -174,7 +175,7 @@ export class zcorpsActor extends Actor {
           tier: results.tier,
           fail: results.fail,
           total_fail: results.total_fail,
-          actor: this.data,
+          actor: this,
           label: dataset.label,
           malus: malus,
           xp_used: used_xp ? used_xp : 0,
@@ -221,9 +222,9 @@ export class zcorpsActor extends Actor {
     //######## ALWAYS USED? #######
     _getMalus(caracteristic) {
         const health = this._calculateHealthMalus(
-            this.data.data.attributes.health
+            this.system.attributes.health
         );
-        const stressTest = this._checkStressMalus(caracteristic, this.data.data.attributes.stress)
+        const stressTest = this._checkStressMalus(caracteristic, this.system.attributes.stress)
         return {
             health: health,
             stressValue: stressTest.value,
@@ -362,7 +363,7 @@ export class zcorpsActor extends Actor {
     async _bonusRollFormula(joker, used) {
         
         const template = `systems/zcorps/templates/actor/parts/bonusSelection.hbs`;
-        const available = this.data.data.attributes.xp.value;
+        const available = this.system.attributes.xp.value;
         const html = await renderTemplate(template, {
             available: available,
             limit: game.settings.get("zcorps", "XPPointPerRollMax") - used,
@@ -398,8 +399,8 @@ export class zcorpsActor extends Actor {
         if (!bonusValue) {
             return [false, 0];
         }
-        this.data.data.attributes.xp.value -= bonusValue;
-        this.update({ data: this.data.data });
+        this.system.attributes.xp.value -= bonusValue;
+        this.update({ data: this.system });
 
         if (joker) {
             var finalFormula = `${bonusValue - 1}D6[white] + 1D6x[bronze]`;
@@ -448,7 +449,7 @@ export class zcorpsActor extends Actor {
     }
     _getSkillsList(){
       let skills = {};
-      for(let [key, carac] of Object.entries(this.data.data.caracs)){
+      for(let [key, carac] of Object.entries(this.system.caracs)){
         for(let [key, skill] of Object.entries(carac.skills)){
           skills[key] = {name: skill.name, added: false, caracteristic: key};
         }

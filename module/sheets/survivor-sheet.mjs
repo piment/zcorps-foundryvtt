@@ -23,7 +23,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 
     /** @override */
     get template() {
-        return `systems/zcorps/templates/actor/actor-${this.actor.data.type}-sheet.html`;
+        return `systems/zcorps/templates/actor/actor-${this.actor.type}-sheet.html`;
     }
 
     /* -------------------------------------------- */
@@ -37,9 +37,9 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         const context = super.getData();
 
         // Use a safe clone of the actor data for further operations.
-        const actorData = this.actor.data.toObject(false);
+        const actorData = this.actor.toObject(false);
         // Add the actor's data to context.data for easier access, as well as flags.
-        context.data = actorData.data;
+        context.data = actorData.system;
         context.flags = actorData.flags.zcorps || {};
         // Prepare character data and items.
         if (actorData.type == "survivor" || actorData.type == "controler") {
@@ -88,12 +88,12 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 		/* Gestion de l'initiative */
 		var Dr = "";
 		var tr = "";
-		if(this.actor.data.data.caracs.agility.roll){
-			[Dr, tr] = this.actor.data.data.caracs.agility.roll.split('d6')
+		if(this.actor.system.caracs.agility.roll){
+			[Dr, tr] = this.actor.system.caracs.agility.roll.split('d6')
 		}
-		if(Dr !== this.actor.data.data.caracs.agility.value){
-			this.actor.data.data.caracs.agility.roll = this.actor.data.data.caracs.agility.value+"d6"
-			this.actor.update({"data.caracs.agility.roll": this.actor.data.data.caracs.agility.roll})
+		if(Dr !== this.actor.system.caracs.agility.value){
+			this.actor.system.caracs.agility.roll = this.actor.system.caracs.agility.value+"d6"
+			this.actor.update({"system.caracs.agility.roll": this.actor.system.caracs.agility.roll})
 		}
 
         
@@ -125,7 +125,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         	context.totalInfest = {color: "lightgreen", infest: 0};
 		}
         
-        if(game.user.data.roll == 4){
+        if(game.user.roll == 4){
 			context.gm = true
 		}else{
 			context.gm = false
@@ -183,7 +183,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 
         //Calculate devired data
         context.attributes = context.data.attributes;
-        console.info(context)
+//        console.info(context)
         context.attributes.movement =
             +context.caracs.strength.value + +context.caracs.agility.value;
         context.attributes.dammageBonus = parseInt(
@@ -269,7 +269,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             this.actor.items.forEach((item) => {
                 if (
                     item.type === "ammo" &&
-                    item.data.data.type == droppedItemData.data.type
+                    item.system.type == droppedItemData.system.type
                 ) {
                     tempAmmo.push(item);
                 }
@@ -277,12 +277,12 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 
             if (tempAmmo.length > 0) {
                 tempAmmo.forEach((item) => {
-                    if (item.data.data.type == droppedItemData.data.type) {
+                    if (item.system.type == droppedItemData.system.type) {
                         
                         return item.update({
                             "data.quantity":
-                                parseInt(item.data.data.quantity) +
-                                parseInt(droppedItemData.data.quantity),
+                                parseInt(item.system.quantity) +
+                                parseInt(droppedItemData.system.quantity),
                         });
                     }
                 });
@@ -392,25 +392,25 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                     value: tierValue,
                     carac: {
                         name: tier.dataset.carac,
-                        array: this.actor.data.data.caracs[tier.dataset.carac].tiers
+                        array: this.actor.system.caracs[tier.dataset.carac].tiers
                         },
                         skill: tier.dataset.skill
                             ? {
                                 name: tier.dataset.skill,
-                                array: this.actor.data.data.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers,
+                                array: this.actor.system.caracs[tier.dataset.carac].skills[tier.dataset.skill].tiers,
                             }
                             : null,
                 };
     
                 const dataFormatted = this.actor._getFormattedTiersData(tiersData);
                 dataFormatted.skill
-                    ? (this.actor.data.data.caracs[tier.dataset.carac].skills[
+                    ? (this.actor.system.caracs[tier.dataset.carac].skills[
                           tier.dataset.skill
                       ].tiers = dataFormatted.skill.array)
-                    : (this.actor.data.data.caracs[tier.dataset.carac].tiers =
+                    : (this.actor.system.caracs[tier.dataset.carac].tiers =
                           dataFormatted.carac.array);
             }
-            this.actor.update({ data: this.actor.data.data });
+            this.actor.update({ system: this.system });
             this.actor.sheet.render(true);
         });
 
@@ -444,7 +444,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                     "Vous ne pouvez posséder que 12 compétences maximum!"
                 );
             } else {
-                this.actor.data.data.caracs[checkbox.dataset.carac].skills[
+                this.actor.system.caracs[checkbox.dataset.carac].skills[
                     checkbox.dataset.skill
                 ].owned = checkbox.classList.contains("checked");
                 checkbox.classList.toggle("checked");
@@ -457,7 +457,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                         this.actor.context.skillsOwned - 1;
                 }
 
-                this.actor.data.data.caracs[checkbox.dataset.carac].skills[
+                this.actor.system.caracs[checkbox.dataset.carac].skills[
                     checkbox.dataset.skill
                 ].owned = checkbox.classList.contains("checked");
                 this.actor.sheet.render(true);
@@ -470,7 +470,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                         "checked"
                     )}}}}}}}`
                 );
-                return this.actor.update({ data: this.actor.data.data });
+                return this.actor.update({ data: this.actor.system });
             }
         });
 
@@ -478,7 +478,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             const bonus = ev.target;
             const bonusId = bonus.id;
             const availablePoints =
-                this.actor.data.data.attributes[bonusId.split("_")[1]].value;
+                this.actor.system.attributes[bonusId.split("_")[1]].value;
 
             if (bonusId == "bonus_xp") {
                 if (bonus.classList.contains("fa-check-square")) {
@@ -539,12 +539,12 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         })
         html.find(".set").click(async ev => {
             const dataset = ev.currentTarget.dataset;
-            console.log(this.actor.data.data.caracs[dataset.set].tier);
+            console.log(this.actor.system.caracs[dataset.set].tier);
             if(dataset.setLevel == "plus") {
-                this.actor.data.data.caracs[dataset.set].tier += 1;
+                this.actor.system.caracs[dataset.set].tier += 1;
             }
             else {
-                this.actor.data.data.caracs[dataset.set].tier -= 1;
+                this.actor.system.caracs[dataset.set].tier -= 1;
             }
             this.actor.render(true);
         })
@@ -567,7 +567,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 			
 			var ammoType = item.data.data['ammo']['type']
 			
-			var Mun = this.actor.data.items.filter(item => item.data.data.type == ammoType)
+			var Mun = this.actor.items.filter(item => item.data.data.type == ammoType)
 
 			var munManq = item.data.data['ammo']['max'] - item.data.data['ammo']['actual']
 			console.info(ammoType)
@@ -596,7 +596,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         
         html.find(".item-toggle").click(async ev=>{
 			const itemNode = ev.currentTarget.parentNode.parentNode;
-			var item = this.actor.data.items.filter(item => item.id == itemNode.dataset.item_id)[0]
+			var item = this.actor.items.filter(item => item.id == itemNode.dataset.item_id)[0]
 			console.info(itemNode, item)
 			if(item.data.data.equipe){
 				console.info(1)

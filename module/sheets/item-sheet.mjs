@@ -23,7 +23,7 @@ export class zcorpsItemSheet extends ItemSheet {
 
     // Alternatively, you could use the following return statement to do a
     // unique item sheet by type, like `weapon-sheet.html`.
-    return `${path}/item-${this.item.data.type}-sheet.hbs`;
+    return `${path}/item-${this.item.type}-sheet.hbs`;
   }
 
   /* -------------------------------------------- */
@@ -44,7 +44,7 @@ export class zcorpsItemSheet extends ItemSheet {
 
     context.ammoType = {0: ".38", 1: "9mm", 2: ".22"};
     // Use a safe clone of the item data for further operations.
-    const itemData = context.item.data;
+    const itemData = context.item;
 
     // Retrieve the roll data for TinyMCE editors.
     context.rollData = {};
@@ -52,9 +52,9 @@ export class zcorpsItemSheet extends ItemSheet {
     if (actor) {
       context.rollData = actor.getRollData();
     }
-    context.actor = this.actor ? this.actor.data : {};
+    context.actor = this.actor ? this.actor.system : {};
     // Add the actor's data to context.data for easier access, as well as flags.
-    context.data = itemData.data;
+    context.data = itemData.system;
     context.flags = itemData.flags;
     context.armeType = {"arme_a_feu": "armes à feu", "arme_de_jet": "arme de jet", "arme_explosive" : "Explosif", "arme_melee": "arme de mêlée"};
     context.munType = {
@@ -96,7 +96,7 @@ export class zcorpsItemSheet extends ItemSheet {
 
     // Roll handlers, click handlers, etc. would go here.
     html.find(".arme-type").change(ev => { 
-      let item = this.object.data.data;
+      let item = this.object.system;
       let skill = ev.currentTarget.value;
       if(skill == "arme_a_feu") {
         item.use.carac = "deftness";

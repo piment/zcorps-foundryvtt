@@ -1,8 +1,8 @@
 export class diceRollHelper {
     constructor(params) {
-        this.data = params.actor.data.data;
+        this.data = params.actor.system;
         this.bonus = params.actor.useBonus;
-        this.healthMalus = this._getMalus(parseInt(this.data.attributes.health));
+        this.healthMalus = this._getMalus(parseInt(this.system.attributes.health));
         this.canAct = false;
         this.baseDicePool = {
             formula: params.formula,

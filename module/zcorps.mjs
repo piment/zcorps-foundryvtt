@@ -176,8 +176,7 @@ Hooks.once("ready", async function() {
 });
 
 Hooks.on("renderPlayerList", async function(playerList, html) {
-  
-  if(game.user.data.role == 4){
+  if(game.user.role == 4){
     const loggedInUser = html.find(`[data-user-id="${game.userId}"]`);
     const tooltip = game.i18n.localize('ZCORPS.gamemaster.title');
     loggedInUser.append(`<button type="button" class="gamemaster_button flex0 gm_tool" title="${tooltip}"><i class="fas fa-dungeon"></i></button>`);
@@ -284,7 +283,7 @@ Hooks.on("renderDialog", (dialog, id, context) => {
 
 Hooks.on("renderChatMessage", (msg, html, data) => {
   //Type 5 = Roll
-  if(msg.data.type == 5) {
+  if(msg.type == 5) {
     const message = html.find(`[data-message-id="${msg.id}"]`);
     message.prevObject[0].classList.add("actions-message");
 
