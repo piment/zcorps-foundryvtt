@@ -1333,9 +1333,9 @@ body {
   background-size: cover !important;
 }
 
-body:not(.background) {
+/*body:not(.background) {
   position: relative;
-}
+}*/
 
 .app.bonus .window-header {
   background-color: #681c1c;

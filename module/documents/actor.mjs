@@ -183,11 +183,12 @@ export class zcorpsActor extends Actor {
           stress : dataset.stress ? true : false,
           stressDifficulty : malus.stressDifficulty
           });
-        
+
+        console.info("tets");
         const myMessage = await ChatMessage.create({
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           roll: roll,
-          user: this._id,
+//          user: this._id,
           speaker: ChatMessage.getSpeaker({ actor: this }),
           content: templateRendered,
           rollMode: game.settings.get("core", "rollMode"),

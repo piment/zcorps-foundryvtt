@@ -289,14 +289,17 @@ Hooks.on("renderChatMessage", (msg, html, data) => {
 
     html.find(".rerollXP_btn").click(async ev => {
       ev.preventDefault();
+      console.info('test0');
       const actor = game.actors.get(data.message.speaker.actor);
       const use_joker = ev.currentTarget.dataset.jokerUsed ? false : true;
       const use_xp = parseInt(ev.currentTarget.dataset.xpUsed);
       const xpFormula = await actor.reRoll(use_joker, use_xp, ev.currentTarget.dataset.label);
+      console.info('test1');
       if(xpFormula) {
         const msgCard = document.querySelector(`[data-message-id="${msg.id}"]`);
         const btn = msgCard.querySelector(".rerollXP_btn");
         msgCard.querySelector(".rerollXP").removeChild(btn);
+        console.info('test2');
       }
     });
   }
