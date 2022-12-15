@@ -253,12 +253,13 @@ Hooks.on("renderDialog", (dialog, id, context) => {
 	    document.querySelectorAll(".gm_supp_infect").forEach(el =>{el.addEventListener("click", async ev => {
 	      ev.preventDefault();
 		  const cont = ev.target.parentNode.parentNode.parentNode.parentNode
+      console.info(cont);
 	      const actorId  = cont.querySelector(".actor_name").dataset.actor_id;
 	      const infect = ev.target.parentNode.dataset.key ;
 	      const actor = game.actors.get(actorId);
 	      await actor.deleteInfect(infect);
 	      openGamemasterToolsDialog("infect");
-//	      console.info(document.getElementById("InfectFormGm"))
+	      // console.info(document.getElementById("InfectFormGm"))
 	      const dialog = document.getElementById("InfectFormGm").parentNode.parentNode.parentNode;
 	      dialog.parentNode.removeChild(dialog)
 	    });
@@ -422,7 +423,7 @@ function getActorsList() {
       actors[actor.type].push({actor: actor, infect: Tinfect, color: color});
     }
   });
-  console.info(actors)
+  // console.info(actors)
   return actors;
 }
 
