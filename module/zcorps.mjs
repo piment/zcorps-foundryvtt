@@ -96,12 +96,12 @@ Handlebars.registerHelper("getSkillValuefromActor", (caracs, carac, skill) => {
 //  const value = `${caracs[carac].skills[skill].total}D+${caracs[carac].skills[skill].tier}`;
 //  console.info(caracs, carac, skill)
     var value = ""
-if(carac && skill){
-  value = `${caracs[carac].skills[skill].formula}`;
-}else{
-  value = ""
-}
-  return value;
+    if(carac && skill){
+      value = `${caracs[carac].skills[skill].formula}`;
+    }else{
+      value = ""
+    }
+      return value;
 });
 
 Handlebars.registerHelper("getHealthStatus", level => {
