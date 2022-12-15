@@ -32,18 +32,18 @@
 	        {{#each tp as |actor key|}}
 		        <tbody>
 		            <tr>
-		                <td class="actor_name" data-actor_id="{{actor.data._id}}">{{actor.data.name}}</td>
+		                <td class="actor_name" data-actor_id="{{actor.actor._id}}">{{actor.actor.name}}</td>
 		                <td style="text-align:center;color:black ;background-color:{{actor.color}}">
 		      				<span >{{actor.infect}}</span>
 		                </td>
 		                <td>
 		                    <div>
-		                        <input type="text" name="infectPourcentToAdd" id="infectPourcentToAdd_{{actor.data._id}}" value="0" data-actor_id="{{actor.data._id}}" data-value="infectPourcentToAdd"/>
+		                        <input type="text" name="infectPourcentToAdd" id="infectPourcentToAdd_{{actor.actor._id}}" value="0" data-actor_id="{{actor.actor._id}}" data-value="infectPourcentToAdd"/>
 		                    </div>
 		                </td>
 		                <td>
 		                    <div>
-		                        <input type="text" name="infectTimeToAdd" id="infectTimeToAdd_{{actor.data._id}}" value="0" data-actor_id="{{actor.data._id}}" data-value="infectTimeToAdd"/>
+		                        <input type="text" name="infectTimeToAdd" id="infectTimeToAdd_{{actor.actor._id}}" value="0" data-actor_id="{{actor.actor._id}}" data-value="infectTimeToAdd"/>
 		                    </div>
 		                </td>
 		                <td>
@@ -52,9 +52,9 @@
 		                	</div>
 		                </td>
 		            </tr>
-		        	{{#each actor.data.flags.zcorps.addedInfect as |infect key|}}
+		        	{{#each actor.actor.flags.zcorps.addedInfect as |infect key|}}
 		            <tr>
-			              <td class="actor_name" data-actor_id="{{actor.data._id}}"></td>
+			              <td class="actor_name" data-actor_id="{{actor._id}}"></td>
 			              <td></td>
 		            	  <td>{{infect.pourcent}}</td>
 		            	  <td>{{infect.time}}</td>

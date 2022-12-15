@@ -31,7 +31,6 @@
     ],
     "packs": [],
     "system": [],
-    "dependencies": [],
     "socket": false,
     "manifest": "https://github.com/piment/zcorps-foundryvtt/releases/latest/download/system.json",
     "download": "https://github.com/piment/zcorps-foundryvtt/releases/download/0.0.9/archive.zip",

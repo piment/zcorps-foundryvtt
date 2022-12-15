@@ -289,17 +289,17 @@ Hooks.on("renderChatMessage", (msg, html, data) => {
 
     html.find(".rerollXP_btn").click(async ev => {
       ev.preventDefault();
-      console.info('test0');
+//      console.info('test0');
       const actor = game.actors.get(data.message.speaker.actor);
       const use_joker = ev.currentTarget.dataset.jokerUsed ? false : true;
       const use_xp = parseInt(ev.currentTarget.dataset.xpUsed);
       const xpFormula = await actor.reRoll(use_joker, use_xp, ev.currentTarget.dataset.label);
-      console.info('test1');
+//      console.info('test1');
       if(xpFormula) {
         const msgCard = document.querySelector(`[data-message-id="${msg.id}"]`);
         const btn = msgCard.querySelector(".rerollXP_btn");
         msgCard.querySelector(".rerollXP").removeChild(btn);
-        console.info('test2');
+//        console.info('test2');
       }
     });
   }
@@ -307,8 +307,8 @@ Hooks.on("renderChatMessage", (msg, html, data) => {
 
 Hooks.on("createItem", (item, info, tempData, actorId) => {
 //  console.log("preCreateItem : ", item);
-  if(item.data.type === "skill"){
-    item.data.img = "systems/zcorps/ui/icons/vial-solid.svg";
+  if(item.type === "skill"){
+    item.img = "systems/zcorps/ui/icons/vial-solid.svg";
   }
 })
 
@@ -403,32 +403,23 @@ function getActorsList() {
 //	actors["zombie"] = [];
 //	actors["npc"] = [];
     game.actors.forEach(actor => {
-    if(actor.data.type == "survivor" || actor.data.type == "controler"){
-	  console.info(actor.data.type)
-	  var Tinfect = 0
-	  if("zcorps" in actor.data.flags && "addedInfect" in actor.data.flags.zcorps){
-		actor.data.flags.zcorps.addedInfect.forEach(infect =>{
-			Tinfect += Number(infect.pourcent)
-        	}
-		)
-	  }
+    if(actor.type == "survivor" || actor.type == "controler"){
+      // console.info(actor)
+      var Tinfect = 0
+      if("zcorps" in actor.flags && "addedInfect" in actor.flags.zcorps){
+      actor.flags.zcorps.addedInfect.forEach(infect =>{
+        Tinfect += Number(infect.pourcent)
+        })
+      }
 	    var color = "black";
-	    if (Tinfect <= 10){
-			color = "lightgreen"
-		}else if(Tinfect <= 20){
-			color = "yellow"
-		}else if(Tinfect <= 30){
-			color = "orange"
-		}else if(Tinfect <= 40){
-			color = "darkorange"
-		}else if(Tinfect < 49){
-			color = "lightcoral"
-		}else if(Tinfect >= 49){
-			color = "red"
-		}else{
-			color = "black";
-		}
-      actors[actor.data.type].push({data: actor.data, skills: actor._getSkillsList(), infect: Tinfect, color: color});
+	    if (Tinfect <= 10){ color = "lightgreen"
+      }else if(Tinfect <= 20){ color = "yellow"
+      }else if(Tinfect <= 30){ color = "orange"
+      }else if(Tinfect <= 40){ color = "darkorange"
+      }else if(Tinfect < 49){ color = "lightcoral"
+      }else if(Tinfect >= 49){ color = "red"
+      }else{ color = "black"; }
+      actors[actor.type].push({actor: actor, infect: Tinfect, color: color});
     }
   });
   console.info(actors)

@@ -25,16 +25,16 @@
 	        	<tr><th colspan=5>{{Ckey}}</th></tr>
 		        {{#each tp as |actor key|}}
 	            <tr>
-	                <td>{{actor.data.name}}</td>
+	                <td>{{actor.actor.name}}</td>
 	                <td>
 	                    <div>
-	                        <input type="text" name="xp" value="0" data-actor_id="{{actor.data._id}}" data-value="xp"/>
+	                        <input type="text" name="xp" value="0" data-actor_id="{{actor.actor._id}}" data-value="xp"/>
 	                        <button class="gm_validate_value">+</button>
 	                    </div>
 	                </td>
 	                <td>
 	                    <div>
-	                        <input type="text" name="cojones" value="0" data-actor_id="{{actor.data._id}}" data-value="cojones"/>
+	                        <input type="text" name="cojones" value="0" data-actor_id="{{actor.actor._id}}" data-value="cojones"/>
 	                        <button class="gm_validate_value">+</button>
 	                    </div>
 	                </td>
@@ -60,10 +60,10 @@
                     <td>
                         <select name="actorCarac" id="selectedActorForCarac">
                         {{#each actors as |tp Ckey|}}
-        				<optgroup label="{{Ckey}}">
-	        			{{#each tp as |actor key|}}
-                            <option value="{{actor.data._id}}">{{actor.data.name}}</option>
-                        {{/each}}
+                            <optgroup label="{{Ckey}}">
+                            {{#each tp as |actor key|}}
+                                <option value="{{actor.actor._id}}">{{actor.actor.name}}</option>
+                            {{/each}}
                         {{/each}}
                         </select>
                     </td>
@@ -100,9 +100,9 @@
 	    	<h4>{{Ckey}}</h4>
         {{#each tp as |actor key|}}
         <div class="form-group">
-            <span class="actor_name" data-actor_id="{{actor.data._id}}">{{actor.data.name}}</span>
+            <span class="actor_name" data-actor_id="{{actor.actor._id}}">{{actor.actor.name}}</span>
             <select name="skill" id="skill">
-                {{#each actor.skills as |skill key|}}
+                {{#each actor.actor.system.skills as |skill key|}}
                 <option value="{{key}}" data-added="{{skill.added}}" data-caracteristic="{{skill.caracteristic}}">{{skill.name}}</option>
                 {{/each}}
             </select>

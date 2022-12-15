@@ -152,7 +152,7 @@ export class zcorpsActor extends Actor {
         }
         if(bonus == "cojones") {
           this.system.attributes.cojones.value -= 1;
-          this.update({ data: this.data.data });
+          this.update({ system: this.system });
         }
         if(bonus){
           document.querySelectorAll(".bonus-icon").forEach((el) => {
@@ -184,7 +184,7 @@ export class zcorpsActor extends Actor {
           stressDifficulty : malus.stressDifficulty
           });
 
-        console.info("tets");
+        // console.info("test");
         const myMessage = await ChatMessage.create({
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           roll: roll,
@@ -205,14 +205,14 @@ export class zcorpsActor extends Actor {
           xp: results.white,
           xp_joker: results.acid,
           total_xp: results.total_xp,
-          actor: this.data,
+          actor: this,
           label: label
         });
-        
-        const myMessage = await ChatMessage.create({
+      // console.info(this);
+      const myMessage = await ChatMessage.create({
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           roll: roll,
-          user: this._id,
+          // user: this._id,
           speaker: ChatMessage.getSpeaker({ actor: this }),
           content: templateRendered,
           rollMode: game.settings.get("core", "rollMode"),
@@ -455,8 +455,8 @@ export class zcorpsActor extends Actor {
           skills[key] = {name: skill.name, added: false, caracteristic: key};
         }
       }
-      if(this.data.flags.zcorps && this.data.flags.zcorps.addedSkill){
-        for(let [key, carac] of Object.entries(this.data.flags.zcorps.addedSkill)){
+      if(this.flags.zcorps && this.flags.zcorps.addedSkill){
+        for(let [key, carac] of Object.entries(this.flags.zcorps.addedSkill)){
           for(let [skillKey, skill] of Object.entries(carac)){
             skills[skillKey] = {name: skill.name, added: true, caracteristic: key};
           }
@@ -471,8 +471,8 @@ export class zcorpsActor extends Actor {
 //		var fl = [];
 //		this.setFlag("zcorps", "addedInfect", fl);
 //	}
-	if("zcorps" in this.data.flags && "addedInfect" in this.data.flags.zcorps){
-		  var flag = this.data.flags.zcorps.addedInfect
+	if("zcorps" in this.flags && "addedInfect" in this.flags.zcorps){
+		  var flag = this.flags.zcorps.addedInfect
 	}else{
 		flag = [];
     }
@@ -487,7 +487,7 @@ export class zcorpsActor extends Actor {
     
     async deleteInfect(infect){
 //	  console.info(this.data.flags.zcorps.addedInfect[infect])
-      var tabs = this.data.flags.zcorps.addedInfect
+      var tabs = this.flags.zcorps.addedInfect
 	  tabs.splice(infect,1);
 	  
       this.unsetFlag("zcorps", `addedInfect.${tabs}`);
