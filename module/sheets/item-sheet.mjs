@@ -33,6 +33,40 @@ export class zcorpsItemSheet extends ItemSheet {
     // Retrieve base data structure.
     const context = super.getData();
     const itemType = context.item.type;
+
+    const typeCollection = ["arme_cac", "arme_range", "arme_explo"]
+
+    if(typeCollection.includes(context.item.type) && context.item.system.use.skill == ""){
+      var use = {"skill": "","carac":""};
+      var item = context.item.system;
+      // console.info(item)
+      switch(context.item.type){
+        case 'arme_cac':
+          item.type = "arme_melee"
+          item.use.carac = "agility";
+          item.use.skill = "melee";
+          console.log('CAC');
+          break;
+        case 'arme_range':
+          item.type = "arme_a_feu"
+          item.use.carac = "deftness";
+          item.use.skill = "armeafeu";
+          console.log('RANGE');
+          break;
+        case 'arme_explo':
+          item.type = "arme_explosive"
+          item.use.carac = "deftness";
+          item.use.skill = "armedejet";
+          console.log('EXPLO');
+          break;
+        default:
+          // console.log(`Sorry, we are out of ${expr}.`);
+      }
+      context.item.update({'system': item});
+      // html.find(".data-skill")[0].value = item.use.skill;
+      // html.find(".data-carac")[0].value = item.use.carac;
+    }
+
     //SKILL PART
     if(itemType == "skill"){
       context.caracteristics = {}
@@ -74,7 +108,7 @@ export class zcorpsItemSheet extends ItemSheet {
 	};
 	
 	//Diff dans l'affichage des items de type arme
-	console.info(context)
+	// console.info(context)
 	context.affichageArme = true;
 	if (context.data.type == "arme_melee"){
 		context.affichageArme = false;

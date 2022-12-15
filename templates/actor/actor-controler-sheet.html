@@ -26,9 +26,48 @@
           <span>{{attributes.pseudo}}</span>
         {{/if}}
       </div>
+
+      <div class="info">
+        <label for="age">{{localize 'ZCORPS.attributes.age'}} :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="number"/>
+        {{else}}
+          <span>{{attributes.physical.age}}</span>
+        {{/if}}
+    </div>
+    <div class="info">
+        <label for="height">{{localize 'ZCORPS.attributes.height'}} :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="number"/>
+        {{else}}
+          <span>{{attributes.physical.height}}</span>
+        {{/if}}
+    </div>
+    
+    <div class="info">
+        <label for="weight">{{localize 'ZCORPS.attributes.weight'}} :</label>
+        {{#if actor.editSheet}}
+          <input name="data.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="number"/>
+        {{else}}
+          <span>{{attributes.physical.weight}}</span>
+        {{/if}}
+    </div>
+    
+    <div class="info">
+        <label for="gender">{{localize 'ZCORPS.attributes.gender'}} :</label>
+        {{#if actor.editSheet}}
+          <select name="data.attributes.physical.gender" id="data.attributes.physical.gender">
+            {{#select attributes.physical.gender}}
+            {{selectOptions genderType selected=value nameAttr=key}}
+            {{/select}}
+          </select>
+        {{else}}
+          <span>{{attributes.physical.gender}}</span>
+        {{/if}}
+      </div>
+
       <div class="info">
         <label for="mouvement">Mouvement</label>
-        
         <span>{{attributes.movement}} m</span>
       </div>
       <div class="info">
@@ -82,7 +121,7 @@
     <a class="item" data-tab="combat">Combat</a>
     <a class="item" data-tab="assets">Equipements</a>
 
-    <a class="item" data-tab="config">Config</a>
+    <!-- <a class="item" data-tab="config">Config</a> -->
 
   </nav>
   <section class="sheet-body">
