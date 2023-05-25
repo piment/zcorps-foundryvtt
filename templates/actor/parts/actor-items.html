@@ -1,64 +1,160 @@
 <table>
-  <caption>ARMES A FEU</caption>
-    <thead>
-      <tr>
-        <th>Tirer</th>
+	<caption>ARMES</caption>
+	<thead>
+<!--         <th>Taper</th> -->
+		<tr>
+		<th>Equiper</th>
         <th>Arme</th>
-        <th>Munitions</th>
-        <th>Portée</th>
         <th>Dégats</th>
         <th>Jeter</th>
-      </tr>
-    </thead>
+		</tr>
+	</thead>
     <tbody>
-      {{#each arme as |item id|}}
-      <tr class="item" data-item-id="{{item._id}}">
-        <td><a class="rollable" data-roll-type="arme" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></td>
+<!--     CAC -->
+      {{#each arme.cac as |item id|}}
+      <tr class="item" data-item_id="{{item._id}}">
+		<td>
+         {{#if item.system.equipe}}
+     	 <a class="item-toggle"><i class="far fa-check-circle"></i></a>
+     	 {{else}}
+    	  <a class="item-toggle"><i class="far fa-circle"></i></a>
+	      {{/if}}
+		</td>
         <td>{{item.name}}</td>
-        <td>{{item.data.ammo-actual}} / {{item.data.ammo-max}} <i class="fas fa-redo-alt"></i></td>
-        <td>{{item.data.range.short}} / {{item.data.range.middle}} / {{item.data.range.long}}</td>
-        <td>{{item.data.dammage}} <a class="rollable" data-roll-type="dammage" data-label="{{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a></td>
+        <td>{{#if item.system.damage.More}}+{{/if}}{{item.system.damage.CodeD}}D+{{item.system.damage.Tier}}
+<!--         <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a> -->
+        </td>
         <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
       </tr>
       {{/each}}
-    </tbody>
-  </table>
+<!--       RANGE  -->
+      {{#each arme.range as |item id|}}
+      <tr class="item" data-item_id="{{item._id}}">
+ 		<td>
+         {{#if item.system.equipe}}
+     	 <a class="item-toggle"><i class="far fa-check-circle"></i></a>
+     	 {{else}}
+    	  <a class="item-toggle"><i class="far fa-circle"></i></a>
+	      {{/if}}
+		</td>
+        <td>{{item.name}}</td>
+        <td>{{#if item.system.damage.More}}+{{/if}}{{item.system.damage.CodeD}}D+{{item.system.damage.Tier}}
+<!--         <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a> -->
+        </td>
+        <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
+      </tr>
+      {{/each}}
+<!--       ARME DE JET  -->
+      {{#each arme.jet as |item id|}}
+      <tr class="item" data-item_id="{{item._id}}">
+ 		<td>
+         {{#if item.system.equipe}}
+     	 <a class="item-toggle"><i class="far fa-check-circle"></i></a>
+     	 {{else}}
+    	  <a class="item-toggle"><i class="far fa-circle"></i></a>
+	      {{/if}}
+		</td>
+        <td>{{item.name}}</td>
+        <td>{{#if item.system.damage.More}}+{{/if}}{{item.system.damage.CodeD}}D+{{item.system.damage.Tier}}
+<!--         <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a> -->
+        </td>
+        <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
+      </tr>
+      {{/each}}
+<!--       EXPLO  -->
+      {{#each arme.explo as |item id|}}
+      <tr class="item" data-item_id="{{item._id}}">
+		<td>
+         {{#if item.system.equipe}}
+     	 <a class="item-toggle"><i class="far fa-check-circle"></i></a>
+     	 {{else}}
+    	  <a class="item-toggle"><i class="far fa-circle"></i></a>
+	      {{/if}}
+		</td>
+        <td>{{item.name}}</td>
+        <td>{{#if item.system.damage.More}}+{{/if}}{{item.system.damage.CodeD}}D+{{item.system.damage.Tier}}
+<!--         <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a> -->
+        </td>
+        <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
+      </tr>
+      {{/each}}
+          </tbody>
+</table>
+
   <table class="item-list">
     <caption>MUNITIONS</caption>
       <thead>
         <tr>
           <th>Type</th>
           <th>Quantité</th>
-          <th>edit</th>
+          <th>Edit</th>
         </tr>
       </thead>
       <tbody>
        
         {{#each ammo as |item id|}}
-        <tr class="item" data-item-id="{{item._id}}">
+        <tr class="item" data-item_id="{{item._id}}">
           <td>{{item.name}}</td>
-          <td>{{item.data.quantity}}</td>
-          <td><a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
+          <td>{{item.system.quantity}}</td>
+          <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+              <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
         </tr>
         {{/each}}
       </tbody>
     </table>
-  <!-- {{#each arme as |item id|}}
-    <li class="item flexrow" data-item-id="{{item._id}}">
-      <div class="item-name" style="color: white;">
-        <div><a class="rollable" data-roll-type="item" data-label="{{item.name}}" data-roll="{{getSkillValuefromActor ../caracs item.data.carac item.data.skill}}"><i class="fas fa-dice-d6"></i></a></div>
-        <div class="item-image">
-         <img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/>
-        </div>
-        <h4>{{item.name}}</h4>
-      </div>
-      <div>{{item.data.ammo-actual}} / {{item.data.ammo-max}}</div>
-      <div>{{item.data.range.short}} / {{item.data.range.middle}} / {{item.data.range.long}}</div>
-      <div>{{item.data.dammage}} <a class="rollable" data-roll-type="dammage" data-label="{{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a></div>
-      <div class="item-controls">
-        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-      </div>
-    </li>
-  {{/each}} -->
+  <table class="item-list">
+    <caption>Protection</caption>
+      <thead>
+        <tr>
+		  <th>Equipé</th>
+          <th>Type</th>
+          <th>Protection</th>
+          <th>Emplacement</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+       
+        {{#each gear as |item id|}}
+        <tr class="item" data-item_id="{{item._id}}">
+		  <td>
+            {{#if item.system.equipe}}
+     	    <a class="item-toggle"><i class="far fa-check-circle"></i></a>
+     	    {{else}}
+    	    <a class="item-toggle"><i class="far fa-circle"></i></a>
+	        {{/if}}
+		  </td>
+		  <td>{{item.name}}</td>
+          <td>{{#if item.system.protection.PUI}}+{{/if}}{{item.system.protection.CodeD}}D+{{item.system.protection.Tier}}</td>
+          <td>{{item.system.emplacement}}</td>
+          <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+              <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    
+    <table>
+    	<caption>Autre items</caption>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Nom</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each otherItem as |item id|}}
+        <tr class="item" data-item_id="{{item._id}}">
+          <td>{{item.type}}</td>
+          <td>{{item.name}}</td>
+          <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+              <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>

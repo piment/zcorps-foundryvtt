@@ -23,18 +23,32 @@
           <label for="data.dammage">Dégats</label>
           <input type="text" name="data.dammage" value="{{data.dammage}}" />
         </div>
+    	{{#if affichageArme }}
         <div class="category-element">
           <label for="ammo-actual">Munitions actuelles</label>
-          <input type="text" name="data.ammo-actual" value="{{data.ammo-actual}}" />
+          <input type="number" name="data.ammo-actual" value="{{data.ammo-actual}}" />
         </div>
         <div class="category-element">
           <label for="ammo-max">Munitions Max</label>
-          <input type="text" name="data.ammo-max" value="{{data.ammo-max}}" />
+          <input type="number" name="data.ammo-max" value="{{data.ammo-max}}" />
         </div>
+		{{/if}}
       </div>
+	{{#if affichageArme }}
+      <div>
+          <label for="ammo-type">Type Munitions</label>
+          <select name="data.ammo-type" id="data.ammo-type" class="arme-type">
+            {{#select data.ammo-type}}
+            {{selectOptions munType selected=value nameAttr=key}}
+            {{/select}}
+          </select>
+      </div>
+	{{/if}}
       
       (Attribut : {{data.carac}} / Compétence : {{data.skill}})
+      
     </div>
+    {{#if affichageArme }}
     <div class="category">
       <div class="category-title">Portée</div>
       <div class="category-body">
@@ -52,12 +66,11 @@
         </div>
       </div>
     </div>
-    
-
+	{{/if}}
     
     <div class="hidden">
-      <input type="text" name="data.skill" value="{{data.skill}}" class="data-skill"  />
-      <input type="text" name="data.carac" value="{{data.carac}}" class="data-carac"  />
+      <input type="hidden" name="data.skill" value="{{data.use.skill}}" class="data-skill"  />
+      <input type="hidden" name="data.carac" value="{{data.use.carac}}" class="data-carac"  />
     </div>
       
     

@@ -1,15 +1,15 @@
 {
     "name": "zcorps",
-    "title": "Z-Corps - FR (non-officiel)",
+    "title": "Z-Corps - FR (non-officiel) (dev_draurt)",
     "description": "Système de jeu FoundryVTT pour Z-Corps - FR (non-officiel)",
     "author": "Romain MURA",
     "authors": [],
     "url": "https://github.com/piment/zcorps-foundryvtt",
     "license": "LICENSE.txt",
     "flags": {},
-    "version": "0.0.9",
-    "minimumCoreVersion": "0.8.6",
-    "compatibleCoreVersion": "9",
+    "version": "0.0.10",
+    "minimumCoreVersion": "9",
+    "compatibleCoreVersion": "10",
     "scripts": [],
     "esmodules": [
         "module/zcorps.mjs"
@@ -31,7 +31,6 @@
     ],
     "packs": [],
     "system": [],
-    "dependencies": [],
     "socket": false,
     "manifest": "https://github.com/piment/zcorps-foundryvtt/releases/latest/download/system.json",
     "download": "https://github.com/piment/zcorps-foundryvtt/releases/download/0.0.9/archive.zip",

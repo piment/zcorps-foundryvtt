@@ -33,7 +33,16 @@ Hooks.once('init', async function() {
     hint: `Points de personnage maximum utilisable par jet de dé`,
     onChange: value => game.settings.set("zcorps", "XPPointPerRollMax", value)
   });
- 
+  game.settings.register("zcorps", "CompMaxNewPerso", {
+    name: `Compétences à la création de personnage`,
+    default: "12",
+    type: String,
+    scope: 'world',
+    config: true,
+    hint: `Nombre de compétences maximum pouvant être apprise à la création de personnage`,
+    onChange: value => game.settings.set("zcorps", "CompMaxNewPerso", value)
+  });
+  
   // Add custom constants for configuration.
   CONFIG.ZCORPS = ZCORPS;
   CONFIG.debug.hooks = false;
@@ -42,9 +51,10 @@ Hooks.once('init', async function() {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: "1d20",
+    formula: "@caracs.agility.roll",
     decimals: 2
   };
+//  console.info(CONFIG.Combat.initiative)
 
   // Define custom Document classes
   CONFIG.Actor.documentClass = zcorpsActor;
@@ -92,8 +102,15 @@ Handlebars.registerHelper('showTotalForSkill', function(str) {
 Handlebars.registerHelper("getSkillValuefromActor", (caracs, carac, skill) => {
   //console.log("get skill value");
   //console.log(caracs[carac].skills[skill].total);
-  const value = `${caracs[carac].skills[skill].total}D+${caracs[carac].skills[skill].tier}`;
-  return value;
+//  const value = `${caracs[carac].skills[skill].total}D+${caracs[carac].skills[skill].tier}`;
+//  console.info(caracs, carac, skill)
+    var value = ""
+    if(carac && skill){
+      value = `${caracs[carac].skills[skill].formula}`;
+    }else{
+      value = ""
+    }
+      return value;
 });
 
 Handlebars.registerHelper("getHealthStatus", level => {
@@ -168,22 +185,25 @@ Hooks.once("ready", async function() {
 });
 
 Hooks.on("renderPlayerList", async function(playerList, html) {
-  
-  if(game.user.data.role == 4){
+  if(game.user.role == 4){
     const loggedInUser = html.find(`[data-user-id="${game.userId}"]`);
     const tooltip = game.i18n.localize('ZCORPS.gamemaster.title');
-    loggedInUser.append(`<button type="button" class="gamemaster_button flex0" title="${tooltip}"><i class="fas fa-dungeon"></i></button>`);
+    loggedInUser.append(`<button type="button" class="gamemaster_button flex0 gm_tool" title="${tooltip}"><i class="fas fa-dungeon"></i></button>`);
+    loggedInUser.append(`<button type="button" class="gamemaster_button flex0 gm_infect" title="${tooltip}"><i class="fas fa-radiation"></i></button>`);
 
-    html.on('click', '.gamemaster_button', event => {
-      openGamemasterToolsDialog();
+    html.on('click', '.gm_tool', event => {
+      openGamemasterToolsDialog("tools");
     });
+    html.on('click', '.gm_infect', event => {
+      openGamemasterToolsDialog("infect");
+    });
+
   }
   
   
 });
 
 Hooks.on("renderDialog", (dialog, id, context) => {
-  
   if(document.querySelector(".gamemaster_tools_dialog")) {
     document.querySelectorAll('.gm_validate_value').forEach(el =>{
       el.addEventListener("click", ev => {
@@ -191,37 +211,69 @@ Hooks.on("renderDialog", (dialog, id, context) => {
         const actor_id = ev.target.parentNode.children[0].dataset.actor_id;
         const value = ev.target.parentNode.children[0].dataset.value;
         const actor = game.actors.get(actor_id);
-        console.log(input_value, actor_id, value, actor);
-        actor.data.data.attributes[value].value = parseInt(actor.data.data.attributes[value].value) + parseInt(input_value);;
-        actor.data.data.attributes[value].total = parseInt(actor.data.data.attributes[value].total) + parseInt(input_value);
-        actor.update({data: actor.data.data});
+//        console.log(input_value, actor_id, value, actor);
+        actor.system.attributes[value].value = parseInt(actor.system.attributes[value].value) + parseInt(input_value);;
+        actor.system.attributes[value].total = parseInt(actor.system.attributes[value].total) + parseInt(input_value);
+        actor.update({data: actor.system});
         ev.target.parentNode.children[0].value = 0;
       })
     });
-    document.querySelector(".gm_add_skill").addEventListener("click", async ev => {
-      ev.preventDefault();
-      const table = document.querySelector("#addSkillToActor");
-      const actorId = table.querySelector("#selectedActorForCarac").value;
-      const caracteristic = table.querySelector("#caracteristic").value;
-      const skill = table.querySelector("#skillToAdd").value;
-      const actor = game.actors.get(actorId);
-      console.log(actorId, caracteristic, skill, actor);
-      table.querySelector("#skillToAdd").value = "";
-      await actor.addSkillToActor({caracteristic: caracteristic, id: skill.toLowerCase().replace(" ", "_"), name: skill})
-      
-    });
-    document.querySelector(".gm_add_spec").addEventListener("click", async ev => {
-      ev.preventDefault();
-      const actorId = ev.target.parentNode.querySelector(".actor_name").dataset.actor_id;
-      const skill = ev.target.parentNode.querySelector("#skill").value;
-      const caracteristic = ev.target.parentNode.querySelector("#skill").options[ev.target.parentNode.querySelector("#skill").selectedIndex].dataset.caracteristic;
-      const spec = ev.target.parentNode.querySelector("#specToAdd").value;
-      const actor = game.actors.get(actorId);
-      ev.target.parentNode.querySelector("#specToAdd").value = "";
-      await actor.addSpecToSkill(spec, skill, caracteristic);
-      
-    })
-  }
+    if (document.querySelector(".gm_tools")){
+	    document.querySelector(".gm_add_skill").addEventListener("click", async ev => {
+	      ev.preventDefault();
+	      const table = document.querySelector("#addSkillToActor");
+	      const actorId = table.querySelector("#selectedActorForCarac").value;
+	      const caracteristic = table.querySelector("#caracteristic").value;
+	      const skill = table.querySelector("#skillToAdd").value;
+	      const actor = game.actors.get(actorId);
+//	      console.log(actorId, caracteristic, skill, actor);
+	      table.querySelector("#skillToAdd").value = "";
+	      await actor.addSkillToActor({caracteristic: caracteristic, id: skill.toLowerCase().replace(" ", "_"), name: skill})
+	      
+	    });
+	    document.querySelector(".gm_add_spec").addEventListener("click", async ev => {
+	      ev.preventDefault();
+	      const actorId = ev.target.parentNode.querySelector(".actor_name").dataset.actor_id;
+	      const skill = ev.target.parentNode.querySelector("#skill").value;
+	      const caracteristic = ev.target.parentNode.querySelector("#skill").options[ev.target.parentNode.querySelector("#skill").selectedIndex].dataset.caracteristic;
+	      const spec = ev.target.parentNode.querySelector("#specToAdd").value;
+	      const actor = game.actors.get(actorId);
+	      ev.target.parentNode.querySelector("#specToAdd").value = "";
+	      await actor.addSpecToSkill(spec, skill, caracteristic);
+	    });
+	}else if (document.querySelector(".gm_infect")){
+	    document.querySelectorAll(".gm_add_infect").forEach(el =>{el.addEventListener("click", async ev => {
+	      ev.preventDefault();
+//	      console.info(ev.target.parentNode.parentNode.parentNode)
+		  const cont = ev.target.parentNode.parentNode.parentNode
+	      const actorId  = cont.querySelector(".actor_name").dataset.actor_id;
+	      const pourcent = cont.querySelector("#infectPourcentToAdd_"+actorId).value;
+	      const time     = cont.querySelector("#infectTimeToAdd_"+actorId).value;
+	      const infect = {pourcent: pourcent, time:time}
+	      const actor = game.actors.get(actorId);
+	      cont.querySelector("#infectPourcentToAdd_"+actorId).value = 0;
+	      cont.querySelector("#infectTimeToAdd_"+actorId).value = 0;
+	      await actor.addInfect(infect);
+	      openGamemasterToolsDialog("infect");
+		  const dialog = document.getElementById("InfectFormGm").parentNode.parentNode.parentNode;
+	      dialog.parentNode.removeChild(dialog)
+	    });
+	   })
+	    document.querySelectorAll(".gm_supp_infect").forEach(el =>{el.addEventListener("click", async ev => {
+	      ev.preventDefault();
+		  const cont = ev.target.parentNode.parentNode.parentNode.parentNode
+      console.info(cont);
+	      const actorId  = cont.querySelector(".actor_name").dataset.actor_id;
+	      const infect = ev.target.parentNode.dataset.key ;
+	      const actor = game.actors.get(actorId);
+	      await actor.deleteInfect(infect);
+	      openGamemasterToolsDialog("infect");
+	      // console.info(document.getElementById("InfectFormGm"))
+	      const dialog = document.getElementById("InfectFormGm").parentNode.parentNode.parentNode;
+	      dialog.parentNode.removeChild(dialog)
+	    });
+	   })
+  }}
 
   if(document.querySelector(".formula_bonus")) {
     const formula_bonus_input = document.querySelector(".formula_bonus")
@@ -237,35 +289,36 @@ Hooks.on("renderDialog", (dialog, id, context) => {
     })
   })
   }
-  
 });
 
 Hooks.on("renderChatMessage", (msg, html, data) => {
   //Type 5 = Roll
-  if(msg.data.type == 5) {
+  if(msg.type == 5) {
     const message = html.find(`[data-message-id="${msg.id}"]`);
     message.prevObject[0].classList.add("actions-message");
 
     html.find(".rerollXP_btn").click(async ev => {
       ev.preventDefault();
+//      console.info('test0');
       const actor = game.actors.get(data.message.speaker.actor);
       const use_joker = ev.currentTarget.dataset.jokerUsed ? false : true;
       const use_xp = parseInt(ev.currentTarget.dataset.xpUsed);
       const xpFormula = await actor.reRoll(use_joker, use_xp, ev.currentTarget.dataset.label);
+//      console.info('test1');
       if(xpFormula) {
         const msgCard = document.querySelector(`[data-message-id="${msg.id}"]`);
         const btn = msgCard.querySelector(".rerollXP_btn");
         msgCard.querySelector(".rerollXP").removeChild(btn);
+//        console.info('test2');
       }
-      
     });
   }
 })
 
 Hooks.on("createItem", (item, info, tempData, actorId) => {
-  console.log("preCreateItem : ", item);
-  if(item.data.type === "skill"){
-    item.data.img = "systems/zcorps/ui/icons/vial-solid.svg";
+//  console.log("preCreateItem : ", item);
+  if(item.type === "skill"){
+    item.img = "systems/zcorps/ui/icons/vial-solid.svg";
   }
 })
 
@@ -327,33 +380,61 @@ function rollItemMacro(itemName) {
   return item.roll();
 }
 
-async function openGamemasterToolsDialog() {
-  const template = "systems/zcorps/templates/gamemaster/tools-dialog.hbs";
+async function openGamemasterToolsDialog(env) {
+  const template = "systems/zcorps/templates/gamemaster/"+env+"-dialog.hbs";
   const actors = getActorsList();
   const caracteristics = {};
   for(let [key, value] of Object.entries(ZCORPS.caracteristics)) {
     caracteristics[key] = game.i18n.localize(value);
   }
   
+  if(env == "infect"){
+  }else{
+  }
   const renderedTemplate = await renderTemplate(template, {actors: actors, caracteristics: caracteristics });
   const data = {
     title: game.i18n.localize('ZCORPS.gamemaster.title'),
-    content: renderedTemplate,
+    content: "<style>.gamemaster_tools_dialog{width:600px}</style>"+renderedTemplate,
     buttons: {}
-}
+  }
 
-new Dialog(data, {
-    with: 500,
-    classes: ["gamemaster_tools_dialog"],
-}).render(true);
+  new Dialog(data, {
+	width: "100px",
+	tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "" }],
+	classes: ["gamemaster_tools_dialog gm_"+env],
+    }).render(true);
 }
 
 function getActorsList() {
-  const actors = [];
-  game.actors.forEach(actor => {
-    if(actor.data.type == "survivor" || actor.data.type == "controler"){
-      actors.push({data: actor.data, skills: actor._getSkillsList()});
+	var actors = {};
+	actors["survivor"] = [];
+	actors["controler"] = [];
+//	actors["zombie"] = [];
+//	actors["npc"] = [];
+    game.actors.forEach(actor => {
+    if(actor.type == "survivor" || actor.type == "controler"){
+      // console.info(actor)
+      var Tinfect = 0
+      if("zcorps" in actor.flags && "addedInfect" in actor.flags.zcorps){
+      actor.flags.zcorps.addedInfect.forEach(infect =>{
+        Tinfect += Number(infect.pourcent)
+        })
+      }
+	    var color = "black";
+	    if (Tinfect <= 10){ color = "lightgreen"
+      }else if(Tinfect <= 20){ color = "yellow"
+      }else if(Tinfect <= 30){ color = "orange"
+      }else if(Tinfect <= 40){ color = "darkorange"
+      }else if(Tinfect < 49){ color = "lightcoral"
+      }else if(Tinfect >= 49){ color = "red"
+      }else{ color = "black"; }
+      actors[actor.type].push({actor: actor, infect: Tinfect, color: color});
     }
   });
+  // console.info(actors)
   return actors;
 }
+
+//var img = document.getElementById('logo')
+//img.style.display="none";
+//img.parentElement.removeChild(img)

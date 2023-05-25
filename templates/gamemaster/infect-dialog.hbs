@@ -1,0 +1,74 @@
+{{!-- This template is a fallback for when items don't have more specific templates. --}}
+{{!-- Generally, you'll want to make more specific templates when possible. --}}
+<form class="{{cssClass}}" autocomplete="off" id="InfectFormGm">
+  <header class="sheet-header">
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+  {{#each actors as |tp Ckey|}}
+    <a class="item" data-tab="{{Ckey}}">{{Ckey}}</a>
+  {{/each}}
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    {{#each actors as |tp Ckey|}}
+    <div class="tab active" data-group="primary" data-tab="{{Ckey}}">
+      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
+    <table>
+        <thead>
+            <tr>
+                <th>Personnage</th>
+                <th>Total %</th>
+                <th>%</th>
+                <th>Temps</th>
+                <th></th>
+            </tr>
+        </thead>
+        	<tr><th colspan=5>{{Ckey}}</th></tr>
+	        {{#each tp as |actor key|}}
+		        <tbody>
+		            <tr>
+		                <td class="actor_name" data-actor_id="{{actor.actor._id}}">{{actor.actor.name}}</td>
+		                <td style="text-align:center;color:black ;background-color:{{actor.color}}">
+		      				<span >{{actor.infect}}</span>
+		                </td>
+		                <td>
+		                    <div>
+		                        <input type="text" name="infectPourcentToAdd" id="infectPourcentToAdd_{{actor.actor._id}}" value="0" data-actor_id="{{actor.actor._id}}" data-value="infectPourcentToAdd"/>
+		                    </div>
+		                </td>
+		                <td>
+		                    <div>
+		                        <input type="text" name="infectTimeToAdd" id="infectTimeToAdd_{{actor.actor._id}}" value="0" data-actor_id="{{actor.actor._id}}" data-value="infectTimeToAdd"/>
+		                    </div>
+		                </td>
+		                <td>
+		                	<div>
+		                        <button class="gm_add_infect">+</button>
+		                	</div>
+		                </td>
+		            </tr>
+		        	{{#each actor.actor.flags.zcorps.addedInfect as |infect key|}}
+		            <tr>
+			              <td class="actor_name" data-actor_id="{{actor.actor._id}}"></td>
+			              <td></td>
+		            	  <td>{{infect.pourcent}}</td>
+		            	  <td>{{infect.time}}</td>
+		            	  <td><div><a class="gm_supp_infect" data-key="{{key}}"><i class="fas fa-trash"></i></button></a></td>
+		            </tr>
+	    	        {{/each}}
+		        </tbody>
+	        {{/each}}
+    </table>
+    </div>
+    {{/each}}
+    {{!-- Attributes Tab --}}
+    <div class="tab attributes" data-group="primary" data-tab="t1">
+      {{!-- As you add new fields, add them in here! --}}
+    </div>
+  </section>
+</form>

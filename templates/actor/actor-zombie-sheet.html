@@ -1,0 +1,85 @@
+<form class="{{cssClass}} {{actor.type}} flexcol characSheet" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <button class="edit-sheet-btn"><i class="fas fa-pencil-alt"></i></button>
+    <div class="header-block profile flex0">
+      <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+      <h1>
+        {{#if actor.editSheet}}
+          <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+        {{else}}
+          {{actor.name}}
+        {{/if}}
+      </h1>
+    </div>
+    <div class="header-block character-infos flex1">
+      <div class="info">
+        <label for="mouvement">Mouvement</label>
+        
+        <span>{{attributes.movement}} m</span>
+      </div>
+      <div class="info">
+        <label class="info-title-sm" for="dammageBonus">Bonus aux dégâts</label>
+        <span>{{attributes.dammageBonus}}D &nbsp;&nbsp;<a class="rollable" data-roll="{{attributes.dammageBonus}}D+0" data-label="Bonus aux dégâts"> <i class="fas fa-dice-d6"></i></a></span>
+      </div>
+      <div class="level">
+        <span class="level-title">{{localize 'ZCORPS.attributes.injuriesLevel'}}</span>
+        <select name="data.attributes.health" class="healthAndStressLevel">
+          {{#select data.attributes.health}}
+           {{selectOptions healthLevel selected=value attr=key}}
+          {{/select}}
+        </select>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    {{!-- Default tab is specified in actor-sheet.mjs --}}
+    <a class="item" data-tab="features">Fiche de Perso</a>
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="combat">Combat</a>
+    <a class="item" data-tab="assets">Equipements</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    {{!-- Owned Features Tab --}}
+    <div class="tab features caracteristics" data-group="primary" data-tab="features">
+      <section class="grid grid-1col" style="margin-top:0;">
+        {{> "systems/zcorps/templates/actor/parts/actor-caracs.html"}}
+
+      </section>
+    </div>
+  </section>
+
+    {{!-- Biography Tab --}}
+    <div class="tab biography" data-group="primary" data-tab="description">
+      {{> "systems/zcorps/templates/actor/parts/actor-description.html"}}
+    </div>
+
+    {{!-- Combat Tab --}}
+    <div class="tab combat" data-group="primary" data-tab="combat">
+      <div>
+          {{> "systems/zcorps/templates/actor/parts/actor-combat.html"}}
+      </div>
+    </div>
+
+    {{!-- Owned Items Tab --}}
+    <div class="tab assets" data-group="primary" data-tab="assets">
+    	<div style="display:grid; grid-template-columns: 1fr 3fr;">
+    	<div>
+    		<textarea style="height: 550px;resize: none; color: white;border:solid white 1px" name="data.attributes.inventaire">{{data.attributes.inventaire}}</textarea>
+    	</div>
+    	<div>
+	       {{> "systems/zcorps/templates/actor/parts/actor-items.html"}}
+    	</div>
+    	</div>
+    </div>
+
+    
+
+  </section>
+</form>
+

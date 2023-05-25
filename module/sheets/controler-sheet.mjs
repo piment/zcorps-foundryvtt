@@ -37,7 +37,6 @@ export class zcorpsControlerSheet extends ActorSheet {
         // sheets are the actor object, the data object, whether or not it's
         // editable, the items array, and the effects array.
         const context = super.getData();
-
         // Use a safe clone of the actor data for further operations.
         const actorData = this.actor.data.toObject(false);
         // Add the actor's data to context.data for easier access, as well as flags.
@@ -124,6 +123,8 @@ export class zcorpsControlerSheet extends ActorSheet {
         const ammo = [];
         const skills = [];
         const specialisations = [];
+        
+        console.info('test')
 
         // Iterate through items, allocating to containers
         for (let i of context.items) {
@@ -282,7 +283,7 @@ export class zcorpsControlerSheet extends ActorSheet {
             //If skill modified is an added skill (item), we update the item directly
             if (tier.dataset.id) {
                 const item = this.actor.items.get(tier.dataset.id);
-                const itemSkillValues = item.data.data.tiers;
+                const itemSkillValues = item.system.tiers;
                 if (tierValue == 0) {
                     itemSkillValues.skill_1 = 0;
                     itemSkillValues.skill_2 = 0;
@@ -297,18 +298,18 @@ export class zcorpsControlerSheet extends ActorSheet {
             }
             //Else we uptdate the actor data
             else {
-              console.log(this.actor.data.data.caracs);
+              console.log(this.actor.system.caracs);
                 const tiersData = {
                     value: tierValue,
                     carac: {
                         name: tier.dataset.carac,
-                        array: this.actor.data.data.caracs[tier.dataset.carac]
+                        array: this.actor.system.caracs[tier.dataset.carac]
                             .tiers,
                     },
                     skill: tier.dataset.skill
                         ? {
                               name: tier.dataset.skill,
-                              array: this.actor.data.data.caracs[
+                              array: this.actor.system.caracs[
                                   tier.dataset.carac
                               ].skills[tier.dataset.skill].tiers,
                           }
@@ -317,14 +318,14 @@ export class zcorpsControlerSheet extends ActorSheet {
                 const dataFormatted = this.actor._getFormattedTiersData(tiersData);
 
                 dataFormatted.skill
-                    ? (this.actor.data.data.caracs[tier.dataset.carac].skills[
+                    ? (this.actor.system.caracs[tier.dataset.carac].skills[
                           tier.dataset.skill
                       ].tiers = dataFormatted.skill.array)
-                    : (this.actor.data.data.caracs[tier.dataset.carac].tiers =
+                    : (this.actor.system.caracs[tier.dataset.carac].tiers =
                           dataFormatted.carac.array);
                 
             }
-            this.actor.update({ data: this.actor.data.data });
+            this.actor.update({ data: this.actor.system });
             this.actor.sheet.render(true);
         });
         // -------------------------------------------------------------
@@ -361,9 +362,9 @@ export class zcorpsControlerSheet extends ActorSheet {
             const hitsReceived = html.find("#hitsReceived")[0].value;
             let hitsLevel = this._getHitsLevel(parseInt(hitsReceived));
             if (hitsLevel <= hitsActual) {
-                this.actor.data.data.attributes.health++;
+                this.actor.system.attributes.health++;
             } else {
-                this.actor.data.data.attributes.health = hitsLevel;
+                this.actor.system.attributes.health = hitsLevel;
             }
             this.actor.sheet.render(true);
             html.find("#hitsReceived")[0].value = "";
@@ -377,12 +378,12 @@ export class zcorpsControlerSheet extends ActorSheet {
             const checkbox = ev.currentTarget;
             const checked = checkbox.classList.contains("checked");
 
-            if (this.actor.context.skillsOwned >= 12 && !checked) {
+            if (this.actor.context.skillsOwned >= game.settings.get("zcorps", "CompMaxNewPerso") && !checked) {
                 ui.notifications.warn(
-                    "Vous ne pouvez posséder que 12 compétences maximum!"
+                    "Vous ne pouvez posséder que "+game.settings.get("zcorps", "CompMaxNewPerso")+" compétences maximum!"
                 );
             } else {
-                this.actor.data.data.caracs[checkbox.dataset.carac].skills[
+                this.actor.system.caracs[checkbox.dataset.carac].skills[
                     checkbox.dataset.skill
                 ].owned = checkbox.classList.contains("checked");
                 checkbox.classList.toggle("checked");
@@ -395,7 +396,7 @@ export class zcorpsControlerSheet extends ActorSheet {
                         this.actor.context.skillsOwned - 1;
                 }
 
-                this.actor.data.data.caracs[checkbox.dataset.carac].skills[
+                this.actor.system.caracs[checkbox.dataset.carac].skills[
                     checkbox.dataset.skill
                 ].owned = checkbox.classList.contains("checked");
                 this.actor.sheet.render(true);

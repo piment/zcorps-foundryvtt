@@ -553,7 +553,7 @@
   -ms-flex-pack: center;
   justify-content: center;
   text-transform: uppercase;
-  width: 100%;
+  width: 70%;
 }
 
 .system-zcorps .chat-message.actions-message .chat-actions-card .dice {
@@ -897,8 +897,8 @@
   height: 30px;
   top: 29px;
   left: 0px;
-  background-color: #222;
-  border-radius: 0 0 2px 0;
+  background-color: #22222296;
+  border-radius: 0 0 40px 0;
 }
 
 .actor .window-content .sheet-header .edit-sheet-btn i {
@@ -923,13 +923,23 @@
 }
 
 .actor .window-content .sheet-body .tab {
-  background-color: #111;
+  background-color: #403a34;
 }
 
 .actor .window-content .sheet-body .caracteristics {
   margin: 0;
   padding: 0;
-  background-color: #111;
+  background-color: #403a34;
+}
+caption{
+	background-color:black;
+	font-weight:bold;
+}
+table{
+	margin:0;
+}
+.item td{
+	text-align:center;
 }
 
 .actor .window-content .sheet-body .caracteristics ul.caracteristics-block {
@@ -1323,9 +1333,9 @@ body {
   background-size: cover !important;
 }
 
-body:not(.background) {
+/*body:not(.background) {
   position: relative;
-}
+}*/
 
 .app.bonus .window-header {
   background-color: #681c1c;
@@ -1486,4 +1496,19 @@ button.gamemaster_button:hover {
 .item-skill .window-content form .form-group select:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+
+li.skill{
+	border-bottom: 1px solid white
+}
+.slt-bgd option{
+	background:black
+}
+
+
+input[type="number"].number{
+  width:50px;
+  color: white;
+  text-align: right;
 }

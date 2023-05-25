@@ -1,4 +1,33 @@
 {
+  "ACTOR.TypeSurvivor": "Survivant",
+  "ACTOR.TypeControler": "Contrôleur",
+  "ACTOR.TypeNpc": "PNJ",
+  "ACTOR.TypeZombie": "Zombie",
+
+  "TYPES.Actor.survivor": "Survivant",
+  "TYPES.Actor.controler": "Contrôleur",
+  "TYPES.Actor.npc": "PNJ",
+  "TYPES.Actor.zombie": "Zombie",
+
+  "ITEM.Typeitem": "Item",
+  "ITEM.TypeSkill": "Capacité",
+  "ITEM.TypeSpecialisation": "Spécialisation",
+  "ITEM.TypeArme_cac": "Arme de corps à corps",
+  "ITEM.TypeArme_range": "Arme à distance",
+  "ITEM.TypeArme_explo": "Explosif",
+  "ITEM.TypeAmmo": "Munition",
+  "ITEM.TypeArmor": "Armure",
+  "ITEM.TypeArme": "Arme (bientôt supprimer)",
+
+  "TYPES.Item.item": "Item",
+  "TYPES.Item.skill": "Capacité",
+  "TYPES.Item.specialisation": "Spécialisation",
+  "TYPES.Item.arme_cac": "Arme de corps à corps",
+  "TYPES.Item.arme_range": "Arme à distance",
+  "TYPES.Item.arme_explo": "Explosif",
+  "TYPES.Item.ammo": "Munition",
+  "TYPES.Item.armor": "Armure",
+  "TYPES.Item.arme": "Arme (bientôt supprimer)",
 
   "ZCORPS.EffectCreate": "Create Effect",
   "ZCORPS.EffectToggle": "Toggle Effect",
@@ -72,6 +101,7 @@
   
   "ZCORPS.attributes" : {
       "nickname": "Pseudo",
+      "carriere": "Carrière",
       "age": "Age",
       "height": "Taille",
       "weight": "Poids",

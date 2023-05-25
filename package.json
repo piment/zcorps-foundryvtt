@@ -14,7 +14,7 @@
   "author": "piment",
   "license": "MIT",
   "private": true,
-  "dependencies": {
+  "relationships.requires": {
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8",
     "gulp-sass": "^4",

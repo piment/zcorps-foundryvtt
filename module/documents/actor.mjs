@@ -18,10 +18,15 @@ export class zcorpsActor extends Actor {
     prepareBaseData() {
         // Data modifications in this step occur before processing embedded
         // documents or derived data.
-        const actorData = this.data;
-        const data = actorData.data;
-        const flags = actorData.flags.zcorps || {};
+        const actorData = this.system;
+        // console.info(actorData);
+//        const data = actorData.data;
+//        const flags = actorData.flags.zcorps || {};
     }
+
+	prepareFormuleInit(){
+//		console.info(this.data)
+	}
 
     /**
      * @override
@@ -33,9 +38,9 @@ export class zcorpsActor extends Actor {
      * is queried and has a roll executed directly from it).
      */
     prepareDerivedData() {
-        const actorData = this.data;
-        const data = actorData.data;
-        const flags = actorData.flags.zcorps || {};
+        const actorData = this.system;
+//        const data = actorData.data;
+//        const flags = actorData.flags.zcorps || {};
         
         // Make separate methods for each Actor type (character, npc, etc.) to keep
         // things organized.
@@ -46,11 +51,8 @@ export class zcorpsActor extends Actor {
      * Prepare Character type specific data
      */
     _prepareCharacterData(actorData) {
-        if (actorData.type == "survivor") {
-            const data = actorData.data;
-        }
-        if (actorData.type == "controler") {
-            const data = actorData.data;
+        if (actorData.type == "survivor" || actorData.type == "controler") {
+            const data = actorData.system;
         }
     }
 
@@ -70,7 +72,7 @@ export class zcorpsActor extends Actor {
      * Prepare character roll data.
      */
     _getCharacterRollData(data) {
-        if (this.data.type !== "character") return;
+        if (this.type !== "character") return;
 
         // Add level for easier access, or fall back to 0.
         if (data.attributes.level) {
@@ -149,8 +151,8 @@ export class zcorpsActor extends Actor {
           var finalFormula = standartRollFormula
         }
         if(bonus == "cojones") {
-          this.data.data.attributes.cojones.value -= 1;
-          this.update({ data: this.data.data });
+          this.system.attributes.cojones.value -= 1;
+          this.update({ system: this.system });
         }
         if(bonus){
           document.querySelectorAll(".bonus-icon").forEach((el) => {
@@ -159,7 +161,6 @@ export class zcorpsActor extends Actor {
         });
         }
         let roll = await new Roll(finalFormula, {}).roll();
-
         const results = this._parseRollResult(roll);
         
           const template = "systems/zcorps/templates/chat/actions.hbs";
@@ -174,7 +175,7 @@ export class zcorpsActor extends Actor {
           tier: results.tier,
           fail: results.fail,
           total_fail: results.total_fail,
-          actor: this.data,
+          actor: this,
           label: dataset.label,
           malus: malus,
           xp_used: used_xp ? used_xp : 0,
@@ -182,13 +183,14 @@ export class zcorpsActor extends Actor {
           stress : dataset.stress ? true : false,
           stressDifficulty : malus.stressDifficulty
           });
-        
-        
+
+        // console.info("test");
         const myMessage = await ChatMessage.create({
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           roll: roll,
-          user: this._id,
-          speaker: ChatMessage.getSpeaker({ actor: this }),
+//          user: this._id,
+//          speaker: ChatMessage.getSpeaker({ actor: this }),
+          speaker: game.user.name,
           content: templateRendered,
           rollMode: game.settings.get("core", "rollMode"),
         });
@@ -204,14 +206,14 @@ export class zcorpsActor extends Actor {
           xp: results.white,
           xp_joker: results.acid,
           total_xp: results.total_xp,
-          actor: this.data,
+          actor: this,
           label: label
         });
-        
-        const myMessage = await ChatMessage.create({
+      // console.info(this);
+      const myMessage = await ChatMessage.create({
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           roll: roll,
-          user: this._id,
+          // user: this._id,
           speaker: ChatMessage.getSpeaker({ actor: this }),
           content: templateRendered,
           rollMode: game.settings.get("core", "rollMode"),
@@ -222,9 +224,10 @@ export class zcorpsActor extends Actor {
     //######## ALWAYS USED? #######
     _getMalus(caracteristic) {
         const health = this._calculateHealthMalus(
-            this.data.data.attributes.health
+            this.system.attributes.health
         );
-        const stressTest = this._checkStressMalus(caracteristic, this.data.data.attributes.stress)
+        const stressTest = this._checkStressMalus(caracteristic, this.system.attributes.stress)
+        console.info(stressTest);
         return {
             health: health,
             stressValue: stressTest.value,
@@ -271,17 +274,20 @@ export class zcorpsActor extends Actor {
         {difficulty: 12, malus: {[knowledge]: 1, [agility]: 1, [deftness]: 1, [presence]: 1}},
         {difficulty: 12, malus: {[knowledge]: 1, [agility]: 2, [deftness]: 1, [presence]: 1, [perception]: 1}},
       ];
-      
-      if(malus[level].malus){
-        if(malus[level].malus[caracteristic]){
-          return {value: malus[level].malus[caracteristic], difficulty: malus[level].difficulty}
+      if(level){
+        if(malus[level].malus){
+          if(malus[level].malus[caracteristic]){
+            return {value: malus[level].malus[caracteristic], difficulty: malus[level].difficulty}
+          }
+          else {
+            return {value: 0, difficulty: malus[level].difficulty};
+          }
         }
         else {
           return {value: 0, difficulty: malus[level].difficulty};
         }
-      }
-      else {
-        return {value: 0, difficulty: malus[level].difficulty};
+      }else{
+        return {value: 0, difficulty: 8};
       }
     }
     //######## ############ #######
@@ -363,7 +369,7 @@ export class zcorpsActor extends Actor {
     async _bonusRollFormula(joker, used) {
         
         const template = `systems/zcorps/templates/actor/parts/bonusSelection.hbs`;
-        const available = this.data.data.attributes.xp.value;
+        const available = this.system.attributes.xp.value;
         const html = await renderTemplate(template, {
             available: available,
             limit: game.settings.get("zcorps", "XPPointPerRollMax") - used,
@@ -399,8 +405,8 @@ export class zcorpsActor extends Actor {
         if (!bonusValue) {
             return [false, 0];
         }
-        this.data.data.attributes.xp.value -= bonusValue;
-        this.update({ data: this.data.data });
+        this.system.attributes.xp.value -= bonusValue;
+        this.update({ data: this.system });
 
         if (joker) {
             var finalFormula = `${bonusValue - 1}D6[white] + 1D6x[bronze]`;
@@ -449,18 +455,47 @@ export class zcorpsActor extends Actor {
     }
     _getSkillsList(){
       let skills = {};
-      for(let [key, carac] of Object.entries(this.data.data.caracs)){
+      for(let [key, carac] of Object.entries(this.system.caracs)){
         for(let [key, skill] of Object.entries(carac.skills)){
           skills[key] = {name: skill.name, added: false, caracteristic: key};
         }
       }
-      if(this.data.flags.zcorps && this.data.flags.zcorps.addedSkill){
-        for(let [key, carac] of Object.entries(this.data.flags.zcorps.addedSkill)){
+      if(this.flags.zcorps && this.flags.zcorps.addedSkill){
+        for(let [key, carac] of Object.entries(this.flags.zcorps.addedSkill)){
           for(let [skillKey, skill] of Object.entries(carac)){
             skills[skillKey] = {name: skill.name, added: true, caracteristic: key};
           }
         }  
       }
       return skills;
+    }
+    
+    async addInfect(infect){
+//	const isEmpty = Object.keys(this.data.flags).length;
+//	if(isEmpty === 0){
+//		var fl = [];
+//		this.setFlag("zcorps", "addedInfect", fl);
+//	}
+	if("zcorps" in this.flags && "addedInfect" in this.flags.zcorps){
+		  var flag = this.flags.zcorps.addedInfect
+	}else{
+		flag = [];
+    }
+      const data = {
+        "pourcent": infect.pourcent,
+        "time": infect.time,
+      }
+      
+      flag.push(data)
+      this.setFlag("zcorps", "addedInfect", flag);
+    }
+    
+    async deleteInfect(infect){
+//	  console.info(this.data.flags.zcorps.addedInfect[infect])
+      var tabs = this.flags.zcorps.addedInfect
+	  tabs.splice(infect,1);
+	  
+      this.unsetFlag("zcorps", `addedInfect.${tabs}`);
+      this.setFlag("zcorps", "addedInfect", tabs)
     }
 }
