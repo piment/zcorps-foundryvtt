@@ -10,8 +10,8 @@
                   <div class="level-block-right">
                     
                     {{#if ../actor.editSheet}}
-                    <input class="setDice" type="text" name="data.caracs.{{caracId}}.value" value="{{carac.value}}" data-dtype="number"/>
-                    <input class="setDice" type="hidden" name="data.caracs.{{caracId}}.roll" value="{{carac.roll}}"/>
+                    <input class="setDice" type="text" name="system.caracs.{{caracId}}.value" value="{{carac.value}}" data-dtype="number"/>
+                    <input class="setDice" type="hidden" name="system.caracs.{{caracId}}.roll" value="{{carac.roll}}"/>
                     {{else}}
                     <div>{{carac.value}}D</div>
                     {{/if}}
@@ -45,7 +45,7 @@
                             {{#if skill.added}}
                               <input type="text" name="addedSkill" value="{{skill.value}}" class=" setDice addedSkill" data-carac="{{caracId}}" data-skill="{{skillId}}"/>
                             {{else}}
-                              <input class="setDice" type="text" name="data.caracs.{{caracId}}.skills.{{skillId}}.value" value="{{skill.value}}" data-dtype="number"/>
+                              <input class="setDice" type="text" name="system.caracs.{{caracId}}.skills.{{skillId}}.value" value="{{skill.value}}" data-dtype="number"/>
                             {{/if}}
                           {{else}}
                             <span>{{showTotalForSkill skill.total}}</span>

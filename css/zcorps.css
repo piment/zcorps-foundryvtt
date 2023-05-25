@@ -553,7 +553,7 @@
   -ms-flex-pack: center;
   justify-content: center;
   text-transform: uppercase;
-  width: 100%;
+  width: 70%;
 }
 
 .system-zcorps .chat-message.actions-message .chat-actions-card .dice {
@@ -1504,4 +1504,11 @@ li.skill{
 }
 .slt-bgd option{
 	background:black
+}
+
+
+input[type="number"].number{
+  width:50px;
+  color: white;
+  text-align: right;
 }

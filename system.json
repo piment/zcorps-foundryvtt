@@ -7,9 +7,9 @@
     "url": "https://github.com/piment/zcorps-foundryvtt",
     "license": "LICENSE.txt",
     "flags": {},
-    "version": "0.0.9",
-    "minimumCoreVersion": "0.8.6",
-    "compatibleCoreVersion": "9",
+    "version": "0.0.10",
+    "minimumCoreVersion": "9",
+    "compatibleCoreVersion": "10",
     "scripts": [],
     "esmodules": [
         "module/zcorps.mjs"

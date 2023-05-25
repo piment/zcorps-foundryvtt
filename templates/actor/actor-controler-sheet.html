@@ -120,8 +120,9 @@
     <a class="item" data-tab="desc">Description</a>
     <a class="item" data-tab="combat">Combat</a>
     <a class="item" data-tab="assets">Equipements</a>
-
-    <!-- <a class="item" data-tab="config">Config</a> -->
+    {{#if isGM }}
+    <a class="item" data-tab="config">Config</a>
+    {{/if}}
 
   </nav>
   <section class="sheet-body">
@@ -157,9 +158,13 @@
       </div>
     </div>
 
+    {{#if isGM }}
     <div class="tab config" data-group="primary" data-tab="config">
+      <div>
       {{> "systems/zcorps/templates/actor/parts/actor-configs.html"}}
+      </div>
     </div>
+    {{/if}}
   </section>
   
     {{!-- Sheet Body --}}

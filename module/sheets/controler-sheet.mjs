@@ -37,7 +37,6 @@ export class zcorpsControlerSheet extends ActorSheet {
         // sheets are the actor object, the data object, whether or not it's
         // editable, the items array, and the effects array.
         const context = super.getData();
-
         // Use a safe clone of the actor data for further operations.
         const actorData = this.actor.data.toObject(false);
         // Add the actor's data to context.data for easier access, as well as flags.
@@ -379,12 +378,12 @@ export class zcorpsControlerSheet extends ActorSheet {
             const checkbox = ev.currentTarget;
             const checked = checkbox.classList.contains("checked");
 
-            if (this.actor.context.skillsOwned >= 12 && !checked) {
+            if (this.actor.context.skillsOwned >= game.settings.get("zcorps", "CompMaxNewPerso") && !checked) {
                 ui.notifications.warn(
-                    "Vous ne pouvez posséder que 12 compétences maximum!"
+                    "Vous ne pouvez posséder que "+game.settings.get("zcorps", "CompMaxNewPerso")+" compétences maximum!"
                 );
             } else {
-                this.actor.data.data.caracs[checkbox.dataset.carac].skills[
+                this.actor.system.caracs[checkbox.dataset.carac].skills[
                     checkbox.dataset.skill
                 ].owned = checkbox.classList.contains("checked");
                 checkbox.classList.toggle("checked");
@@ -397,7 +396,7 @@ export class zcorpsControlerSheet extends ActorSheet {
                         this.actor.context.skillsOwned - 1;
                 }
 
-                this.actor.data.data.caracs[checkbox.dataset.carac].skills[
+                this.actor.system.caracs[checkbox.dataset.carac].skills[
                     checkbox.dataset.skill
                 ].owned = checkbox.classList.contains("checked");
                 this.actor.sheet.render(true);

@@ -3,7 +3,7 @@ import { zcorpsActor } from "./documents/actor.mjs";
 import { zcorpsItem } from "./documents/item.mjs";
 // Import sheet classes.
 import { zcorpsSurvivorSheet } from "./sheets/survivor-sheet.mjs";
-import { zcorpsControlerSheet } from "./sheets/controler-sheet.mjs";
+//import { zcorpsControlerSheet } from "./sheets/controler-sheet.mjs";
 import { zcorpsItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
@@ -33,7 +33,16 @@ Hooks.once('init', async function() {
     hint: `Points de personnage maximum utilisable par jet de dé`,
     onChange: value => game.settings.set("zcorps", "XPPointPerRollMax", value)
   });
- 
+  game.settings.register("zcorps", "CompMaxNewPerso", {
+    name: `Compétences à la création de personnage`,
+    default: "12",
+    type: String,
+    scope: 'world',
+    config: true,
+    hint: `Nombre de compétences maximum pouvant être apprise à la création de personnage`,
+    onChange: value => game.settings.set("zcorps", "CompMaxNewPerso", value)
+  });
+  
   // Add custom constants for configuration.
   CONFIG.ZCORPS = ZCORPS;
   CONFIG.debug.hooks = false;
@@ -54,7 +63,7 @@ Hooks.once('init', async function() {
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("zcorps", zcorpsSurvivorSheet, { makeDefault: true });
-  Actors.registerSheet("zcorps", zcorpsControlerSheet);
+  // Actors.registerSheet("zcorps", zcorpsControlerSheet);
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("zcorps", zcorpsItemSheet, { makeDefault: true });
 
@@ -203,9 +212,9 @@ Hooks.on("renderDialog", (dialog, id, context) => {
         const value = ev.target.parentNode.children[0].dataset.value;
         const actor = game.actors.get(actor_id);
 //        console.log(input_value, actor_id, value, actor);
-        actor.data.data.attributes[value].value = parseInt(actor.data.data.attributes[value].value) + parseInt(input_value);;
-        actor.data.data.attributes[value].total = parseInt(actor.data.data.attributes[value].total) + parseInt(input_value);
-        actor.update({data: actor.data.data});
+        actor.system.attributes[value].value = parseInt(actor.system.attributes[value].value) + parseInt(input_value);;
+        actor.system.attributes[value].total = parseInt(actor.system.attributes[value].total) + parseInt(input_value);
+        actor.update({data: actor.system});
         ev.target.parentNode.children[0].value = 0;
       })
     });
@@ -382,7 +391,6 @@ async function openGamemasterToolsDialog(env) {
   if(env == "infect"){
   }else{
   }
-  
   const renderedTemplate = await renderTemplate(template, {actors: actors, caracteristics: caracteristics });
   const data = {
     title: game.i18n.localize('ZCORPS.gamemaster.title'),

@@ -19,7 +19,7 @@ export class zcorpsActor extends Actor {
         // Data modifications in this step occur before processing embedded
         // documents or derived data.
         const actorData = this.system;
-        console.info(actorData);
+        // console.info(actorData);
 //        const data = actorData.data;
 //        const flags = actorData.flags.zcorps || {};
     }
@@ -189,7 +189,8 @@ export class zcorpsActor extends Actor {
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           roll: roll,
 //          user: this._id,
-          speaker: ChatMessage.getSpeaker({ actor: this }),
+//          speaker: ChatMessage.getSpeaker({ actor: this }),
+          speaker: game.user.name,
           content: templateRendered,
           rollMode: game.settings.get("core", "rollMode"),
         });

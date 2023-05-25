@@ -34,7 +34,15 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         // the context variable to see the structure, but some key properties for
         // sheets are the actor object, the data object, whether or not it's
         // editable, the items array, and the effects array.
+
         const context = super.getData();
+
+        console.info(context);
+        console.info(game.user)
+
+        context.isGM= game.user.isGM
+        console.info(context);
+
 
         // Use a safe clone of the actor data for further operations.
         const actorData = this.actor.toObject(false);
@@ -438,10 +446,9 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         html.find(".checkbox").click((ev) => {
             const checkbox = ev.currentTarget;
             const checked = checkbox.classList.contains("checked");
-
-            if (this.actor.context.skillsOwned >= 12 && !checked) {
+            if (this.actor.context.skillsOwned >= game.settings.get("zcorps", "CompMaxNewPerso") && !checked) {
                 ui.notifications.warn(
-                    "Vous ne pouvez posséder que 12 compétences maximum!"
+                    "Vous ne pouvez posséder que "+game.settings.get("zcorps", "CompMaxNewPerso")+" compétences maximum!"
                 );
             } else {
                 this.actor.system.caracs[checkbox.dataset.carac].skills[
@@ -564,32 +571,32 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 			const actor = this.actor;
 
 			const updates = [];
+			console.info(item)
+			var ammoType = item.system['ammo']['type']
 			
-			var ammoType = item.data.data['ammo']['type']
-			
-			var Mun = this.actor.items.filter(item => item.data.data.type == ammoType)
+			var Mun = this.actor.items.filter(item => item.system.type == ammoType)
 
-			var munManq = item.data.data['ammo']['max'] - item.data.data['ammo']['actual']
+			var munManq = item.system['ammo']['max'] - item.system['ammo']['actual']
 			console.info(ammoType)
 
 			for(var i = 0 ; Mun.length > i ; i++){
 				
-				munManq = item.data.data['ammo']['max'] - item.data.data['ammo']['actual']
+				munManq = item.system['ammo']['max'] - item.system['ammo']['actual']
 
 				var newMun = Mun[i];
 				
-				if(Mun[i].data.data.quantity > 0 && item.data.data['ammo']['actual'] < item.data.data['ammo']['max']){
-					if(Mun[i].data.data.quantity >= munManq){
-						item.data.data['ammo']['actual'] = item.data.data['ammo']['max'];
-						newMun.data.data.quantity = Mun[i].data.data.quantity - munManq
-					}else if (Mun[i].data.data.quantity < munManq){
-						item.data.data['ammo']['actual'] = Number(item.data.data['ammo']['actual']) + Number(Mun[i].data.data.quantity);
-						newMun.data.data.quantity = 0
+				if(Mun[i].system.quantity > 0 && item.system['ammo']['actual'] < item.system['ammo']['max']){
+					if(Mun[i].system.quantity >= munManq){
+						item.system['ammo']['actual'] = item.system['ammo']['max'];
+						newMun.system.quantity = Mun[i].system.quantity - munManq
+					}else if (Mun[i].system.quantity < munManq){
+						item.system['ammo']['actual'] = Number(item.system['ammo']['actual']) + Number(Mun[i].system.quantity);
+						newMun.system.quantity = 0
 					}
-					updates.push({_id: Mun[i].id , data: newMun.data.data});
+					updates.push({_id: Mun[i].id , data: newMun.system});
 				}
 			}
-			updates.push({_id: item.id, data: item.data.data});
+			updates.push({_id: item.id, data: item.system});
 			await Item.updateDocuments(updates, {parent: actor});
 			this.actor.sheet.render(true);
 		});
@@ -598,7 +605,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 			const itemNode = ev.currentTarget.parentNode.parentNode;
 			var item = this.actor.items.filter(item => item.id == itemNode.dataset.item_id)[0]
 			console.info(itemNode, item)
-			if(item.data.data.equipe){
+			if(item.system.equipe){
 				console.info(1)
 				item.update({"data.equipe": false})
 			}else{
@@ -656,7 +663,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                 const itemId = element.closest(".item").dataset.itemId;
                 //const item = this.actor.items.get(itemId);
                 const item = this.actor.getOwnedItem(itemId);
-                item.data.data.formula = "2d6";
+                item.system.formula = "2d6";
                 
                 if (item) return item.roll();
             } else if (dataset.rollType == "protection") {
@@ -667,7 +674,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
 	            if(dataset.roll.substring(0,1) == "+"){
 					var [d,t] = dataset.roll.split("D+");
 //					console.info(this.actor.data.data.caracs)
-					d = Number(this.actor.data.data.caracs.strength.value) + Number(d)
+					d = Number(this.actor.system.caracs.strength.value) + Number(d)
 					dataset.roll = d+"D+"+t
 				}
 //                console.info(tier)
@@ -691,13 +698,13 @@ export class zcorpsSurvivorSheet extends ActorSheet {
             } else if (dataset.rollType == "arme") {
                 const itemId = element.closest(".item").dataset['item_id'];
                 const item = this.actor.items.get(itemId);
-                if(item.data.data.type !== "arme_melee"){
-	                if (item.data.data['ammo']['actual'] <= 0) {
+                if(item.system.type !== "arme_melee"){
+	                if (item.system['ammo']['actual'] <= 0) {
 	                    ui.notifications.error("Pas assez de munitions");
 	                    return;
 	                }
-	                item.data.data['ammo']['actual'] = item.data.data['ammo']['actual'] - 1;
-	                item.update({"data.ammo.actual": item.data.data.ammo.actual })
+	                item.system['ammo']['actual'] = item.system['ammo']['actual'] - 1;
+	                item.update({"data.ammo.actual": item.system.ammo.actual })
                 }
 
                 let label = dataset.label ? `[Arme] ${dataset.label}` : "";

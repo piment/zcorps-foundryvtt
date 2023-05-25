@@ -14,14 +14,14 @@
       {{#each arme.cac as |item id|}}
       <tr class="item" data-item_id="{{item._id}}">
 		<td>
-         {{#if item.data.equipe}}
+         {{#if item.system.equipe}}
      	 <a class="item-toggle"><i class="far fa-check-circle"></i></a>
      	 {{else}}
     	  <a class="item-toggle"><i class="far fa-circle"></i></a>
 	      {{/if}}
 		</td>
         <td>{{item.name}}</td>
-        <td>{{#if item.data.damage.More}}+{{/if}}{{item.data.damage.CodeD}}D+{{item.data.damage.Tier}}
+        <td>{{#if item.system.damage.More}}+{{/if}}{{item.system.damage.CodeD}}D+{{item.system.damage.Tier}}
 <!--         <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a> -->
         </td>
         <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -32,14 +32,14 @@
       {{#each arme.range as |item id|}}
       <tr class="item" data-item_id="{{item._id}}">
  		<td>
-         {{#if item.data.equipe}}
+         {{#if item.system.equipe}}
      	 <a class="item-toggle"><i class="far fa-check-circle"></i></a>
      	 {{else}}
     	  <a class="item-toggle"><i class="far fa-circle"></i></a>
 	      {{/if}}
 		</td>
         <td>{{item.name}}</td>
-        <td>{{#if item.data.damage.More}}+{{/if}}{{item.data.damage.CodeD}}D+{{item.data.damage.Tier}}
+        <td>{{#if item.system.damage.More}}+{{/if}}{{item.system.damage.CodeD}}D+{{item.system.damage.Tier}}
 <!--         <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a> -->
         </td>
         <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -50,14 +50,14 @@
       {{#each arme.jet as |item id|}}
       <tr class="item" data-item_id="{{item._id}}">
  		<td>
-         {{#if item.data.equipe}}
+         {{#if item.system.equipe}}
      	 <a class="item-toggle"><i class="far fa-check-circle"></i></a>
      	 {{else}}
     	  <a class="item-toggle"><i class="far fa-circle"></i></a>
 	      {{/if}}
 		</td>
         <td>{{item.name}}</td>
-        <td>{{#if item.data.damage.More}}+{{/if}}{{item.data.damage.CodeD}}D+{{item.data.damage.Tier}}
+        <td>{{#if item.system.damage.More}}+{{/if}}{{item.system.damage.CodeD}}D+{{item.system.damage.Tier}}
 <!--         <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a> -->
         </td>
         <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -68,14 +68,14 @@
       {{#each arme.explo as |item id|}}
       <tr class="item" data-item_id="{{item._id}}">
 		<td>
-         {{#if item.data.equipe}}
+         {{#if item.system.equipe}}
      	 <a class="item-toggle"><i class="far fa-check-circle"></i></a>
      	 {{else}}
     	  <a class="item-toggle"><i class="far fa-circle"></i></a>
 	      {{/if}}
 		</td>
         <td>{{item.name}}</td>
-        <td>{{#if item.data.damage.More}}+{{/if}}{{item.data.damage.CodeD}}D+{{item.data.damage.Tier}}
+        <td>{{#if item.system.damage.More}}+{{/if}}{{item.system.damage.CodeD}}D+{{item.system.damage.Tier}}
 <!--         <a class="rollable" data-roll-type="dammage" data-label="Damage {{item.name}}" data-roll="{{item.data.dammage}}"><i class="fas fa-dice-d6"></i></a> -->
         </td>
         <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -99,7 +99,7 @@
         {{#each ammo as |item id|}}
         <tr class="item" data-item_id="{{item._id}}">
           <td>{{item.name}}</td>
-          <td>{{item.data.quantity}}</td>
+          <td>{{item.system.quantity}}</td>
           <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
               <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
         </tr>
@@ -122,15 +122,15 @@
         {{#each gear as |item id|}}
         <tr class="item" data-item_id="{{item._id}}">
 		  <td>
-            {{#if item.data.equipe}}
+            {{#if item.system.equipe}}
      	    <a class="item-toggle"><i class="far fa-check-circle"></i></a>
      	    {{else}}
     	    <a class="item-toggle"><i class="far fa-circle"></i></a>
 	        {{/if}}
 		  </td>
 		  <td>{{item.name}}</td>
-          <td>{{#if item.data.protection.PUI}}+{{/if}}{{item.data.protection.CodeD}}D+{{item.data.protection.Tier}}</td>
-          <td>{{item.data.emplacement}}</td>
+          <td>{{#if item.system.protection.PUI}}+{{/if}}{{item.system.protection.CodeD}}D+{{item.system.protection.Tier}}</td>
+          <td>{{item.system.emplacement}}</td>
           <td><a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
               <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a></td>
         </tr>
