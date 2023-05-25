@@ -17,7 +17,7 @@
       <div class="info">
         <label for="pseudo">{{localize 'ZCORPS.attributes.nickname'}} :</label>
         {{#if actor.editSheet}}
-          <input name="data.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="text"/>
+          <input name="system.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="text"/>
         {{else}}
           <span>{{attributes.pseudo}}</span>
         {{/if}}
@@ -25,14 +25,14 @@
       <div class="info">
         <label for="carriere">{{localize 'ZCORPS.attributes.carriere'}} :</label>
         {{#if actor.editSheet}}
-          <input name="data.attributes.carriere" type="text" value="{{attributes.carriere}}" placeholder="carriere" class="text"/>
+          <input name="system.attributes.carriere" type="text" value="{{attributes.carriere}}" placeholder="carriere" class="text"/>
         {{else}}
           <span>{{attributes.carriere}}</span>
         {{/if}}
       </div>      <div class="info">
         <label for="age">{{localize 'ZCORPS.attributes.age'}} :</label>
         {{#if actor.editSheet}}
-          <input name="data.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="number"/>
+          <input name="system.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="number"/>
         {{else}}
           <span>{{attributes.physical.age}}</span>
         {{/if}}
@@ -40,7 +40,7 @@
       <div class="info">
         <label for="height">{{localize 'ZCORPS.attributes.height'}} :</label>
         {{#if actor.editSheet}}
-          <input name="data.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="number"/>
+          <input name="system.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="number"/>
         {{else}}
           <span>{{attributes.physical.height}}</span>
         {{/if}}
@@ -48,7 +48,7 @@
       <div class="info">
         <label for="weight">{{localize 'ZCORPS.attributes.weight'}} :</label>
         {{#if actor.editSheet}}
-          <input name="data.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="number"/>
+          <input name="system.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="number"/>
         {{else}}
           <span>{{attributes.physical.weight}}</span>
         {{/if}}
@@ -56,7 +56,7 @@
       <div class="info">
         <label for="gender">{{localize 'ZCORPS.attributes.gender'}} :</label>
         {{#if actor.editSheet}}
-          <select name="data.attributes.physical.gender" id="data.attributes.physical.gender">
+          <select name="system.attributes.physical.gender" id="system.attributes.physical.gender">
             {{#select attributes.physical.gender}}
             {{selectOptions genderType selected=value nameAttr=key}}
             {{/select}}
@@ -78,50 +78,32 @@
     <div class="header-block levels">
       <div class="level">
         <span class="level-title">{{localize 'ZCORPS.attributes.injuriesLevel'}}</span>
-        <select name="data.attributes.health" class="healthAndStressLevel">
-          {{#select data.attributes.health}}
+        <select name="system.attributes.health" class="healthAndStressLevel">
+          {{#select attributes.health}}
            {{selectOptions healthLevel selected=value attr=key}}
           {{/select}}
         </select>
       </div>
       <div class="level">
         <span><span class="level-title">{{localize 'ZCORPS.attributes.stressLevel'}}</span> &nbsp;&nbsp;=>&nbsp;&nbsp; <a class="stressTest rollable" data-label="Test de résistance au stress" data-carac="Présence" data-stress="true" data-roll="{{caracs.presence.skills.volonte.formula}}"><i class="fas fa-dice-d6"></i></a></span>
-        <select name="data.attributes.stress" class="healthAndStressLevel">
-          {{#select data.attributes.stress}}
+        <select name="system.attributes.stress" class="healthAndStressLevel">
+          {{#select attributes.stress}}
            {{selectOptions stressLevel selected=value attr=key}}
           {{/select}}
         </select>
       </div>
       <div class="level">
-        <span class="level-title">Points de Personnage</span>
+        <!-- <span class="level-title">Points de Personnage</span> -->
         <div class="resource-content flexrow flex-center flex-between">
-        {{#if actor.editSheet}}
-        {{/if}}
-        {{#if 0 }}
-          <span><em>Restants : </em> <input name="data.attributes.xp.value" type="number" value="{{attributes.xp.value}}" class="number"/></span>
-          <span><em>Totaux : </em> <input name="data.attributes.xp.total" type="number" value="{{attributes.xp.total}}" placeholder="Poids" class="number"/></span>
-        {{else}}
-          <span><em>Restants : </em> {{data.attributes.xp.value}}</span>
-          <span><em>Totaux : </em> {{data.attributes.xp.total}}</span>
-        {{/if}}
+          <span class="level-title">Points de Personnage</span> :
+          <span>{{attributes.xp.value}} / {{attributes.xp.total}}</span>
           <span class="use-bonus flex0"><i id="bonus_xp" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
         </div>
       </div>
       <div class="level">
-        <span class="level-title">Points de Cojones</span>
         <div class="resource-content flexrow flex-center flex-between">
-        {{#if actor.editSheet}}
-        	{{#if gm }}
-    	      <span><em>Restants : </em> <input name="data.attributes.cojones.value" type="number" value="{{attributes.cojones.value}}" class="number"/></span>
-	          <span><em>Totaux : </em> <input name="data.attributes.cojones.total" type="number" value="{{attributes.cojones.total}}" placeholder="Poids" class="number"/></span>
-	        {{else}}
-          <span><em>Restants : </em> {{data.attributes.cojones.value}}</span>
-          <span><em>Totaux : </em> {{data.attributes.cojones.total}}</span>
-	        {{/if}}
-	        {{else}}
-          <span><em>Restants : </em> {{data.attributes.cojones.value}}</span>
-          <span><em>Totaux : </em> {{data.attributes.cojones.total}}</span>
-        {{/if}}
+          <span class="level-title">Points de Cojones</span> :
+          <span>{{attributes.cojones.value}} / {{attributes.cojones.total}}</span>
           <span class="use-bonus flex0"><i id="bonus_cojones" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
         </div>
       </div>
@@ -135,6 +117,9 @@
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="combat">Combat</a>
     <a class="item" data-tab="assets">Equipements</a>
+    {{#if isGM }}
+    <a class="item" data-tab="config">Config</a>
+    {{/if}}
   </nav>
 
   {{!-- Sheet Body --}}
@@ -149,9 +134,8 @@
     </div>
 
     {{!-- Biography Tab --}}
-    <div class="tab biography" data-group="primary" data-tab="description">
-      {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to the rollData property. --}}
-      {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner editable=editable}}
+    <div class="tab desc" data-group="primary" data-tab="description" style="padding:5px">
+      {{> "systems/zcorps/templates/actor/parts/actor-description.html"}}
     </div>
 
     {{!-- Combat Tab --}}
@@ -165,7 +149,7 @@
     <div class="tab assets" data-group="primary" data-tab="assets">
     	<div style="display:grid; grid-template-columns: 1fr 3fr;">
     	<div>
-    		<textarea style="height: 550px;resize: none; color: white;border:solid white 1px" name="data.attributes.inventaire">{{data.attributes.inventaire}}</textarea>
+    		<textarea style="height: 550px;resize: none; color: white;border:solid white 1px" name="system.attributes.inventaire">{{attributes.inventaire}}</textarea>
     	</div>
     	<div>
 	       {{> "systems/zcorps/templates/actor/parts/actor-items.html"}}
@@ -173,6 +157,13 @@
     	</div>
     </div>
 
+    {{#if isGM }}
+    <div class="tab config" data-group="primary" data-tab="config">
+      <div>
+      {{> "systems/zcorps/templates/actor/parts/actor-configs.html"}}
+      </div>
+    </div>
+    {{/if}}
     
 
   </section>

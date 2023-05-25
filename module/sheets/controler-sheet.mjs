@@ -283,7 +283,7 @@ export class zcorpsControlerSheet extends ActorSheet {
             //If skill modified is an added skill (item), we update the item directly
             if (tier.dataset.id) {
                 const item = this.actor.items.get(tier.dataset.id);
-                const itemSkillValues = item.data.data.tiers;
+                const itemSkillValues = item.system.tiers;
                 if (tierValue == 0) {
                     itemSkillValues.skill_1 = 0;
                     itemSkillValues.skill_2 = 0;
@@ -298,18 +298,18 @@ export class zcorpsControlerSheet extends ActorSheet {
             }
             //Else we uptdate the actor data
             else {
-              console.log(this.actor.data.data.caracs);
+              console.log(this.actor.system.caracs);
                 const tiersData = {
                     value: tierValue,
                     carac: {
                         name: tier.dataset.carac,
-                        array: this.actor.data.data.caracs[tier.dataset.carac]
+                        array: this.actor.system.caracs[tier.dataset.carac]
                             .tiers,
                     },
                     skill: tier.dataset.skill
                         ? {
                               name: tier.dataset.skill,
-                              array: this.actor.data.data.caracs[
+                              array: this.actor.system.caracs[
                                   tier.dataset.carac
                               ].skills[tier.dataset.skill].tiers,
                           }
@@ -318,14 +318,14 @@ export class zcorpsControlerSheet extends ActorSheet {
                 const dataFormatted = this.actor._getFormattedTiersData(tiersData);
 
                 dataFormatted.skill
-                    ? (this.actor.data.data.caracs[tier.dataset.carac].skills[
+                    ? (this.actor.system.caracs[tier.dataset.carac].skills[
                           tier.dataset.skill
                       ].tiers = dataFormatted.skill.array)
-                    : (this.actor.data.data.caracs[tier.dataset.carac].tiers =
+                    : (this.actor.system.caracs[tier.dataset.carac].tiers =
                           dataFormatted.carac.array);
                 
             }
-            this.actor.update({ data: this.actor.data.data });
+            this.actor.update({ data: this.actor.system });
             this.actor.sheet.render(true);
         });
         // -------------------------------------------------------------
@@ -362,9 +362,9 @@ export class zcorpsControlerSheet extends ActorSheet {
             const hitsReceived = html.find("#hitsReceived")[0].value;
             let hitsLevel = this._getHitsLevel(parseInt(hitsReceived));
             if (hitsLevel <= hitsActual) {
-                this.actor.data.data.attributes.health++;
+                this.actor.system.attributes.health++;
             } else {
-                this.actor.data.data.attributes.health = hitsLevel;
+                this.actor.system.attributes.health = hitsLevel;
             }
             this.actor.sheet.render(true);
             html.find("#hitsReceived")[0].value = "";

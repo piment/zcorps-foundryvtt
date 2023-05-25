@@ -21,7 +21,7 @@
       <div class="info">
         <label for="pseudo">{{localize 'ZCORPS.attributes.nickname'}} :</label>
         {{#if actor.editSheet}}
-          <input name="data.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="text"/>
+          <input name="system.attributes.pseudo" type="text" value="{{attributes.pseudo}}" placeholder="Pseudo" class="text"/>
         {{else}}
           <span>{{attributes.pseudo}}</span>
         {{/if}}
@@ -30,7 +30,7 @@
       <div class="info">
         <label for="age">{{localize 'ZCORPS.attributes.age'}} :</label>
         {{#if actor.editSheet}}
-          <input name="data.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="number"/>
+          <input name="system.attributes.physical.age" type="text" value="{{attributes.physical.age}}" placeholder="Age" class="number"/>
         {{else}}
           <span>{{attributes.physical.age}}</span>
         {{/if}}
@@ -38,7 +38,7 @@
     <div class="info">
         <label for="height">{{localize 'ZCORPS.attributes.height'}} :</label>
         {{#if actor.editSheet}}
-          <input name="data.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="number"/>
+          <input name="system.attributes.physical.height" type="text" value="{{attributes.physical.height}}" placeholder="Taille" class="number"/>
         {{else}}
           <span>{{attributes.physical.height}}</span>
         {{/if}}
@@ -47,7 +47,7 @@
     <div class="info">
         <label for="weight">{{localize 'ZCORPS.attributes.weight'}} :</label>
         {{#if actor.editSheet}}
-          <input name="data.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="number"/>
+          <input name="system.attributes.physical.weight" type="text" value="{{attributes.physical.weight}}" placeholder="Poids" class="number"/>
         {{else}}
           <span>{{attributes.physical.weight}}</span>
         {{/if}}
@@ -56,7 +56,7 @@
     <div class="info">
         <label for="gender">{{localize 'ZCORPS.attributes.gender'}} :</label>
         {{#if actor.editSheet}}
-          <select name="data.attributes.physical.gender" id="data.attributes.physical.gender">
+          <select name="system.attributes.physical.gender" id="system.attributes.physical.gender">
             {{#select attributes.physical.gender}}
             {{selectOptions genderType selected=value nameAttr=key}}
             {{/select}}
@@ -80,8 +80,8 @@
 
       <div class="level">
         <span class="level-title">{{localize 'ZCORPS.attributes.injuriesLevel'}}</span>
-        <select name="data.attributes.health" class="healthAndStressLevel">
-          {{#select data.attributes.health}}
+        <select name="system.attributes.health" class="healthAndStressLevel">
+          {{#select attributes.health}}
            {{selectOptions healthLevel selected=value attr=key}}
           {{/select}}
         </select>
@@ -89,8 +89,8 @@
       <div class="level">
 <!--         <span class="level-title">{{localize 'ZCORPS.attributes.stressLevel'}}</span> -->
         <span><span class="level-title">{{localize 'ZCORPS.attributes.stressLevel'}}</span> &nbsp;&nbsp;=>&nbsp;&nbsp; <a class="stressTest rollable" data-label="Test de résistance au stress" data-carac="Présence" data-stress="true" data-roll="{{caracs.presence.skills.volonte.formula}}"><i class="fas fa-dice-d6"></i></a></span>
-        <select name="data.attributes.stress" class="healthAndStressLevel">
-          {{#select data.attributes.stress}}
+        <select name="system.attributes.stress" class="healthAndStressLevel">
+          {{#select attributes.stress}}
            {{selectOptions stressLevel selected=value attr=key}}
           {{/select}}
         </select>
@@ -99,14 +99,14 @@
         <!-- <span class="level-title">Points de Personnage</span> -->
         <div class="resource-content flexrow flex-center flex-between">
           <span class="level-title">Points de Personnage</span> :
-          <span>{{data.attributes.xp.value}} / {{data.attributes.xp.total}}</span>
+          <span>{{attributes.xp.value}} / {{attributes.xp.total}}</span>
           <span class="use-bonus flex0"><i id="bonus_xp" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
         </div>
       </div>
       <div class="level">
         <div class="resource-content flexrow flex-center flex-between">
           <span class="level-title">Points de Cojones</span> :
-          <span>{{data.attributes.cojones.value}} / {{data.attributes.cojones.total}}</span>
+          <span>{{attributes.cojones.value}} / {{attributes.cojones.total}}</span>
           <span class="use-bonus flex0"><i id="bonus_cojones" class="bonus-icon fas fa-square" data-bonus="false"></i></span>
         </div>
       </div>
@@ -150,7 +150,7 @@
     <div class="tab assets" data-group="primary" data-tab="assets">
       <div style="display:grid; grid-template-columns: 1fr 3fr;">
       <div>
-        <textarea style="height: 550px;resize: none; color: white;border:solid white 1px" name="data.attributes.inventaire">{{data.attributes.inventaire}}</textarea>
+        <textarea style="height: 550px;resize: none; color: white;border:solid white 1px" name="system.attributes.inventaire">{{attributes.inventaire}}</textarea>
       </div>
       <div>
           {{> "systems/zcorps/templates/actor/parts/actor-items.html"}}

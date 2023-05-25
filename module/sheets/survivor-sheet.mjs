@@ -38,10 +38,8 @@ export class zcorpsSurvivorSheet extends ActorSheet {
         const context = super.getData();
 
         console.info(context);
-        console.info(game.user)
-
-        context.isGM= game.user.isGM
-        console.info(context);
+        console.info(this.actor);
+        context.isGM= game.user.isGM;
 
 
         // Use a safe clone of the actor data for further operations.

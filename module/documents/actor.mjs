@@ -227,6 +227,7 @@ export class zcorpsActor extends Actor {
             this.system.attributes.health
         );
         const stressTest = this._checkStressMalus(caracteristic, this.system.attributes.stress)
+        console.info(stressTest);
         return {
             health: health,
             stressValue: stressTest.value,
@@ -273,17 +274,20 @@ export class zcorpsActor extends Actor {
         {difficulty: 12, malus: {[knowledge]: 1, [agility]: 1, [deftness]: 1, [presence]: 1}},
         {difficulty: 12, malus: {[knowledge]: 1, [agility]: 2, [deftness]: 1, [presence]: 1, [perception]: 1}},
       ];
-      
-      if(malus[level].malus){
-        if(malus[level].malus[caracteristic]){
-          return {value: malus[level].malus[caracteristic], difficulty: malus[level].difficulty}
+      if(level){
+        if(malus[level].malus){
+          if(malus[level].malus[caracteristic]){
+            return {value: malus[level].malus[caracteristic], difficulty: malus[level].difficulty}
+          }
+          else {
+            return {value: 0, difficulty: malus[level].difficulty};
+          }
         }
         else {
           return {value: 0, difficulty: malus[level].difficulty};
         }
-      }
-      else {
-        return {value: 0, difficulty: malus[level].difficulty};
+      }else{
+        return {value: 0, difficulty: 8};
       }
     }
     //######## ############ #######
