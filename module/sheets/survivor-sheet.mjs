@@ -416,7 +416,7 @@ export class zcorpsSurvivorSheet extends ActorSheet {
                     : (this.actor.system.caracs[tier.dataset.carac].tiers =
                           dataFormatted.carac.array);
             }
-            this.actor.update({ system: this.system });
+            this.actor.update({ system: this.actor.system });
             this.actor.sheet.render(true);
         });
 
